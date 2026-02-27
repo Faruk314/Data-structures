@@ -8,12 +8,17 @@ import (
 func main() {
     fmt.Println("Hello")
 
-    myList := list.LinkedList{} 
+    list1 := list.LinkedList{} 
 
-    myList.PrependDoubly(20);
+    list1.Append(9)
+    list1.Append(2)
 
-    myList.AppendDoubly(40)
+    list2 := list.LinkedList{}
+    list2.Append(5)
+    list2.Append(5)
 
+    result := list.SumLists(list1, list2)
 
-    myList.Display()
+    result.Display()
+    
 }
