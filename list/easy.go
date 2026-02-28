@@ -1,5 +1,31 @@
 package list
 
+func MergeList (l1 *LinkedList, l2 *LinkedList) *Node {
+  
+    dummy := &Node{}
+    tail := dummy
+    
+    p1 := l1.Head
+    p2 := l2.Head
+
+    for p1 != nil && p2 != nil {
+
+        if p1.Value > p2.Value {
+            tail.Next = p1
+
+            p1 = p1.Next
+        }else {
+            tail.Next = p2
+
+            p2 = p2.Next
+        }
+
+        tail = tail.Next
+    }
+
+    return dummy.Next
+}
+
 
 func Reverselist(list *LinkedList) *Node {
 
