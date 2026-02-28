@@ -1,6 +1,26 @@
 package list
 
 
+func Reverselist(list *LinkedList) *Node {
+
+    current := list.Head
+
+    var prev *Node
+
+    for current != nil {
+         temp := current.Next
+
+         current.Next = nil
+
+         prev = current 
+
+         current = temp
+    }
+
+    return prev
+}
+
+
 func RemoveElements(head *Node, value int) *Node {
    
    dummy := &Node{Value: 0, Next: head}
