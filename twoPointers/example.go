@@ -1,29 +1,23 @@
 package twopointers
 
-
 func Palindrome(slice []int) bool {
-
 	if len(slice) == 0 {
-		return  false
+		return false
 	}
 
- 
 	left := 0
 
 	right := len(slice) - 1
-    
 
 	for left < right {
-        
+
 		if slice[left] != slice[right] {
-            return  false
+			return false
 		}
 
-		left ++
-		right --
+		left++
+		right--
 	}
-
-
 
 	return true
 }

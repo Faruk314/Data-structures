@@ -5,125 +5,121 @@ import (
 )
 
 func (l *LinkedList) PrependCircular(val int) {
-    newNode := &Node{Value: val}
-    
-    if l.Head == nil {
-        l.Head = newNode
-        l.Tail = newNode
-    } else {
-        newNode.Next = l.Head
+	newNode := &Node{Value: val}
+
+	if l.Head == nil {
+		l.Head = newNode
+		l.Tail = newNode
+	} else {
+		newNode.Next = l.Head
 		newNode.Prev = l.Tail
-        
+
 		l.Tail.Next = newNode
 		l.Head.Prev = newNode
 
 		l.Head = newNode
 
-       
-    }
-    l.Size++
+	}
+	l.Size++
 }
 
 func (l *LinkedList) AppendCircular(val int) {
-    newNode := &Node{Value: val}
+	newNode := &Node{Value: val}
 
-    if l.Head == nil {
-        l.Head = newNode
-        l.Tail = newNode
-       
-        newNode.Next = newNode
-        newNode.Prev = newNode
-    } else {
-        newNode.Next = l.Head
-        newNode.Prev = l.Tail
+	if l.Head == nil {
+		l.Head = newNode
+		l.Tail = newNode
 
-        l.Tail.Next = newNode
-        l.Head.Prev = newNode
+		newNode.Next = newNode
+		newNode.Prev = newNode
+	} else {
+		newNode.Next = l.Head
+		newNode.Prev = l.Tail
 
-        l.Tail = newNode
-    }
-    l.Size++
+		l.Tail.Next = newNode
+		l.Head.Prev = newNode
+
+		l.Tail = newNode
+	}
+	l.Size++
 }
 
 func (l *LinkedList) DeleteHeadCircular() {
-    if l.Head == nil {
-        return
-    }
+	if l.Head == nil {
+		return
+	}
 
-    if(l.Head == l.Tail) {
-        l.Head = nil
-        l.Tail = nil
-    
-    }else {
-    newHead := l.Head.Next
+	if l.Head == l.Tail {
+		l.Head = nil
+		l.Tail = nil
 
-     newHead.Prev = l.Tail
+	} else {
+		newHead := l.Head.Next
 
-     l.Tail.Next = newHead
+		newHead.Prev = l.Tail
 
-     l.Head.Next = nil
-     l.Head.Prev = nil
+		l.Tail.Next = newHead
 
-     l.Head = newHead  
-    }
+		l.Head.Next = nil
+		l.Head.Prev = nil
 
-    l.Size--     
+		l.Head = newHead
+	}
+
+	l.Size--
 }
 
 func (l *LinkedList) DeleteTailCircular() {
-    if l.Head == nil {
-        return
-    }
+	if l.Head == nil {
+		return
+	}
 
-    if l.Head == l.Tail {
-        l.Head = nil
-        l.Tail = nil
-    } else {
-        newTail := l.Tail.Prev
-        newTail.Next = l.Head
-        l.Head.Prev = newTail
+	if l.Head == l.Tail {
+		l.Head = nil
+		l.Tail = nil
+	} else {
+		newTail := l.Tail.Prev
+		newTail.Next = l.Head
+		l.Head.Prev = newTail
 
-      
-        l.Tail.Next = nil
-        l.Tail.Prev = nil
-        l.Tail = newTail
-    }
+		l.Tail.Next = nil
+		l.Tail.Prev = nil
+		l.Tail = newTail
+	}
 
-    l.Size-- 
+	l.Size--
 }
 
-
 func (l *LinkedList) InsertAtIndexCircular(val int, index int) {
+	if index < 0 || index > l.Size {
+		fmt.Println("Index is out of range")
 
-    if index < 0 || index > l.Size {
-        fmt.Println("Index is out of range")
+		return
+	}
 
-        return
-    }
+	if index == 0 {
+		l.PrependCircular(val)
+		return
+	}
 
-    if index == 0 {
-        l.PrependCircular(val)
-        return
-    }
+	if index == l.Size {
+		l.AppendCircular(val)
+		return
+	}
 
-    if index == l.Size {
-        l.AppendCircular(val)
-        return
-    }
+	current := l.Head
+	newNode := &Node{Value: val}
 
-    current := l.Head
-    newNode := &Node{Value: val}
+	for i := 0; i < index-1; i++ {
+		current = current.Next
+	}
 
-    for i:=0; i < index - 1; i++ {
-        current = current.Next
-    }
+	newNode.Next = current.Next
+	newNode.Prev = current
 
-    newNode.Next = current.Next
-    newNode.Prev = current
+	current.Next.Prev = newNode
 
-    current.Next.Prev = newNode
+	current.Next = newNode
 
-    current.Next = newNode
-
-    l.Size++
+	l.Size++
 }
