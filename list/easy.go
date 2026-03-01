@@ -1,26 +1,30 @@
 package list
 
-func MergeList (l1 *LinkedList, l2 *LinkedList) *Node {
-  
+func MergeList(l1 *LinkedList, l2 *LinkedList) *Node {
+
+    if l1 == nil || l1.Head == nil { return l2.Head }
+    if l2 == nil || l2.Head == nil { return l1.Head }
+
     dummy := &Node{}
     tail := dummy
-    
-    p1 := l1.Head
-    p2 := l2.Head
+    p1, p2 := l1.Head, l2.Head
 
     for p1 != nil && p2 != nil {
-
-        if p1.Value > p2.Value {
+        if p1.Value <= p2.Value {
             tail.Next = p1
-
             p1 = p1.Next
-        }else {
+        } else {
             tail.Next = p2
-
             p2 = p2.Next
         }
-
         tail = tail.Next
+    }
+
+
+    if p1 != nil {
+        tail.Next = p1
+    } else {
+        tail.Next = p2
     }
 
     return dummy.Next
