@@ -28,3 +28,28 @@ func SumLists(list1, list2 LinkedList) LinkedList {
 
 	return result
 }
+
+func RemoveNthFromEnd(l *LinkedList, n int) *Node {
+	if l.Head == nil {
+		return nil
+	}
+
+	dummy := &Node{Next: l.Head}
+
+	left := dummy
+	right := l.Head
+
+	for n > 0 && right != nil {
+		right = right.Next
+		n--
+	}
+
+	for right != nil {
+		left = left.Next
+		right = right.Next
+	}
+
+	left.Next = left.Next.Next
+
+	return dummy.Next
+}
