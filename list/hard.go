@@ -26,3 +26,44 @@ func MergeKLists(lists []*LinkedList) *Node {
 
 	return lists[0].Head
 }
+
+func ReverseKGroup(head *Node, k int) *Node {
+	if head == nil || k == 1 {
+		return head
+	}
+
+	dummy := &Node{Next: head}
+	groupPrev := dummy
+
+	for {
+		kth := getKth(groupPrev, k)
+		if kth == nil {
+			break
+		}
+		groupNext := kth.Next
+
+		prev := groupNext
+		curr := groupPrev.Next
+
+		for i := 0; i < k; i++ {
+			nextTmp := curr.Next
+			curr.Next = prev
+			prev = curr
+			curr = nextTmp
+		}
+
+		newTail := groupPrev.Next
+		groupPrev.Next = kth
+		groupPrev = newTail
+	}
+
+	return dummy.Next
+}
+
+func getKth(curr *Node, k int) *Node {
+	for curr != nil && k > 1 {
+		curr = curr.Next
+		k--
+	}
+	return curr
+}

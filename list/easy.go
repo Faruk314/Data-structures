@@ -32,14 +32,14 @@ func MergeList(l1 *LinkedList, l2 *LinkedList) *Node {
 	return dummy.Next
 }
 
-func Reverselist(list *LinkedList) *Node {
-	current := list.Head
+func Reverselist(head *Node) *Node {
+	current := head
 
 	var prev *Node
 
 	for current != nil {
 		temp := current.Next
-		current.Next = nil
+		current.Next = prev
 		prev = current
 		current = temp
 	}
