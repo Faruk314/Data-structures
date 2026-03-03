@@ -53,3 +53,28 @@ func RemoveNthFromEnd(l *LinkedList, n int) *Node {
 
 	return dummy.Next
 }
+
+func SwapPairs(l *LinkedList) *Node {
+	if l.Head == nil {
+		return nil
+	}
+
+	dummy := &Node{Value: 0, Next: l.Head}
+
+	point := dummy
+
+	for point.Next != nil && point.Next.Next != nil {
+
+		swap1 := point.Next
+		swap2 := point.Next.Next
+
+		swap1.Next = swap2.Next
+		swap2.Next = swap1
+
+		point.Next = swap2
+		point = swap1
+
+	}
+
+	return dummy.Next
+}
