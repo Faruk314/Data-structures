@@ -78,3 +78,31 @@ func SwapPairs(l *LinkedList) *Node {
 
 	return dummy.Next
 }
+
+func PartionList(head *Node, x int) *Node {
+	leftHead := &Node{}
+	rightHead := &Node{}
+
+	left := leftHead
+	right := rightHead
+
+	curr := head
+
+	for curr != nil {
+		if curr.Value < x {
+			left.Next = curr
+			left = left.Next
+		} else {
+			right.Next = curr
+			right = right.Next
+
+		}
+		curr = curr.Next
+	}
+
+	right.Next = nil
+
+	left.Next = rightHead.Next
+
+	return leftHead.Next
+}
