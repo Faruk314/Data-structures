@@ -101,3 +101,20 @@ func isPalindrome(list *LinkedList) bool {
 
 	return true
 }
+
+func RemoveDuplicateFromSortedList(head *Node) *Node {
+	if head == nil {
+		return nil
+	}
+
+	curr := head
+
+	for curr != nil {
+		for curr.Next != nil && curr.Value == curr.Next.Value {
+			curr.Next = curr.Next.Next
+		}
+		curr = curr.Next
+	}
+
+	return head
+}
