@@ -106,3 +106,31 @@ func PartionList(head *Node, x int) *Node {
 
 	return leftHead.Next
 }
+
+func CopyListWithRandomPointer(head *Node) *Node {
+	if head == nil {
+		return nil
+	}
+
+	oldToCopy := make(map[*Node]*Node)
+
+	curr := head
+
+	for curr != nil {
+		oldToCopy[curr] = &Node{Value: curr.Value}
+		curr = curr.Next
+	}
+
+	curr = head
+
+	for curr != nil {
+		copy := oldToCopy[curr]
+
+		copy.Next = oldToCopy[curr.Next]
+		copy.Random = oldToCopy[curr.Random]
+
+		curr = curr.Next
+	}
+
+	return oldToCopy[head]
+}

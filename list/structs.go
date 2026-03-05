@@ -1,9 +1,10 @@
 package list
 
 type Node struct {
-	Value int
-	Next  *Node
-	Prev  *Node
+	Value  int
+	Next   *Node
+	Prev   *Node
+	Random *Node
 }
 
 type LinkedList struct {
