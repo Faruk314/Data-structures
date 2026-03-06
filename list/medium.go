@@ -134,3 +134,33 @@ func CopyListWithRandomPointer(head *Node) *Node {
 
 	return oldToCopy[head]
 }
+
+func RotateList(head *Node, k int) *Node {
+	if head == nil || head.Next == nil {
+		return head
+	}
+
+	tail := head
+	length := 1
+	for tail.Next != nil {
+		tail = tail.Next
+		length++
+	}
+
+	n := k % length
+	if n == 0 {
+		return head
+	}
+
+	tail.Next = head
+
+	curr := head
+	for i := 0; i < length-n-1; i++ {
+		curr = curr.Next
+	}
+
+	newHead := curr.Next
+	curr.Next = nil
+
+	return newHead
+}
