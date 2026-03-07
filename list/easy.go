@@ -118,3 +118,40 @@ func RemoveDuplicateFromSortedList(head *Node) *Node {
 
 	return head
 }
+
+func GetIntersectionNode(headA, headB *Node) *Node {
+	if headA == nil || headB == nil {
+		return nil
+	}
+
+	lenA, lenB := 0, 0
+	currA, currB := headA, headB
+
+	for currA != nil {
+		lenA++
+		currA = currA.Next
+	}
+	for currB != nil {
+		lenB++
+		currB = currB.Next
+	}
+
+	currA, currB = headA, headB
+
+	if lenA > lenB {
+		for i := 0; i < lenA-lenB; i++ {
+			currA = currA.Next
+		}
+	} else {
+		for i := 0; i < lenB-lenA; i++ {
+			currB = currB.Next
+		}
+	}
+
+	for currA != currB {
+		currA = currA.Next
+		currB = currB.Next
+	}
+
+	return currA
+}
