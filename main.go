@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
-	twopointers "golang/twoPointers"
+	arrayshashing "golang/arraysHashing"
 )
 
 func main() {
-	mySlice := []int{1, 2, 1}
-	result := twopointers.Palindrome(mySlice)
-	fmt.Println("result", result)
+	numbers := []int{10, 20, 30, 40}
+
+	result := arrayshashing.HasDuplicates(numbers)
+
+	fmt.Println(result, "res")
 }
