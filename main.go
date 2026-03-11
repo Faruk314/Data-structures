@@ -6,9 +6,9 @@ import (
 )
 
 func main() {
-	numbers := []int{10, 20, 30, 40}
+	numbers := []int{}
 
-	result := arrayshashing.HasDuplicates(numbers)
+	result := arrayshashing.TwoSum(numbers, 40)
 
 	fmt.Println(result, "res")
 }
