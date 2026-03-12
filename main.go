@@ -6,9 +6,9 @@ import (
 )
 
 func main() {
-	numbers := []int{}
+	anagrams := []string{"act", "pots", "tops", "cat", "stop", "hat"}
 
-	result := arrayshashing.TwoSum(numbers, 40)
+	result := arrayshashing.GroupAnagrams(anagrams)
 
 	fmt.Println(result, "res")
 }
