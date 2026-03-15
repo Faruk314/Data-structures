@@ -78,3 +78,50 @@ func ProductExceptSelf(nums []int) []int {
 
 	return result
 }
+
+func LongestConsecutive(nums []int) int {
+	if len(nums) == 0 {
+		return 0
+	}
+
+	visited := make(map[int]bool)
+	for _, num := range nums {
+		visited[num] = false
+	}
+
+	longest := 0
+
+	for _, num := range nums {
+
+		if visited[num] {
+			continue
+		}
+
+		visited[num] = true
+		currentLength := 1
+
+		for next := num + 1; ; next++ {
+			if _, exists := visited[next]; exists {
+				visited[next] = true
+				currentLength++
+			} else {
+				break
+			}
+		}
+
+		for prev := num - 1; ; prev-- {
+			if _, exists := visited[prev]; exists {
+				visited[prev] = true
+				currentLength++
+			} else {
+				break
+			}
+		}
+
+		if currentLength > longest {
+			longest = currentLength
+		}
+	}
+
+	return longest
+}
