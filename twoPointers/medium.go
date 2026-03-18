@@ -38,3 +38,35 @@ func ThreeSum(nums []int) [][]int {
 
 	return result
 }
+
+func MaxArea(heights []int) int {
+	leftPointer := 0
+	rightPointer := len(heights) - 1
+	biggestSurface := 0
+
+	for leftPointer < rightPointer {
+
+		leftHeight := heights[leftPointer]
+
+		rightHeight := heights[rightPointer]
+
+		height := min(leftHeight, rightHeight)
+
+		width := rightPointer - leftPointer
+
+		surface := height * width
+
+		if surface > biggestSurface {
+			biggestSurface = surface
+		}
+
+		if rightHeight >= leftHeight {
+			leftPointer++
+		} else {
+			rightPointer--
+		}
+
+	}
+
+	return biggestSurface
+}
