@@ -1,6 +1,9 @@
 package twopointers
 
-import "sort"
+import (
+	"slices"
+	"sort"
+)
 
 func ThreeSum(nums []int) [][]int {
 	sort.Ints(nums)
@@ -69,4 +72,23 @@ func MaxArea(heights []int) int {
 	}
 
 	return biggestSurface
+}
+
+func BoatsToSavePeople(people []int, limit int) int {
+	slices.Sort(people)
+	count := 0
+	left := 0
+	right := len(people) - 1
+
+	for left <= right {
+
+		if people[left]+people[right] <= limit {
+			left++
+		}
+
+		right--
+		count++
+	}
+
+	return count
 }
