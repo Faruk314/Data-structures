@@ -1,5 +1,10 @@
 package arrayshashing
 
+import (
+	"sort"
+	"strings"
+)
+
 func HasDuplicates(numbers []int) bool {
 	numberSet := make(map[int]struct{})
 
@@ -54,4 +59,33 @@ func TwoSum(nums []int, target int) []int {
 	}
 
 	return nil
+}
+
+func LongestCommonPrefix(strs []string) string {
+	if len(strs) == 0 {
+		return ""
+	}
+
+	sort.Strings(strs)
+
+	first := strs[0]
+	last := strs[len(strs)-1]
+
+	var builder strings.Builder
+
+	limit := len(first)
+
+	if len(last) < limit {
+		limit = len(last)
+	}
+
+	for i := 0; i < limit; i++ {
+		if first[i] != last[i] {
+			break
+		}
+
+		builder.WriteByte(first[i])
+	}
+
+	return builder.String()
 }
