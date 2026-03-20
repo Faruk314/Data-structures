@@ -106,3 +106,14 @@ func RemoveDuplicates(nums []int) int {
 
 	return left
 }
+
+func GetConcatenation(nums []int) []int {
+	n := len(nums)
+
+	ans := make([]int, 2*n)
+
+	copy(ans[0:n], nums)
+	copy(ans[n:], nums)
+
+	return ans
+}
