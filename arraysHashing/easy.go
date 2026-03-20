@@ -89,3 +89,20 @@ func LongestCommonPrefix(strs []string) string {
 
 	return builder.String()
 }
+
+func RemoveDuplicates(nums []int) int {
+	if len(nums) == 0 {
+		return 0
+	}
+
+	left := 1
+
+	for right := 1; right < len(nums); right++ {
+		if nums[right] != nums[right-1] {
+			nums[left] = nums[right]
+			left += 1
+		}
+	}
+
+	return left
+}
