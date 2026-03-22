@@ -157,3 +157,85 @@ func merge(left, right []int) []int {
 
 	return result
 }
+
+func IsValidSudoku(board [][]byte) bool {
+	if checkHorisontal(board) == false {
+		return false
+	}
+	if checkVertical(board) == false {
+		return false
+	}
+
+	subBox := 0
+	startRow := 0
+	startCol := 0
+
+	for subBox < 9 {
+		subBoxSet := make(map[byte]struct{})
+
+		for r := 0; r < 3; r++ {
+			for c := 0; c < 3; c++ {
+				num := board[startRow+r][startCol+c]
+				if num == '.' {
+					continue
+				}
+				if _, exists := subBoxSet[num]; exists {
+					return false
+				}
+				subBoxSet[num] = struct{}{}
+			}
+		}
+
+		startCol += 3
+		if startCol == 9 {
+			startCol = 0
+			startRow += 3
+		}
+		subBox++
+	}
+	return true
+}
+
+func checkHorisontal(board [][]byte) bool {
+	for row := 0; row < 9; row++ {
+		horisontalSet := make(map[byte]struct{})
+		for col := 0; col < 9; col++ {
+			num := board[row][col]
+
+			if num == '.' {
+				continue
+			}
+
+			if _, exists := horisontalSet[num]; exists {
+				return false
+			}
+
+			horisontalSet[num] = struct{}{}
+		}
+	}
+
+	return true
+}
+
+func checkVertical(board [][]byte) bool {
+	for col := 0; col < 9; col++ {
+		verticalSet := make(map[byte]struct{})
+		for row := 0; row < 9; row++ {
+
+			num := board[row][col]
+
+			if num == '.' {
+				continue
+			}
+
+			if _, exists := verticalSet[num]; exists {
+				return false
+			}
+
+			verticalSet[num] = struct{}{}
+
+		}
+	}
+
+	return true
+}
