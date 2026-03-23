@@ -57,3 +57,28 @@ func ValidPalindromeTwo(s string) bool {
 
 	return true
 }
+
+func MergeAlternately(word1, word2 string) string {
+	var result strings.Builder
+
+	n1, n2 := len(word1), len(word2)
+
+	maxLen := n1
+
+	if n2 > n1 {
+		maxLen = n2
+	}
+
+	for i := 0; i < maxLen; i++ {
+
+		if i < n1 {
+			result.WriteByte(word1[i])
+		}
+
+		if i < n2 {
+			result.WriteByte(word2[i])
+		}
+	}
+
+	return result.String()
+}
