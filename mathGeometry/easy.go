@@ -23,13 +23,11 @@ func RomanToInt(s string) int {
 	right := 1
 
 	for {
-
 		if left+1 > len(s) {
 			break
 		}
 
 		roman1 := s[left]
-
 		if left+1 == len(s) {
 
 			if num, ok := romanToIntMap[string(roman1)]; ok {
@@ -39,9 +37,7 @@ func RomanToInt(s string) int {
 		}
 
 		roman2 := s[right]
-
 		res := string([]byte{roman1, roman2})
-
 		if num, ok := romanToIntMap[res]; ok {
 			sum += num
 
@@ -85,4 +81,20 @@ func romanToInt(s string) int {
 	}
 
 	return total
+}
+
+func ConvertToTitle(columnNum int32) string {
+	result := ""
+
+	for columnNum > 0 {
+		columnNum--
+
+		char := byte(columnNum%26 + 'A')
+
+		result = string(char) + result
+
+		columnNum = columnNum / 26
+	}
+
+	return result
 }
