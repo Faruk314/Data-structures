@@ -91,3 +91,25 @@ func ContainsNearbyDuplicate(nums []int, k int) bool {
 
 	return false
 }
+
+func MaxProfit(prices []int) int {
+	if len(prices) == 0 {
+		return 0
+	}
+
+	buyPrice := prices[0]
+	maxProfit := 0
+
+	for i := 1; i < len(prices); i++ {
+		if prices[i] < buyPrice {
+			buyPrice = prices[i]
+		} else {
+			currentProfit := prices[i] - buyPrice
+			if currentProfit > maxProfit {
+				maxProfit = currentProfit
+			}
+		}
+	}
+
+	return maxProfit
+}
