@@ -23,3 +23,52 @@ func MaxSizeSubarray(nums []int, k int) int {
 
 	return maxSum
 }
+
+func isVowel(letter byte) bool {
+	switch letter {
+	case 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U':
+		return true
+	}
+	return false
+}
+
+func MaxVowels(s string, k int) int {
+	if len(s) < k {
+		return 0
+	}
+
+	currentCount := 0
+
+	for i := 0; i < k; i++ {
+		if isVowel(s[i]) {
+			currentCount++
+		}
+	}
+
+	maxCount := currentCount
+
+	if maxCount == k {
+		return k
+	}
+
+	for i := k; i < len(s); i++ {
+
+		if isVowel(s[i]) {
+			currentCount += 1
+		}
+
+		if isVowel(s[i-k]) {
+			currentCount -= 1
+		}
+
+		if currentCount > maxCount {
+			maxCount = currentCount
+
+			if maxCount == k {
+				return maxCount
+			}
+		}
+	}
+
+	return maxCount
+}
