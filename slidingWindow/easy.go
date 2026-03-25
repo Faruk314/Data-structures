@@ -72,3 +72,22 @@ func MaxVowels(s string, k int) int {
 
 	return maxCount
 }
+
+func ContainsNearbyDuplicate(nums []int, k int) bool {
+	numSet := make(map[int]struct{})
+
+	for i := 0; i < len(nums); i++ {
+		if _, ok := numSet[nums[i]]; ok {
+			return true
+		}
+
+		numSet[nums[i]] = struct{}{}
+
+		if len(numSet) > k {
+			delete(numSet, nums[i-k])
+		}
+
+	}
+
+	return false
+}
