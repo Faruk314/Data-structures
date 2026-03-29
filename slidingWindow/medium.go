@@ -1,5 +1,7 @@
 package slidingwindow
 
+import "math"
+
 func LengthOfLongestSubstring(s string) int {
 	left := 0
 	charSet := make(map[byte]struct{})
@@ -91,4 +93,29 @@ func CheckInclusion(s1 string, s2 string) bool {
 	}
 
 	return false
+}
+
+func MinSubArrayLen(nums []int, target int) int {
+	minWindowSize := math.MaxInt
+	currentSum := 0
+	right := 0
+	left := 0
+
+	for right < len(nums) {
+		currentSum += nums[right]
+		right++
+
+		for currentSum >= target {
+			currentWindowSize := right - left
+
+			if currentWindowSize < minWindowSize {
+				minWindowSize = currentWindowSize
+			}
+
+			currentSum -= nums[left]
+			left++
+		}
+	}
+
+	return minWindowSize
 }
