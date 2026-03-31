@@ -2,10 +2,11 @@ package stack
 
 import (
 	"strconv"
+	"strings"
 )
 
 func CalPoints(operations []string) int {
-	stack := Stack{}
+	stack := Stack[int]{}
 	totalSum := 0
 
 	for _, char := range operations {
@@ -40,4 +41,37 @@ func CalPoints(operations []string) int {
 	}
 
 	return totalSum
+}
+
+func ValidParentheses(s string) bool {
+	stack := Stack[rune]{}
+	pairs := map[string]struct{}{
+		"()": {},
+		"[]": {},
+		"{}": {},
+	}
+
+	for _, bracket := range s {
+		if bracket == '(' || bracket == '[' || bracket == '{' {
+			stack.Push(bracket)
+		} else {
+
+			prevBracket, ok := stack.Pop()
+
+			if !ok {
+				return false
+			}
+
+			var res strings.Builder
+			res.WriteRune(prevBracket)
+			res.WriteRune(bracket)
+
+			if _, exists := pairs[res.String()]; !exists {
+				return false
+			}
+
+		}
+	}
+
+	return stack.IsEmpty()
 }
