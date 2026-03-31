@@ -1,18 +1,19 @@
 package stack
 
-type Stack []int
+type Stack[T any] []T
 
-func (s *Stack) IsEmpty() bool {
+func (s *Stack[T]) IsEmpty() bool {
 	return len(*s) == 0
 }
 
-func (s *Stack) Push(v int) {
+func (s *Stack[T]) Push(v T) {
 	*s = append(*s, v)
 }
 
-func (s *Stack) Pop() (int, bool) {
+func (s *Stack[T]) Pop() (T, bool) {
 	if s.IsEmpty() {
-		return 0, false
+		var zero T
+		return zero, false
 	}
 	index := len(*s) - 1
 	element := (*s)[index]
