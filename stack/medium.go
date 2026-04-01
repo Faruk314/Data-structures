@@ -1,3 +1,7 @@
+package stack
+
+import "strconv"
+
 type MinStack struct {
 	stack    []int
 	minStack []int
@@ -37,4 +41,32 @@ func (s *MinStack) Top() int {
 
 func (s *MinStack) GetMin() int {
 	return s.minStack[len(s.minStack)-1]
+}
+
+func EvalRPN(tokens []string) int {
+	myStack := Stack[int]{}
+
+	for _, token := range tokens {
+		if num, err := strconv.Atoi(token); err == nil {
+			myStack.Push(num)
+		} else {
+			a, _ := myStack.Pop()
+			b, _ := myStack.Pop()
+
+			switch token {
+			case "+":
+				myStack.Push(b + a)
+			case "-":
+				myStack.Push(b - a)
+
+			case "*":
+				myStack.Push(b * a)
+			case "/":
+				myStack.Push(b / a)
+			}
+		}
+	}
+
+	result, _ := myStack.Pop()
+	return result
 }
