@@ -20,3 +20,16 @@ func (s *Stack[T]) Pop() (T, bool) {
 	*s = (*s)[:index]
 	return element, true
 }
+
+func (s *Stack[T]) Peek() (T, bool) {
+	if s.IsEmpty() {
+		var zero T
+
+		return zero, false
+	}
+
+	index := len(*s) - 1
+	element := (*s)[index]
+
+	return element, true
+}
