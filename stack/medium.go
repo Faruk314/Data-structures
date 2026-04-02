@@ -1,6 +1,8 @@
 package stack
 
-import "strconv"
+import (
+	"strconv"
+)
 
 type MinStack struct {
 	stack    []int
@@ -69,4 +71,36 @@ func EvalRPN(tokens []string) int {
 
 	result, _ := myStack.Pop()
 	return result
+}
+
+func AsteroidCollision(asteroids []int) []int {
+	Stack := Stack[int]{}
+
+	for _, asteroid := range asteroids {
+		isAlive := true
+
+		for isAlive && !Stack.IsEmpty() && asteroid < 0 {
+			last, _ := Stack.Peek()
+
+			if last < 0 {
+				break
+			}
+
+			if -asteroid > last {
+				Stack.Pop()
+			} else if -asteroid == last {
+
+				Stack.Pop()
+				isAlive = false
+			} else {
+				isAlive = false
+			}
+		}
+
+		if isAlive {
+			Stack.Push(asteroid)
+		}
+	}
+
+	return Stack
 }
