@@ -104,3 +104,28 @@ func AsteroidCollision(asteroids []int) []int {
 
 	return Stack
 }
+
+func DailyTemperatures(temperatures []int) []int {
+	n := len(temperatures)
+	result := make([]int, n)
+	helperStack := Stack[int]{}
+
+	for idx := n - 1; idx >= 0; idx-- {
+
+		for {
+			topIdx, exists := helperStack.Peek()
+			if !exists || temperatures[idx] < temperatures[topIdx] {
+				break
+			}
+			helperStack.Pop()
+		}
+
+		if topIdx, exists := helperStack.Peek(); exists {
+			result[idx] = topIdx - idx
+		}
+
+		helperStack.Push(idx)
+	}
+
+	return result
+}
