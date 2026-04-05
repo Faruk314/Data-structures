@@ -1,6 +1,7 @@
 package stack
 
 import (
+	"sort"
 	"strconv"
 )
 
@@ -128,4 +129,46 @@ func DailyTemperatures(temperatures []int) []int {
 	}
 
 	return result
+}
+
+type car struct {
+	pos  int
+	time float64
+}
+
+func CarFleet(target int, position []int, speed []int) int {
+	n := len(position)
+	if n == 0 {
+		return 0
+	}
+
+	cars := make([]car, n)
+	for i := 0; i < n; i++ {
+
+		t := float64(target-position[i]) / float64(speed[i])
+		cars[i] = car{pos: position[i], time: t}
+	}
+
+	sort.Slice(cars, func(i, j int) bool {
+		return cars[i].pos > cars[j].pos
+	})
+
+	stack := Stack[float64]{}
+
+	for _, c := range cars {
+
+		if stack.IsEmpty() {
+			stack.Push(c.time)
+			continue
+		}
+
+		leadTime, _ := stack.Peek()
+
+		if c.time > leadTime {
+			stack.Push(c.time)
+		}
+
+	}
+
+	return len(stack)
 }
