@@ -3,6 +3,7 @@ package stack
 import (
 	"sort"
 	"strconv"
+	"strings"
 )
 
 type MinStack struct {
@@ -171,4 +172,23 @@ func CarFleet(target int, position []int, speed []int) int {
 	}
 
 	return len(stack)
+}
+
+func SimplifyPath(path string) string {
+	chars := strings.Split(path, "/")
+	newPath := Stack[string]{}
+
+	for _, char := range chars {
+		if char == ".." {
+			if !newPath.IsEmpty() {
+				newPath.Pop()
+			}
+		} else if char == "." || char == "" {
+			continue
+		} else {
+			newPath.Push(char)
+		}
+	}
+
+	return "/" + strings.Join([]string(newPath), "/")
 }
