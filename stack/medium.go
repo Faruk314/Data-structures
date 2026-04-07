@@ -4,6 +4,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 type MinStack struct {
@@ -191,4 +192,52 @@ func SimplifyPath(path string) string {
 	}
 
 	return "/" + strings.Join([]string(newPath), "/")
+}
+
+func decodeString(s string) string {
+	stack := Stack[string]{}
+
+	for _, char := range s {
+		c := string(char)
+
+		if c != "]" {
+			stack.Push(c)
+		} else {
+			substr := ""
+			for {
+				top, _ := stack.Peek()
+				if top == "[" {
+					break
+				}
+				val, _ := stack.Pop()
+				substr = val + substr
+			}
+
+			stack.Pop()
+
+			kStr := ""
+			for !stack.IsEmpty() {
+				top, _ := stack.Peek()
+				if unicode.IsDigit(rune(top[0])) {
+					val, _ := stack.Pop()
+					kStr = val + kStr
+				} else {
+					break
+				}
+			}
+
+			k, _ := strconv.Atoi(kStr)
+			repeated := strings.Repeat(substr, k)
+
+			stack.Push(repeated)
+		}
+	}
+
+	result := ""
+	for !stack.IsEmpty() {
+		val, _ := stack.Pop()
+		result = val + result
+	}
+
+	return result
 }
