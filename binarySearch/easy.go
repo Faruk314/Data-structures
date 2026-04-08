@@ -39,3 +39,32 @@ func SearchInsert(nums []int, target int) int {
 
 	return low
 }
+
+var target = 42
+
+func guess(num int) int {
+	if num == target {
+		return 0
+	} else if num > target {
+		return -1
+	} else {
+		return 1
+	}
+}
+
+func GuessNumber(n int) int {
+	low := 1
+	high := n
+	for low <= high {
+		mid := low + (high-low)/2
+		res := guess(mid)
+		if res == 0 {
+			return mid
+		} else if res == -1 {
+			high = mid - 1
+		} else {
+			low = mid + 1
+		}
+	}
+	return -1
+}
