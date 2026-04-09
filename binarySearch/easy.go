@@ -68,3 +68,28 @@ func GuessNumber(n int) int {
 	}
 	return -1
 }
+
+func MySqrt(x int) int {
+	if x < 2 {
+		return x
+	}
+
+	low := 1
+	high := x
+	ans := 0
+
+	for low <= high {
+
+		mid := low + (high-low)/2
+
+		if mid <= x/mid {
+			ans = mid
+			low = mid + 1
+		} else {
+			high = mid - 1
+		}
+
+	}
+
+	return ans
+}
