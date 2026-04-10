@@ -1,5 +1,7 @@
 package binarysearch
 
+import "slices"
+
 func SeachMatrix(matrix [][]int, target int) bool {
 	if len(matrix) == 0 || len(matrix[0]) == 0 {
 		return false
@@ -45,4 +47,30 @@ func SeachMatrix(matrix [][]int, target int) bool {
 	}
 
 	return false
+}
+
+func CalcPiles(piles []int, h int) int {
+	left := 1
+	right := slices.Max(piles)
+	res := right
+
+	for left <= right {
+		k := left + (right-left)/2
+
+		hours := 0
+		for _, pile := range piles {
+			hours += (pile + k - 1) / k
+		}
+
+		if hours <= h {
+			if k < res {
+				res = k
+			}
+			right = k - 1
+		} else {
+			left = k + 1
+		}
+	}
+
+	return res
 }
