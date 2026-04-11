@@ -74,3 +74,38 @@ func CalcPiles(piles []int, h int) int {
 
 	return res
 }
+
+func ShipWithingDays(weights []int, days int) int {
+	minCap := 0
+	maxCap := 0
+
+	for _, weight := range weights {
+		if weight > minCap {
+			minCap = weight
+		}
+		maxCap += weight
+	}
+
+	for minCap <= maxCap {
+		mid := minCap + (maxCap-minCap)/2
+
+		foundDays := 1
+		sum := 0
+
+		for _, weight := range weights {
+			if sum+weight > mid {
+				foundDays++
+				sum = 0
+			}
+			sum += weight
+		}
+
+		if foundDays > days {
+			minCap = mid + 1
+		} else {
+			maxCap = mid - 1
+		}
+	}
+
+	return minCap
+}
