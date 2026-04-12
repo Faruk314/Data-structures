@@ -92,3 +92,29 @@ func BoatsToSavePeople(people []int, limit int) int {
 
 	return count
 }
+
+func LongestMountain(arr []int) int {
+	res := 0
+
+	for i := 1; i < len(arr)-1; i++ {
+		if arr[i-1] < arr[i] && arr[i] > arr[i+1] {
+			left, right := i, i
+
+			for left > 0 && arr[left] > arr[left-1] {
+				left--
+			}
+
+			for right+1 < len(arr) && arr[right] > arr[right+1] {
+				right++
+			}
+
+			total := right - left + 1
+
+			if total > res {
+				res = total
+			}
+		}
+	}
+
+	return res
+}
