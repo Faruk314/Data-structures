@@ -128,3 +128,43 @@ func FindMin(nums []int) int {
 
 	return nums[left]
 }
+
+func Search(nums []int, target int) int {
+	n := len(nums)
+	left := 0
+	right := n - 1
+
+	for left < right {
+		mid := left + (right-left)/2
+
+		if nums[mid] > nums[right] {
+			left = mid + 1
+		} else {
+			right = mid
+		}
+	}
+
+	min_i := left
+
+	if min_i == 0 {
+		left, right = 0, n-1
+	} else if target >= nums[0] && target <= nums[min_i-1] {
+		left, right = 0, min_i-1
+	} else {
+		left, right = min_i, n-1
+	}
+
+	for left <= right {
+		mid := left + (right-left)/2
+
+		if nums[mid] == target {
+			return mid
+		} else if nums[mid] < target {
+			left = mid + 1
+		} else {
+			right = mid - 1
+		}
+	}
+
+	return -1
+}
