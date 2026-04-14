@@ -164,3 +164,29 @@ func LongestMountain(arr []int) int {
 
 	return res
 }
+
+func DividePlayers(skills []int) int64 {
+	n := len(skills)
+	sort.Ints(skills)
+
+	target := skills[0] + skills[n-1]
+	var totalChemistry int64 = 0
+
+	left := 0
+	right := n - 1
+
+	for left < right {
+		sum := skills[left] + skills[right]
+
+		if sum != target {
+			return -1
+		}
+
+		totalChemistry += int64(skills[left]) * int64(skills[right])
+
+		left++
+		right--
+	}
+
+	return totalChemistry
+}
