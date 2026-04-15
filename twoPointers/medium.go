@@ -190,3 +190,27 @@ func DividePlayers(skills []int) int64 {
 
 	return totalChemistry
 }
+
+func MinCost(colors string, neededTime []int) int {
+	time := 0
+	left := 0
+	right := 1
+
+	for right < len(colors) {
+		if colors[right] != colors[left] {
+			left = right
+			right++
+		} else {
+			if neededTime[left] < neededTime[right] {
+				time += neededTime[left]
+				left = right
+			} else {
+				time += neededTime[right]
+			}
+
+			right++
+		}
+	}
+
+	return time
+}
