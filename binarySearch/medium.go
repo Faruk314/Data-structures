@@ -168,3 +168,50 @@ func Search(nums []int, target int) int {
 
 	return -1
 }
+
+func SearchTwo(nums []int, target int) bool {
+	n := len(nums)
+
+	if n == 0 {
+		return false
+	}
+
+	left := 0
+	right := n - 1
+
+	for left < right {
+
+		mid := left + (right-left)/2
+
+		if nums[mid] > nums[right] {
+			left = mid + 1
+		} else if nums[mid] < nums[right] {
+			right = mid
+		} else {
+			right--
+		}
+
+	}
+
+	min_i := left
+
+	if min_i < n && target >= nums[min_i] && target <= nums[n-1] {
+		left, right = min_i, n-1
+	} else {
+		left, right = 0, min_i-1
+	}
+
+	for left <= right {
+		mid := left + (right-left)/2
+
+		if nums[mid] == target {
+			return true
+		} else if nums[mid] < target {
+			left = mid + 1
+		} else {
+			right = mid - 1
+		}
+	}
+
+	return false
+}
