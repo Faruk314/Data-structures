@@ -215,3 +215,59 @@ func SearchTwo(nums []int, target int) bool {
 
 	return false
 }
+
+type TimeValue struct {
+	time  int
+	value string
+}
+
+type TimeMap struct {
+	store map[string][]TimeValue
+}
+
+func Constructor() TimeMap {
+	return TimeMap{
+		store: make(map[string][]TimeValue),
+	}
+}
+
+func (this *TimeMap) Set(key string, value string, timestamp int) {
+	slices := this.store[key]
+
+	if len(slices) > 0 {
+		lastIdx := len(slices) - 1
+
+		if slices[lastIdx].time == timestamp {
+			slices[lastIdx].value = value
+			return
+		}
+
+		if slices[lastIdx].time > timestamp {
+			return
+		}
+	}
+
+	this.store[key] = append(this.store[key], TimeValue{time: timestamp, value: value})
+}
+
+func (this *TimeMap) Get(key string, timestamp int) string {
+	slices, exists := this.store[key]
+	if !exists || len(slices) == 0 {
+		return ""
+	}
+
+	left, right := 0, len(slices)-1
+	result := ""
+
+	for left <= right {
+		mid := left + (right-left)/2
+		if slices[mid].time <= timestamp {
+			result = slices[mid].value
+			left = mid + 1
+		} else {
+			right = mid - 1
+		}
+	}
+
+	return result
+}
