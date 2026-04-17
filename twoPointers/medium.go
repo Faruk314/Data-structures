@@ -214,3 +214,28 @@ func MinCost(colors string, neededTime []int) int {
 
 	return time
 }
+
+func RearrangeArray(nums []int) []int {
+	positive := []int{}
+	negative := []int{}
+
+	for _, n := range nums {
+		if n > 0 {
+			positive = append(positive, n)
+		} else {
+			negative = append(negative, n)
+		}
+	}
+
+	i := 0
+
+	for 2*i < len(nums) {
+
+		nums[2*i] = positive[i]
+		nums[2*i+1] = negative[i]
+
+		i += 1
+	}
+
+	return nums
+}
