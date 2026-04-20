@@ -239,3 +239,32 @@ func RearrangeArray(nums []int) []int {
 
 	return nums
 }
+
+func BagOfTokens(tokens []int, power int) int {
+	sort.Ints(tokens)
+	score := 0
+	maxScore := 0
+	left := 0
+	right := len(tokens) - 1
+
+	for left <= right {
+		if power >= tokens[left] {
+			score++
+			power -= tokens[left]
+			left++
+
+			if score > maxScore {
+				maxScore = score
+			}
+
+		} else if score > 0 {
+			power += tokens[right]
+			score--
+			right--
+		} else {
+			break
+		}
+	}
+
+	return score
+}
