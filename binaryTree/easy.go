@@ -84,3 +84,29 @@ func PostorderTraversal(root *TreeNode) []int {
 	}
 	return result
 }
+
+func InvertBinaryTree(root *TreeNode) *TreeNode {
+	if root == nil {
+		return nil
+	}
+
+	s := stack.Stack[*TreeNode]{}
+	s.Push(root)
+
+	for !s.IsEmpty() {
+		node, _ := s.Pop()
+
+		node.Left, node.Right = node.Right, node.Left
+
+		if node.Left != nil {
+			s.Push(node.Left)
+		}
+
+		if node.Right != nil {
+			s.Push(node.Right)
+		}
+
+	}
+
+	return root
+}
