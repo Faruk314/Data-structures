@@ -268,3 +268,24 @@ func BagOfTokens(tokens []int, power int) int {
 
 	return score
 }
+
+func RearrangeArrayNotEqualToAverage(nums []int) []int {
+	sort.Ints(nums)
+	res := []int{}
+
+	left, right := 0, len(nums)-1
+
+	for len(res) != len(nums) {
+
+		res = append(res, nums[left])
+		left++
+
+		if left <= right {
+			res = append(res, nums[right])
+			right--
+		}
+
+	}
+
+	return res
+}
