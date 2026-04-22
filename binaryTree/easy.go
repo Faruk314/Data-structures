@@ -1,6 +1,8 @@
 package binarytree
 
-import "golang/stack"
+import (
+	"golang/stack"
+)
 
 type TreeNode struct {
 	Val   int
@@ -109,4 +111,18 @@ func InvertBinaryTree(root *TreeNode) *TreeNode {
 	}
 
 	return root
+}
+
+func MaxDepth(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+
+	left := MaxDepth(root.Left)
+	right := MaxDepth(root.Right)
+
+	if left > right {
+		return left + 1
+	}
+	return right + 1
 }
