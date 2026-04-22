@@ -1,6 +1,8 @@
 package slidingwindow
 
-import "math"
+import (
+	"math"
+)
 
 func LengthOfLongestSubstring(s string) int {
 	left := 0
@@ -146,4 +148,38 @@ func LongestOnes(nums []int, k int) int {
 	}
 
 	return maxLen
+}
+
+func MaxSatisfied(customers []int, grumpy []int, minutes int) int {
+	base := 0
+
+	for i := 0; i < len(customers); i++ {
+		if grumpy[i] == 0 {
+			base += customers[i]
+		}
+	}
+
+	left := 0
+	extra := 0
+	maxExtra := 0
+
+	for right := 0; right < len(customers); right++ {
+		if grumpy[right] == 1 {
+			extra += customers[right]
+		}
+
+		if right-left+1 > minutes {
+			if grumpy[left] == 1 {
+				extra -= customers[left]
+			}
+
+			left++
+		}
+
+		if extra > maxExtra {
+			maxExtra = extra
+		}
+	}
+
+	return base + maxExtra
 }
