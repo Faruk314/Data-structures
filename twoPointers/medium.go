@@ -289,3 +289,23 @@ func RearrangeArrayNotEqualToAverage(nums []int) []int {
 
 	return res
 }
+
+func pivotArray(nums []int, pivot int) []int {
+	var less, equal, greater []int
+
+	for _, n := range nums {
+		switch {
+		case n < pivot:
+			less = append(less, n)
+		case n == pivot:
+			equal = append(equal, n)
+		default:
+			greater = append(greater, n)
+		}
+	}
+
+	result := append(less, equal...)
+	result = append(result, greater...)
+
+	return result
+}
