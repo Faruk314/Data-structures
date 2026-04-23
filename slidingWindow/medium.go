@@ -183,3 +183,30 @@ func MaxSatisfied(customers []int, grumpy []int, minutes int) int {
 
 	return base + maxExtra
 }
+
+func TotalFruit(fruits []int) int {
+	basket := make(map[int]int)
+	maxFruits := 0
+	left := 0
+
+	for right := 0; right < len(fruits); right++ {
+
+		basket[fruits[right]]++
+
+		for len(basket) > 2 {
+			basket[fruits[left]]--
+
+			if basket[fruits[left]] == 0 {
+				delete(basket, fruits[left])
+			}
+			left++
+		}
+
+		currentWindowSize := right - left + 1
+		if currentWindowSize > maxFruits {
+			maxFruits = currentWindowSize
+		}
+	}
+
+	return maxFruits
+}
