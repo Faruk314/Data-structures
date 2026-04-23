@@ -1,6 +1,7 @@
 package binarytree
 
 import (
+	"fmt"
 	"golang/stack"
 )
 
@@ -32,6 +33,18 @@ func InorderTraversal(root *TreeNode) []int {
 	return result
 }
 
+func inorderRecursive(root *TreeNode) {
+	if root == nil {
+		return
+	}
+
+	inorderRecursive(root.Left)
+
+	fmt.Println(root.Val)
+
+	inorderRecursive(root.Right)
+}
+
 func PreorderTraversal(root *TreeNode) []int {
 	if root == nil {
 		return nil
@@ -56,6 +69,18 @@ func PreorderTraversal(root *TreeNode) []int {
 	}
 
 	return result
+}
+
+func preorderRecursive(root *TreeNode) {
+	if root == nil {
+		return
+	}
+
+	fmt.Print(root.Val)
+
+	preorderRecursive(root.Left)
+
+	preorderRecursive(root.Right)
 }
 
 func PostorderTraversal(root *TreeNode) []int {
@@ -85,6 +110,18 @@ func PostorderTraversal(root *TreeNode) []int {
 		}
 	}
 	return result
+}
+
+func postorderRecursive(root *TreeNode) {
+	if root == nil {
+		return
+	}
+
+	postorderRecursive(root.Left)
+
+	postorderRecursive(root.Right)
+
+	fmt.Println(root.Val)
 }
 
 func InvertBinaryTree(root *TreeNode) *TreeNode {
