@@ -210,3 +210,45 @@ func TotalFruit(fruits []int) int {
 
 	return maxFruits
 }
+
+func MinOperations(nums []int, x int) int {
+	totalSum := 0
+	for _, num := range nums {
+		totalSum += num
+	}
+
+	target := totalSum - x
+
+	if target == 0 {
+		return len(nums)
+	}
+
+	if target < 0 {
+		return -1
+	}
+
+	maxLen := -1
+	currentSum := 0
+	left := 0
+
+	for right := 0; right < len(nums); right++ {
+		currentSum += nums[right]
+
+		for currentSum > target && left <= right {
+			currentSum -= nums[left]
+			left++
+		}
+
+		if currentSum == target {
+			if right-left+1 > maxLen {
+				maxLen = right - left + 1
+			}
+		}
+	}
+
+	if maxLen == -1 {
+		return -1
+	}
+
+	return len(nums) - maxLen
+}
