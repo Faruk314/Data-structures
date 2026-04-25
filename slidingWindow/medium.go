@@ -309,3 +309,33 @@ func LongestDistinct(s string) int {
 
 	return max_win
 }
+
+func NumKLenSubstrNoRepeats(s string, k int) int {
+	count := 0
+	left := 0
+	uniques := make(map[byte]int)
+
+	for right := 0; right < len(s); right++ {
+		uniques[s[right]]++
+
+		for uniques[s[right]] > 1 {
+
+			uniques[s[left]]--
+
+			if uniques[s[left]] == 0 {
+				delete(uniques, s[left])
+			}
+
+			left++
+		}
+
+		if len(uniques) == k {
+			count++
+			delete(uniques, s[left])
+			left++
+
+		}
+	}
+
+	return count
+}
