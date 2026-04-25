@@ -281,3 +281,31 @@ func MaxConsTwo(nums []int) int {
 
 	return max_window
 }
+
+func LongestDistinct(s string) int {
+	distinct := make(map[byte]int)
+	max_win := 0
+	left := 0
+
+	for right := 0; right < len(s); right++ {
+		distinct[s[right]]++
+
+		for len(distinct) > 2 {
+			distinct[s[left]]--
+
+			if distinct[s[left]] == 0 {
+				delete(distinct, s[left])
+			}
+
+			left++
+		}
+
+		curr_win := right - left + 1
+
+		if curr_win > max_win {
+			max_win = curr_win
+		}
+	}
+
+	return max_win
+}
