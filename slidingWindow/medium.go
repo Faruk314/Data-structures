@@ -252,3 +252,32 @@ func MinOperations(nums []int, x int) int {
 
 	return len(nums) - maxLen
 }
+
+func MaxConsTwo(nums []int) int {
+	left := 0
+	num_zeroes := 0
+	max_window := 0
+
+	for right := 0; right < len(nums); right++ {
+		if nums[right] == 0 {
+			num_zeroes += 1
+		}
+
+		for num_zeroes > 1 {
+
+			if nums[left] == 0 {
+				num_zeroes -= 1
+			}
+
+			left++
+		}
+
+		curr_window := right - left + 1
+
+		if curr_window > max_window {
+			max_window = curr_window
+		}
+	}
+
+	return max_window
+}
