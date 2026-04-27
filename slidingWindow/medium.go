@@ -363,3 +363,48 @@ func NumKSizeGreaterOrEqualToAverage(arr []int, k int, threshold int) int {
 
 	return count
 }
+
+func countAtLeast(word string, k int) int64 {
+	if k < 0 {
+		return 0
+	}
+
+	var count int64 = 0
+	left := 0
+	vowels := map[byte]int{}
+	consonants := 0
+
+	vowelSet := map[byte]bool{
+		'a': true, 'e': true, 'i': true, 'o': true, 'u': true,
+	}
+
+	for right := 0; right < len(word); right++ {
+
+		char := word[right]
+		if vowelSet[char] {
+			vowels[char]++
+		} else {
+			consonants++
+		}
+
+		for len(vowels) == 5 && consonants >= k {
+			count += int64(len(word) - right)
+
+			outChar := word[left]
+			if vowelSet[outChar] {
+				vowels[outChar]--
+				if vowels[outChar] == 0 {
+					delete(vowels, outChar)
+				}
+			} else {
+				consonants--
+			}
+			left++
+		}
+	}
+	return count
+}
+
+func CountConsonantsAndVowels(word string, k int) int64 {
+	return countAtLeast(word, k) - countAtLeast(word, k+1)
+}
