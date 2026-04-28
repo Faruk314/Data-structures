@@ -408,3 +408,35 @@ func countAtLeast(word string, k int) int64 {
 func CountConsonantsAndVowels(word string, k int) int64 {
 	return countAtLeast(word, k) - countAtLeast(word, k+1)
 }
+
+func CountSubarrays(nums []int, k int) int64 {
+	max := 0
+
+	for _, num := range nums {
+		if num > max {
+			max = num
+		}
+	}
+
+	n := len(nums)
+	left := 0
+	count_max := 0
+	var ans int64 = 0
+
+	for right := 0; right < n; right++ {
+		if nums[right] == max {
+			count_max++
+		}
+
+		for count_max >= k {
+			ans += int64(n - right)
+
+			if nums[left] == max {
+				count_max--
+			}
+			left++
+		}
+	}
+
+	return ans
+}
