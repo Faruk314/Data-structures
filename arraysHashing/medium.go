@@ -239,3 +239,28 @@ func checkVertical(board [][]byte) bool {
 
 	return true
 }
+
+func vowelStrings(words []string, queries [][]int) []int {
+	vowels := map[byte]bool{
+		'a': true, 'e': true, 'i': true, 'o': true, 'u': true,
+	}
+
+	prefix := make([]int, len(words)+1)
+
+	for i, word := range words {
+		if vowels[word[0]] && vowels[word[len(word)-1]] {
+			prefix[i+1] = prefix[i] + 1
+		} else {
+			prefix[i+1] = prefix[i]
+		}
+	}
+
+	ans := make([]int, len(queries))
+
+	for i, q := range queries {
+		left, right := q[0], q[1]
+		ans[i] = prefix[right+1] - prefix[left]
+	}
+
+	return ans
+}
