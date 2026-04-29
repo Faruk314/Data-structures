@@ -287,3 +287,35 @@ func AverageWaitingTime(customers [][]int) float64 {
 
 	return float64(total_time) / float64(len(customers))
 }
+
+func MinOperations(boxes string) []int {
+	leftCount := 0
+	rightCount := 0
+	operations := 0
+
+	for i, box := range boxes {
+		if box == '1' {
+			operations += i
+			rightCount++
+		}
+	}
+
+	if boxes[0] == '1' {
+		leftCount = 1
+		rightCount--
+	}
+
+	result := []int{operations}
+
+	for i := 1; i < len(boxes); i++ {
+		operations = operations - rightCount + leftCount
+		result = append(result, operations)
+
+		if boxes[i] == '1' {
+			leftCount++
+			rightCount--
+		}
+	}
+
+	return result
+}
