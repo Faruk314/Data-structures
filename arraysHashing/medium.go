@@ -264,3 +264,26 @@ func vowelStrings(words []string, queries [][]int) []int {
 
 	return ans
 }
+
+func AverageWaitingTime(customers [][]int) float64 {
+	total_time := 0
+	last_finished_time := 0
+
+	for _, customer := range customers {
+		arrive_time := customer[0]
+		prepare_time := customer[1]
+
+		start_time := arrive_time
+		if last_finished_time > arrive_time {
+			start_time = last_finished_time
+		}
+
+		finish_time := start_time + prepare_time
+		last_finished_time = finish_time
+
+		waiting_time := finish_time - arrive_time
+		total_time += waiting_time
+	}
+
+	return float64(total_time) / float64(len(customers))
+}
