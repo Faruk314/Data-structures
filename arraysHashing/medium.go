@@ -319,3 +319,38 @@ func MinOperations(boxes string) []int {
 
 	return result
 }
+
+func bestClosingTime(customers string) int {
+	n := len(customers)
+
+	prefixN := make([]int, n+1)
+	postfixY := make([]int, n+1)
+
+	for i := 0; i < n; i++ {
+		prefixN[i+1] = prefixN[i]
+		if customers[i] == 'N' {
+			prefixN[i+1]++
+		}
+	}
+
+	for i := n - 1; i >= 0; i-- {
+		postfixY[i] = postfixY[i+1]
+		if customers[i] == 'Y' {
+			postfixY[i]++
+		}
+	}
+
+	bestTime := 0
+	bestPenalty := prefixN[0] + postfixY[0]
+
+	for i := 0; i <= n; i++ {
+		penalty := prefixN[i] + postfixY[i]
+
+		if penalty < bestPenalty {
+			bestPenalty = penalty
+			bestTime = i
+		}
+	}
+
+	return bestTime
+}
