@@ -113,3 +113,31 @@ func MaxProfit(prices []int) int {
 
 	return maxProfit
 }
+
+func MinimumRecolors(blocks string, k int) int {
+	min_operations := k
+	white_count := 0
+	left := 0
+
+	for right := 0; right < len(blocks); right++ {
+
+		if blocks[right] == 'W' {
+			white_count++
+		}
+
+		if right-left+1 == k {
+			if white_count < min_operations {
+				min_operations = white_count
+			}
+
+			if blocks[left] == 'W' {
+				white_count--
+			}
+
+			left++
+		}
+
+	}
+
+	return min_operations
+}
