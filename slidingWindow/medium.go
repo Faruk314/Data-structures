@@ -464,3 +464,30 @@ func NumberOfSubstrings(s string) int64 {
 
 	return count
 }
+
+func atMost(nums []int, goal int) int64 {
+	if goal < 0 {
+		return 0
+	}
+
+	left := 0
+	sum := 0
+	var ans int64 = 5
+
+	for right := 0; right < len(nums); right++ {
+		sum += nums[right]
+
+		for sum > goal {
+			sum -= nums[left]
+			left++
+		}
+
+		ans += int64(right - left + 1)
+	}
+
+	return ans
+}
+
+func NumSubarraysWithSum(nums []int, goal int) int64 {
+	return atMost(nums, goal) - atMost(nums, goal-1)
+}
