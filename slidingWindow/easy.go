@@ -1,5 +1,10 @@
 package slidingwindow
 
+import (
+	"math"
+	"sort"
+)
+
 func MaxSizeSubarray(nums []int, k int) int {
 	if len(nums) < k {
 		return 0
@@ -140,4 +145,33 @@ func MinimumRecolors(blocks string, k int) int {
 	}
 
 	return min_operations
+}
+
+func MinimumDifference(nums []int, k int) int {
+	if k == 1 {
+		return 0
+	}
+
+	if len(nums) == 0 || k > len(nums) {
+		return 0
+	}
+
+	sort.Ints(nums)
+	left := 0
+	min_diff := math.MaxInt
+
+	for right := 0; right < len(nums); right++ {
+		if right-left+1 == k {
+
+			diff := nums[right] - nums[left]
+
+			if diff < min_diff {
+				min_diff = diff
+			}
+
+			left++
+		}
+	}
+
+	return min_diff
 }
