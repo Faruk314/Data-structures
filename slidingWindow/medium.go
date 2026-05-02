@@ -440,3 +440,27 @@ func CountSubarrays(nums []int, k int) int64 {
 
 	return ans
 }
+
+func NumberOfSubstrings(s string) int64 {
+	chars := make(map[byte]int)
+	var count int64 = 0
+	left := 0
+
+	for right := 0; right < len(s); right++ {
+		chars[s[right]]++
+
+		for len(chars) >= 3 && left <= right {
+			count += int64(len(s) - right)
+
+			chars[s[left]]--
+
+			if chars[s[left]] == 0 {
+				delete(chars, s[left])
+			}
+
+			left++
+		}
+	}
+
+	return count
+}
