@@ -82,3 +82,20 @@ func MergeAlternately(word1, word2 string) string {
 
 	return result.String()
 }
+
+func MoveZeroes(nums []int) []int {
+	last_non_zero_idx := 0
+
+	for i := 0; i < len(nums); i++ {
+		if nums[i] != 0 {
+			nums[last_non_zero_idx] = nums[i]
+			last_non_zero_idx++
+		}
+	}
+
+	for i := last_non_zero_idx; i < len(nums); i++ {
+		nums[i] = 0
+	}
+
+	return nums
+}
