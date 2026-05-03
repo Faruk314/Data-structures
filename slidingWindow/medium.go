@@ -491,3 +491,33 @@ func atMost(nums []int, goal int) int64 {
 func NumSubarraysWithSum(nums []int, goal int) int64 {
 	return atMost(nums, goal) - atMost(nums, goal-1)
 }
+
+func helper(nums []int, k int) int64 {
+	if k < 0 {
+		return 0
+	}
+
+	var count int64
+	left := 0
+	oddCount := 0
+
+	for right := 0; right < len(nums); right++ {
+		if nums[right]%2 != 0 {
+			oddCount++
+		}
+
+		for oddCount >= k && left <= right {
+			count += int64(len(nums) - right)
+
+			if nums[left]%2 != 0 {
+				oddCount--
+			}
+			left++
+		}
+	}
+	return count
+}
+
+func NumberOfNiceSubarrays(nums []int, k int) int64 {
+	return helper(nums, k) - helper(nums, k+1)
+}
