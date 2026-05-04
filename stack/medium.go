@@ -241,3 +241,17 @@ func decodeString(s string) string {
 
 	return result
 }
+
+func removeStars(s string) string {
+	stack := Stack[byte]{}
+
+	for i := 0; i < len(s); i++ {
+		if s[i] != '*' {
+			stack.Push(s[i])
+		} else {
+			stack.Pop()
+		}
+	}
+
+	return string(stack)
+}
