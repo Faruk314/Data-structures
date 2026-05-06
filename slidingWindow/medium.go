@@ -521,3 +521,26 @@ func helper(nums []int, k int) int64 {
 func NumberOfNiceSubarrays(nums []int, k int) int64 {
 	return helper(nums, k) - helper(nums, k+1)
 }
+
+func NumSubarrayProductLessThanK(nums []int, k int) int {
+	if k <= 1 {
+		return 0
+	}
+
+	left := 0
+	product := 1
+	count := 0
+
+	for right := 0; right < len(nums); right++ {
+		product *= nums[right]
+
+		for product >= k {
+			product = product / nums[left]
+			left++
+		}
+
+		count += right - left + 1
+	}
+
+	return count
+}
