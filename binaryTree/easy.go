@@ -163,3 +163,36 @@ func MaxDepth(root *TreeNode) int {
 	}
 	return right + 1
 }
+
+func maxInt(a int, b int) int {
+	if a > b {
+		return a
+	}
+
+	return b
+}
+
+func DiameterOfBinaryTree(root *TreeNode) int {
+	var maxDiameter int
+
+	var dfs func(*TreeNode) int
+
+	dfs = func(node *TreeNode) int {
+		if node == nil {
+			return 0
+		}
+
+		leftHeight := dfs(node.Left)
+		rightHeight := dfs(node.Right)
+
+		if leftHeight+rightHeight > maxDiameter {
+			maxDiameter = leftHeight + rightHeight
+		}
+
+		return maxInt(leftHeight, rightHeight) + 1
+	}
+
+	dfs(root)
+
+	return maxDiameter
+}
