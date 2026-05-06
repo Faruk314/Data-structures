@@ -255,3 +255,36 @@ func removeStars(s string) string {
 
 	return string(stack)
 }
+
+type node struct {
+	char  rune
+	count int
+}
+
+func RemoveAdjacentDuplicates(s string, k int) string {
+	stack := Stack[node]{}
+
+	for _, char := range s {
+		top, exists := stack.Peek()
+
+		if exists && top.char == char {
+			stack.Pop()
+			top.count++
+
+			if top.count < k {
+				stack.Push(top)
+			}
+
+		} else {
+			stack.Push(node{char: char, count: 1})
+		}
+	}
+
+	var result strings.Builder
+
+	for _, n := range stack {
+		result.WriteString(strings.Repeat(string(n.char), n.count))
+	}
+
+	return result.String()
+}
