@@ -346,3 +346,34 @@ func maxProfit(prices []int) int {
 
 	return profit
 }
+
+type Letter struct {
+	char  byte
+	count int
+}
+
+func FrequencySort(s string) string {
+	freq := make([]int, 256)
+
+	for i := 0; i < len(s); i++ {
+		freq[s[i]]++
+	}
+
+	var filtered []Letter
+
+	for i, count := range freq {
+		if count > 0 {
+			filtered = append(filtered, Letter{byte(i), count})
+		}
+	}
+
+	sort.Slice(filtered, func(i, j int) bool {
+		return filtered[i].count > filtered[j].count
+	})
+
+	var result strings.Builder
+	for _, l := range filtered {
+		result.WriteString(strings.Repeat(string(l.char), l.count))
+	}
+	return result.String()
+}
