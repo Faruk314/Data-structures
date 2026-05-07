@@ -544,3 +544,32 @@ func NumSubarrayProductLessThanK(nums []int, k int) int {
 
 	return count
 }
+
+func LongestOnesK(nums []int, k int) int {
+	numZeroes := 0
+	left := 0
+	longest := 0
+
+	for right := 0; right < len(nums); right++ {
+
+		if nums[right] == 0 {
+			numZeroes++
+		}
+
+		for numZeroes > k {
+
+			if nums[left] == 0 {
+				numZeroes--
+			}
+			left++
+		}
+
+		currWindow := right - left + 1
+
+		if currWindow > longest {
+			longest = currWindow
+		}
+	}
+
+	return longest
+}
