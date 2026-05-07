@@ -288,3 +288,36 @@ func RemoveAdjacentDuplicates(s string, k int) string {
 
 	return result.String()
 }
+
+func ReverseParentheses(s string) string {
+	stack := Stack[byte]{}
+
+	for i := 0; i < len(s); i++ {
+		char := s[i]
+
+		if char != ')' {
+			stack.Push(char)
+		} else {
+			var temp []byte
+
+			for {
+				top, _ := stack.Peek()
+
+				if top == '(' {
+					break
+				}
+
+				char, _ := stack.Pop()
+				temp = append(temp, char)
+			}
+			stack.Pop()
+
+			for _, b := range temp {
+				stack.Push(b)
+			}
+
+		}
+	}
+
+	return string(stack)
+}
