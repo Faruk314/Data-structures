@@ -196,3 +196,38 @@ func DiameterOfBinaryTree(root *TreeNode) int {
 
 	return maxDiameter
 }
+
+func abs(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
+
+func isBalanced(root *TreeNode) bool {
+	return dfs(root) != -1
+}
+
+func dfs(node *TreeNode) int {
+	if node == nil {
+		return 0
+	}
+
+	left := dfs(node.Left)
+
+	if left == -1 {
+		return -1
+	}
+
+	right := dfs(node.Right)
+
+	if right == -1 {
+		return -1
+	}
+
+	if abs(left-right) > 1 {
+		return -1
+	}
+
+	return maxInt(left, right) + 1
+}
