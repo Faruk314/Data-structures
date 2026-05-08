@@ -573,3 +573,32 @@ func LongestOnesK(nums []int, k int) int {
 
 	return longest
 }
+
+func MaximumSubarraySum(nums []int, k int) int64 {
+	var maxSum int64 = 0
+	var currentSum int64 = 0
+	left := 0
+	distinct := make(map[int]int)
+
+	for right := 0; right < len(nums); right++ {
+		distinct[nums[right]]++
+		currentSum += int64(nums[right])
+
+		if right-left+1 > k {
+			distinct[nums[left]]--
+			if distinct[nums[left]] == 0 {
+				delete(distinct, nums[left])
+			}
+			currentSum -= int64(nums[left])
+			left++
+		}
+
+		if right-left+1 == k && len(distinct) == k {
+			if currentSum > maxSum {
+				maxSum = currentSum
+			}
+		}
+	}
+
+	return maxSum
+}
