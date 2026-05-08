@@ -321,3 +321,24 @@ func ReverseParentheses(s string) string {
 
 	return string(stack)
 }
+
+func MinAddToMakeValid(s string) int {
+	stack := Stack[byte]{}
+
+	for _, char := range s {
+		if stack.IsEmpty() {
+			stack.Push(byte(char))
+		} else {
+			top, _ := stack.Peek()
+
+			if top == '(' && char == ')' {
+				stack.Pop()
+			} else {
+				stack.Push(byte(char))
+			}
+
+		}
+	}
+
+	return len(stack)
+}
