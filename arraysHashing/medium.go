@@ -377,3 +377,37 @@ func FrequencySort(s string) string {
 	}
 	return result.String()
 }
+
+func abs(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
+
+func MaxDistanceInArrays(arrays [][]int) int {
+	globalMin := arrays[0][0]
+	globalMax := arrays[0][len(arrays[0])-1]
+	target := 0
+
+	for i := 1; i < len(arrays); i++ {
+
+		currMin := arrays[i][0]
+		currMax := arrays[i][len(arrays[i])-1]
+
+		diffOne := abs(globalMax - currMin)
+		diffTwo := abs(currMax - globalMin)
+
+		res := max(diffOne, diffTwo)
+
+		if res > target {
+			target = res
+		}
+
+		globalMin = min(currMin, globalMin)
+		globalMax = max(currMax, globalMax)
+
+	}
+
+	return target
+}
