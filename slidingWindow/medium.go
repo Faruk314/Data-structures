@@ -602,3 +602,32 @@ func MaximumSubarraySum(nums []int, k int) int64 {
 
 	return maxSum
 }
+
+func MaxSubarrayLength(nums []int, k int) int {
+	left := 0
+	freq := make(map[int]int)
+	maxWindow := 0
+
+	for right := 0; right < len(nums); right++ {
+		freq[nums[right]]++
+
+		for freq[nums[right]] > k && left <= right {
+			freq[nums[left]]--
+
+			if freq[nums[left]] == 0 {
+				delete(freq, nums[left])
+			}
+
+			left++
+		}
+
+		currWindow := right - left + 1
+
+		if currWindow > maxWindow {
+			maxWindow = currWindow
+		}
+
+	}
+
+	return maxWindow
+}
