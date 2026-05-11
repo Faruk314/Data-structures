@@ -342,3 +342,25 @@ func MinAddToMakeValid(s string) int {
 
 	return len(stack)
 }
+
+func ValidateStackSequences(pushed []int, popped []int) bool {
+	stack := Stack[int]{}
+	idx := 0
+
+	for i := 0; i < len(pushed); i++ {
+		stack.Push(pushed[i])
+
+		for !stack.IsEmpty() && idx < len(popped) {
+			top, _ := stack.Peek()
+
+			if top != popped[idx] {
+				break
+			}
+
+			stack.Pop()
+			idx++
+		}
+	}
+
+	return stack.IsEmpty()
+}
