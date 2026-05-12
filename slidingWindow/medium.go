@@ -631,3 +631,35 @@ func MaxSubarrayLength(nums []int, k int) int {
 
 	return maxWindow
 }
+
+func ResultsArray(nums []int, k int) []int {
+	left := 0
+	result := make([]int, 0)
+	consCount := 1
+
+	for right := 0; right < len(nums); right++ {
+		if right > 0 && nums[right-1]+1 == nums[right] {
+			consCount++
+		}
+
+		if right-left+1 > k {
+
+			if nums[left]+1 == nums[left+1] {
+				consCount--
+			}
+
+			left++
+		}
+
+		if right-left+1 == k {
+			if consCount == k {
+				result = append(result, nums[right])
+			} else {
+				result = append(result, -1)
+			}
+		}
+
+	}
+
+	return result
+}
