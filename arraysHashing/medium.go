@@ -411,3 +411,24 @@ func MaxDistanceInArrays(arrays [][]int) int {
 
 	return target
 }
+
+func subarraySum(nums []int, k int) int {
+	prefixMap := make(map[int]int)
+
+	prefixMap[0] = 1
+
+	currentSum := 0
+	count := 0
+
+	for _, num := range nums {
+		currentSum += num
+
+		if freq, exists := prefixMap[currentSum-k]; exists {
+			count += freq
+		}
+
+		prefixMap[currentSum]++
+	}
+
+	return count
+}
