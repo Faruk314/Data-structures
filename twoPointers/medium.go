@@ -309,3 +309,27 @@ func pivotArray(nums []int, pivot int) []int {
 
 	return result
 }
+
+func MaxWidthRamp(nums []int) int {
+	maxRight := make([]int, len(nums))
+	prevMax := 0
+
+	for i := len(nums) - 1; i >= 0; i-- {
+		maxRight[i] = max(nums[i], prevMax)
+		prevMax = maxRight[i]
+
+	}
+
+	res := 0
+	left := 0
+
+	for right := 0; right < len(nums); right++ {
+		for nums[left] > maxRight[right] {
+			left++
+		}
+
+		res = max(res, right-left)
+	}
+
+	return res
+}
