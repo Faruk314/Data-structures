@@ -333,3 +333,21 @@ func MaxWidthRamp(nums []int) int {
 
 	return res
 }
+
+func AddSpaces(s string, spaces []int) string {
+	res := make([]byte, len(s)+len(spaces))
+	sIdx := 0
+	spaceIdx := 0
+
+	for i := 0; i < len(res); i++ {
+		if spaceIdx < len(spaces) && sIdx == spaces[spaceIdx] {
+			res[i] = ' '
+			spaceIdx++
+		} else {
+			res[i] = s[sIdx]
+			sIdx++
+		}
+	}
+
+	return string(res)
+}
