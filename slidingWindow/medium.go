@@ -663,3 +663,33 @@ func ResultsArray(nums []int, k int) []int {
 
 	return result
 }
+
+func abs(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
+
+func EqualSubstring(s string, t string, maxCost int) int {
+	maxWindow := 0
+	left := 0
+	cost := 0
+
+	for right := 0; right < len(s); right++ {
+
+		cost += abs(int(s[right]) - int(t[right]))
+
+		for cost > maxCost {
+			cost -= abs(int(s[left]) - int(t[left]))
+			left++
+		}
+
+		if right-left+1 > maxWindow {
+			maxWindow = right - left + 1
+		}
+
+	}
+
+	return maxWindow
+}
