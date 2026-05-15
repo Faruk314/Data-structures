@@ -271,3 +271,30 @@ func (this *TimeMap) Get(key string, timestamp int) string {
 
 	return result
 }
+
+func missingElement(nums []int, k int) int {
+	n := len(nums)
+
+	totalMissing := nums[n-1] - nums[0] - (n - 1)
+
+	if k > totalMissing {
+		return nums[n-1] + (k - totalMissing)
+	}
+
+	left := 0
+	right := n - 1
+
+	for left <= right {
+		pivot := left + (right-left)/2
+		missingHere := nums[pivot] - nums[0] - pivot
+
+		if missingHere < k {
+			left = pivot + 1
+		} else {
+			right = pivot - 1
+		}
+	}
+
+	missingBeforeRight := nums[right] - nums[0] - right
+	return nums[right] + (k - missingBeforeRight)
+}
