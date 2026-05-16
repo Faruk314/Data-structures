@@ -432,3 +432,30 @@ func subarraySum(nums []int, k int) int {
 
 	return count
 }
+
+func SubarraysDivByK(nums []int, k int) int {
+	remainderMap := make(map[int]int)
+
+	remainderMap[0] = 1
+	count := 0
+	currentSum := 0
+
+	for _, num := range nums {
+
+		currentSum += num
+
+		remainder := currentSum % k
+
+		if remainder < 0 {
+			remainder += k
+		}
+
+		if value, exists := remainderMap[remainder]; exists {
+			count += value
+		}
+
+		remainderMap[remainder]++
+	}
+
+	return count
+}
