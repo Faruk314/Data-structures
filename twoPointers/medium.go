@@ -351,3 +351,31 @@ func AddSpaces(s string, spaces []int) string {
 
 	return string(res)
 }
+
+func numSubseq(nums []int, target int) int {
+	n := len(nums)
+	pow2 := make([]int, n)
+	pow2[0] = 1
+	mod := 1000000007
+
+	for i := 1; i < n; i++ {
+		pow2[i] = (pow2[i-1] * 2) % mod
+	}
+
+	sort.Ints(nums)
+
+	left := 0
+	right := n - 1
+	count := 0
+
+	for left <= right {
+		if nums[left]+nums[right] > target {
+			right--
+		} else {
+			count = (count + pow2[right-left]) % mod
+			left++
+		}
+	}
+
+	return count
+}
