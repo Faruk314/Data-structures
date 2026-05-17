@@ -379,3 +379,26 @@ func numSubseq(nums []int, target int) int {
 
 	return count
 }
+
+func MinimumLength(s string) int {
+	left := 0
+	right := len(s) - 1
+
+	for left < right && s[left] == s[right] {
+		ch := s[left]
+
+		for left <= right && s[left] == ch {
+			left++
+		}
+
+		for left <= right && s[right] == ch {
+			right--
+		}
+	}
+
+	if left > right {
+		return 0
+	}
+
+	return right - left + 1
+}
