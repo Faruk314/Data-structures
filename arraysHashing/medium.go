@@ -459,3 +459,19 @@ func SubarraysDivByK(nums []int, k int) int {
 
 	return count
 }
+
+func AppendCharacters(s string, t string) int {
+	j := 0
+
+	for i := 0; i < len(s); i++ {
+		if j > len(t)-1 {
+			return 0
+		}
+
+		if s[i] == t[j] {
+			j++
+		}
+	}
+
+	return len(t) - j
+}
