@@ -139,3 +139,13 @@ func isSubsequence(s string, t string) bool {
 
 	return false
 }
+
+func ScoreOfString(s string) int {
+	score := 0
+
+	for i := 1; i < len(s); i++ {
+		score += abs(int(s[i]) - int(s[i-1]))
+	}
+
+	return score
+}
