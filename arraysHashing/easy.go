@@ -171,3 +171,23 @@ func CountSeniors(details []string) int {
 
 	return count
 }
+
+func lengthOfLastWord(s string) int {
+	count := 0
+
+	for i := len(s) - 1; i >= 0; i-- {
+
+		if s[i] == ' ' {
+
+			if count > 0 {
+				return count
+			}
+
+			continue
+		}
+
+		count++
+	}
+
+	return count
+}
