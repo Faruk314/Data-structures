@@ -2,6 +2,7 @@ package arrayshashing
 
 import (
 	"sort"
+	"strconv"
 	"strings"
 )
 
@@ -148,4 +149,25 @@ func ScoreOfString(s string) int {
 	}
 
 	return score
+}
+
+func CountSeniors(details []string) int {
+	count := 0
+
+	for i := 0; i < len(details); i++ {
+		detail := details[i]
+
+		ageStr := detail[11:13]
+
+		ageNum, err := strconv.Atoi(ageStr)
+		if err != nil {
+			continue
+		}
+
+		if ageNum > 60 {
+			count++
+		}
+	}
+
+	return count
 }
