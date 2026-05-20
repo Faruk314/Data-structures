@@ -191,3 +191,22 @@ func lengthOfLastWord(s string) int {
 
 	return count
 }
+
+func StringMatching(words []string) []string {
+	result := []string{}
+
+	for i := 0; i < len(words); i++ {
+		for j := 0; j < len(words); j++ {
+			if i == j {
+				continue
+			}
+
+			if strings.Contains(words[j], words[i]) {
+				result = append(result, words[i])
+				break
+			}
+		}
+	}
+
+	return result
+}
