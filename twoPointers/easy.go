@@ -2,6 +2,7 @@ package twopointers
 
 import (
 	"regexp"
+	"sort"
 	"strings"
 )
 
@@ -98,4 +99,29 @@ func MoveZeroes(nums []int) []int {
 	}
 
 	return nums
+}
+
+func TwoSumLessThanK(nums []int, k int) int {
+	sort.Ints(nums)
+
+	left := 0
+	right := len(nums) - 1
+	maxSum := -1
+
+	for left < right {
+		newSum := nums[left] + nums[right]
+
+		if newSum < k {
+			left++
+
+			if newSum > maxSum {
+				maxSum = newSum
+			}
+		} else {
+			right--
+		}
+
+	}
+
+	return maxSum
 }
