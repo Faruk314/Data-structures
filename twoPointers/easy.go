@@ -125,3 +125,30 @@ func TwoSumLessThanK(nums []int, k int) int {
 
 	return maxSum
 }
+
+func SortedSquares(nums []int) []int {
+	n := len(nums)
+	result := make([]int, n)
+
+	left := 0
+	right := n - 1
+	p := n - 1
+
+	for left <= right {
+
+		leftSquare := nums[left] * nums[left]
+		rightSquare := nums[right] * nums[right]
+
+		if leftSquare > rightSquare {
+			result[p] = leftSquare
+			left++
+		} else {
+			result[p] = rightSquare
+			right--
+		}
+
+		p--
+	}
+
+	return result
+}
