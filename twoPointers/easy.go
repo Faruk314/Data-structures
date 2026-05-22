@@ -135,7 +135,6 @@ func SortedSquares(nums []int) []int {
 	p := n - 1
 
 	for left <= right {
-
 		leftSquare := nums[left] * nums[left]
 		rightSquare := nums[right] * nums[right]
 
@@ -151,4 +150,23 @@ func SortedSquares(nums []int) []int {
 	}
 
 	return result
+}
+
+func findContentChildren(g []int, s []int) int {
+	sort.Ints(g)
+	sort.Ints(s)
+
+	childP := 0
+	cookieP := 0
+
+	for childP < len(g) && cookieP < len(s) {
+
+		if s[cookieP] >= g[childP] {
+			childP++
+		}
+
+		cookieP++
+	}
+
+	return childP
 }
