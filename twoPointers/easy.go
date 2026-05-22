@@ -170,3 +170,29 @@ func findContentChildren(g []int, s []int) int {
 
 	return childP
 }
+
+func checkPalindrome(word string) bool {
+	left := 0
+	right := len(word) - 1
+
+	for left <= right {
+		if word[left] != word[right] {
+			return false
+		}
+
+		left++
+		right--
+	}
+
+	return true
+}
+
+func firstPalindrome(words []string) string {
+	for _, word := range words {
+		if checkPalindrome(word) {
+			return word
+		}
+	}
+
+	return ""
+}
