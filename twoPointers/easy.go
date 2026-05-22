@@ -196,3 +196,22 @@ func firstPalindrome(words []string) string {
 
 	return ""
 }
+
+func sortArrayByParity(nums []int) []int {
+	left := 0
+	right := len(nums) - 1
+
+	for left < right {
+		if nums[left]%2 == 0 {
+			left++
+		} else if nums[right]%2 != 0 {
+			right--
+		} else {
+			nums[left], nums[right] = nums[right], nums[left]
+			left++
+			right--
+		}
+	}
+
+	return nums
+}
