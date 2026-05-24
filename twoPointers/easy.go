@@ -238,3 +238,34 @@ func ReverseWords(s string) string {
 
 	return string(bytes)
 }
+
+func StrobogramaticNumber(num string) bool {
+	pairs := map[byte]byte{
+		'0': '0',
+		'1': '1',
+		'8': '8',
+		'6': '9',
+		'9': '6',
+	}
+
+	left := 0
+	right := len(num) - 1
+
+	for left <= right {
+
+		targetNum, exists := pairs[num[left]]
+
+		if !exists {
+			return false
+		}
+
+		if targetNum != num[right] {
+			return false
+		}
+
+		left++
+		right--
+	}
+
+	return true
+}
