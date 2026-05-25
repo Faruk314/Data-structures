@@ -211,3 +211,28 @@ func SwapNodes(head *Node, k int) *Node {
 
 	return head
 }
+
+func modifiedList(nums []int, head *Node) *Node {
+	numSet := make(map[int]struct{})
+
+	for _, num := range nums {
+		numSet[num] = struct{}{}
+	}
+
+	dummy := &Node{Next: head}
+
+	prev := dummy
+	curr := head
+
+	for curr != nil {
+		if _, ok := numSet[curr.Value]; ok {
+			prev.Next = curr.Next
+			curr = curr.Next
+		} else {
+			prev = curr
+			curr = curr.Next
+		}
+	}
+
+	return dummy.Next
+}
