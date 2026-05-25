@@ -179,3 +179,35 @@ func LinkedListCycle(head *Node) bool {
 
 	return false
 }
+
+func SwapNodes(head *Node, k int) *Node {
+	if head == nil || k <= 0 {
+		return head
+	}
+
+	fast := head
+
+	for i := 1; i < k; i++ {
+
+		if fast.Next == nil {
+			return head
+		}
+
+		fast = fast.Next
+	}
+
+	first := fast
+
+	slow := head
+
+	for fast.Next != nil {
+		fast = fast.Next
+		slow = slow.Next
+	}
+
+	last := slow
+
+	first.Value, last.Value = last.Value, first.Value
+
+	return head
+}
