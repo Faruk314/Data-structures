@@ -269,3 +269,30 @@ func StrobogramaticNumber(num string) bool {
 
 	return true
 }
+
+func getString(s string) string {
+	result := make([]byte, len(s))
+	insertPos := len(s) - 1
+
+	count := 0
+
+	for i := len(s) - 1; i >= 0; i-- {
+		if s[i] == '#' {
+			count++
+			continue
+		}
+
+		if count > 0 {
+			count--
+			continue
+		}
+
+		result[insertPos] = s[i]
+		insertPos--
+	}
+	return string(result[insertPos+1:])
+}
+
+func backspaceCompare(s string, t string) bool {
+	return getString(s) == getString(t)
+}
