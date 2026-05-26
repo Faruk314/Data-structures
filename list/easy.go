@@ -155,3 +155,30 @@ func GetIntersectionNode(headA, headB *Node) *Node {
 
 	return currA
 }
+
+func DeleteNodesAfterM(head *Node, k int, d int) *Node {
+	curr := head
+
+	for curr != nil {
+		for i := 1; i < k && curr != nil; i++ {
+			curr = curr.Next
+		}
+
+		if curr == nil {
+			break
+		}
+
+		nextSet := curr.Next
+
+		for i := 0; i < d && nextSet != nil; i++ {
+			nextSet = nextSet.Next
+		}
+
+		curr.Next = nextSet
+
+		curr = nextSet
+
+	}
+
+	return head
+}
