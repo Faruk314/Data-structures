@@ -236,3 +236,21 @@ func modifiedList(nums []int, head *Node) *Node {
 
 	return dummy.Next
 }
+
+func swapPairs(head *Node) *Node {
+	dummy := &Node{Next: head}
+	prev := dummy
+
+	for prev.Next != nil && prev.Next.Next != nil {
+		first := prev.Next
+		second := prev.Next.Next
+
+		first.Next = second.Next
+		second.Next = first
+		prev.Next = second
+
+		prev = first
+	}
+
+	return dummy.Next
+}
