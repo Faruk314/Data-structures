@@ -1,5 +1,7 @@
 package list
 
+import "golang/stack"
+
 func SumLists(list1, list2 LinkedList) LinkedList {
 	result := LinkedList{}
 
@@ -253,4 +255,38 @@ func swapPairs(head *Node) *Node {
 	}
 
 	return dummy.Next
+}
+
+func removeNodes(head *Node) *Node {
+	stack := stack.Stack[*Node]{}
+
+	curr := head
+
+	for curr != nil {
+
+		for {
+			top, ok := stack.Peek()
+
+			if !ok || top.Value >= curr.Value {
+				break
+			}
+
+			stack.Pop()
+		}
+
+		stack.Push(curr)
+		curr = curr.Next
+	}
+
+	var resultHead *Node
+
+	for !stack.IsEmpty() {
+		node, _ := stack.Pop()
+
+		node.Next = resultHead
+		resultHead = node
+
+	}
+
+	return resultHead
 }
