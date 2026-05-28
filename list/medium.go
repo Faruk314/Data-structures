@@ -31,6 +31,47 @@ func SumLists(list1, list2 LinkedList) LinkedList {
 	return result
 }
 
+func addTwoNumbers(l1 *Node, l2 *Node) *Node {
+	firstStack := stack.Stack[*Node]{}
+	secondStack := stack.Stack[*Node]{}
+
+	curr1 := l1
+	for curr1 != nil {
+		firstStack.Push(curr1)
+		curr1 = curr1.Next
+	}
+
+	curr2 := l2
+	for curr2 != nil {
+		secondStack.Push(curr2)
+		curr2 = curr2.Next
+	}
+
+	var head *Node
+	carry := 0
+
+	for !firstStack.IsEmpty() || !secondStack.IsEmpty() || carry > 0 {
+		sum := carry
+
+		if n1, ok := firstStack.Pop(); ok {
+			sum += n1.Value
+		}
+
+		if n2, ok := secondStack.Pop(); ok {
+			sum += n2.Value
+		}
+
+		remainder := sum % 10
+		carry = sum / 10
+
+		resultNode := &Node{Value: remainder}
+		resultNode.Next = head
+		head = resultNode
+	}
+
+	return head
+}
+
 func RemoveNthFromEnd(l *LinkedList, n int) *Node {
 	if l.Head == nil {
 		return nil
