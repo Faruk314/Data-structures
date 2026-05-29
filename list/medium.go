@@ -374,3 +374,33 @@ func pairSum(head *Node) int {
 
 	return max
 }
+
+func mergeInBetween(list1 *Node, a int, b int, list2 *Node) *Node {
+	curr := list1
+
+	for i := 1; i < a; i++ {
+		curr = curr.Next
+	}
+
+	start := curr
+	lastPrev := start
+
+	for i := 0; i <= (b - a); i++ {
+		lastPrev = lastPrev.Next
+	}
+
+	end := lastPrev.Next
+	lastPrev.Next = nil
+
+	start.Next = list2
+
+	curr = list2
+
+	for curr.Next != nil {
+		curr = curr.Next
+	}
+
+	curr.Next = end
+
+	return list1
+}
