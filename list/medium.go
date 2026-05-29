@@ -331,3 +331,46 @@ func removeNodes(head *Node) *Node {
 
 	return resultHead
 }
+
+func pairSum(head *Node) int {
+	slow, fast := head, head
+	var slowPrev *Node
+
+	for fast != nil && fast.Next != nil {
+		fast = fast.Next.Next
+		slowPrev = slow
+		slow = slow.Next
+	}
+
+	if slowPrev != nil {
+		slowPrev.Next = nil
+	}
+
+	var prev *Node
+	curr := slow
+
+	for curr != nil {
+		tmp := curr.Next
+		curr.Next = prev
+		prev = curr
+		curr = tmp
+	}
+
+	p1 := head
+	p2 := prev
+	max := 0
+
+	for p2 != nil {
+
+		sum := p1.Value + p2.Value
+
+		if sum > max {
+			max = sum
+		}
+
+		p1 = p1.Next
+		p2 = p2.Next
+	}
+
+	return max
+}
