@@ -61,7 +61,7 @@ func ReverseKGroup(head *Node, k int) *Node {
 }
 
 func getKth(curr *Node, k int) *Node {
-	for curr != nil && k > 1 {
+	for k > 0 && curr != nil {
 		curr = curr.Next
 		k--
 	}
