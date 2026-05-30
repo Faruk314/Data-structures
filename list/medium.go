@@ -404,3 +404,28 @@ func mergeInBetween(list1 *Node, a int, b int, list2 *Node) *Node {
 
 	return list1
 }
+
+func mergeNodes(head *Node) *Node {
+	curr := head.Next
+	runner := curr
+
+	for runner != nil {
+		sum := 0
+
+		for runner != nil && runner.Value != 0 {
+			sum += runner.Value
+			runner = runner.Next
+		}
+
+		curr.Value = sum
+
+		if runner != nil {
+			runner = runner.Next
+		}
+
+		curr.Next = runner
+		curr = curr.Next
+	}
+
+	return head.Next
+}
