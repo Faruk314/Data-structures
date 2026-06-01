@@ -337,3 +337,26 @@ func min(vars ...int) int {
 
 	return minVal
 }
+
+func MaxAscendingSum(nums []int) int {
+	if len(nums) == 0 {
+		return 0
+	}
+
+	maxSum := nums[0]
+	sum := nums[0]
+
+	for i := 1; i < len(nums); i++ {
+		if nums[i] > nums[i-1] {
+			sum += nums[i]
+		} else {
+			sum = nums[i]
+		}
+
+		if sum > maxSum {
+			maxSum = sum
+		}
+	}
+
+	return maxSum
+}
