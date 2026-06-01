@@ -309,3 +309,31 @@ func MaxDifference(s string) int {
 
 	return maxOdd - minEven
 }
+
+func maxNumberOfBalloons(text string) int {
+	var counts [26]int
+
+	for i := 0; i < len(text); i++ {
+		counts[text[i]-'a']++
+	}
+
+	b := counts['b'-'a']
+	a := counts['a'-'a']
+	l := counts['l'-'a'] / 2
+	o := counts['o'-'a'] / 2
+	n := counts['n'-'a']
+
+	return min(b, a, l, o, n)
+}
+
+func min(vars ...int) int {
+	minVal := vars[0]
+
+	for _, count := range vars {
+		if count < minVal {
+			minVal = count
+		}
+	}
+
+	return minVal
+}
