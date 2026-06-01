@@ -360,3 +360,29 @@ func MaxAscendingSum(nums []int) int {
 
 	return maxSum
 }
+
+func pivotIndex(nums []int) int {
+	if len(nums) == 0 {
+		return -1
+	}
+
+	totalSum := 0
+
+	for _, num := range nums {
+		totalSum += num
+	}
+
+	leftSum := 0
+
+	for idx, num := range nums {
+		totalSum -= num
+
+		if totalSum == leftSum {
+			return idx
+		}
+
+		leftSum += num
+	}
+
+	return -1
+}
