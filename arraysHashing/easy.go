@@ -281,3 +281,31 @@ func canPlaceFlowers(flowerbed []int, n int) bool {
 
 	return false
 }
+
+func MaxDifference(s string) int {
+	freq := [26]int{}
+	for i := 0; i < len(s); i++ {
+		freq[s[i]-'a']++
+	}
+
+	maxOdd := 0
+	minEven := len(s) + 1
+
+	for _, count := range freq {
+		if count == 0 {
+			continue
+		}
+
+		if count%2 != 0 {
+			if count > maxOdd {
+				maxOdd = count
+			}
+		} else {
+			if count < minEven {
+				minEven = count
+			}
+		}
+	}
+
+	return maxOdd - minEven
+}
