@@ -386,3 +386,25 @@ func pivotIndex(nums []int) int {
 
 	return -1
 }
+
+func kthDistinct(arr []string, k int) string {
+	distinct := make(map[string]int)
+
+	for _, char := range arr {
+		distinct[char]++
+	}
+
+	count := 0
+
+	for _, str := range arr {
+		if distinct[str] == 1 {
+			count++
+
+			if count == k {
+				return str
+			}
+		}
+	}
+
+	return ""
+}
