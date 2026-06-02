@@ -408,3 +408,24 @@ func kthDistinct(arr []string, k int) string {
 
 	return ""
 }
+
+func findDisappearedNumbers(nums []int) []int {
+	result := []int{}
+
+	for _, num := range nums {
+
+		targetIndex := abs(num) - 1
+
+		if nums[targetIndex] > 0 {
+			nums[targetIndex] = -nums[targetIndex]
+		}
+	}
+
+	for i, num := range nums {
+		if num > 0 {
+			result = append(result, i+1)
+		}
+	}
+
+	return result
+}
