@@ -475,3 +475,26 @@ func AppendCharacters(s string, t string) int {
 
 	return len(t) - j
 }
+
+func FindRepeatedDnaSequences(s string) []string {
+	if len(s) < 10 {
+		return []string{}
+	}
+
+	sequences := make(map[string]int)
+
+	for i := 0; i <= len(s)-10; i++ {
+		seq := s[i : i+10]
+		sequences[seq]++
+	}
+
+	res := []string{}
+
+	for key, value := range sequences {
+		if value > 1 {
+			res = append(res, key)
+		}
+	}
+
+	return res
+}
