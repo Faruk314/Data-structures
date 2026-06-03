@@ -468,3 +468,36 @@ func LongestMonotonicSubarray(nums []int) int {
 
 	return longest
 }
+
+func findMissingAndRepeatedValues(grid [][]int) []int {
+	n := len(grid)
+	totalNumbers := n * n
+
+	freq := make([]int, totalNumbers+1)
+
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			freq[grid[i][j]]++
+		}
+	}
+
+	res := make([]int, 2)
+	foundRepeated := false
+	foundMissing := false
+
+	for i := 1; i <= totalNumbers; i++ {
+		if freq[i] == 2 {
+			res[0] = i
+			foundRepeated = true
+		} else if freq[i] == 0 {
+			res[1] = i
+			foundMissing = true
+		}
+
+		if foundRepeated && foundMissing {
+			break
+		}
+	}
+
+	return res
+}
