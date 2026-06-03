@@ -429,3 +429,42 @@ func findDisappearedNumbers(nums []int) []int {
 
 	return result
 }
+
+func LongestMonotonicSubarray(nums []int) int {
+	if len(nums) == 0 {
+		return 0
+	}
+
+	longest := 1
+	count := 1
+	isIncreasing := true
+
+	for i := 1; i < len(nums); i++ {
+
+		if nums[i] > nums[i-1] {
+
+			if !isIncreasing {
+				isIncreasing = true
+				count = 1
+			}
+
+			count++
+		} else if nums[i] < nums[i-1] {
+
+			if isIncreasing {
+				isIncreasing = false
+				count = 1
+			}
+
+			count++
+		} else {
+			count = 1
+		}
+
+		if count > longest {
+			longest = count
+		}
+	}
+
+	return longest
+}
