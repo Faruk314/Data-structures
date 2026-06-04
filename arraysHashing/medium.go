@@ -498,3 +498,67 @@ func FindRepeatedDnaSequences(s string) []string {
 
 	return res
 }
+
+func pushLeft(dominoes []byte, lastL, currentIdx int) {
+	start := lastL + 1
+
+	for k := currentIdx; k >= start; k-- {
+		dominoes[k] = 'L'
+	}
+}
+
+func pushRight(dominoes []byte, lastR, currentIdx int) {
+	for k := lastR + 1; k < currentIdx; k++ {
+		dominoes[k] = 'R'
+	}
+}
+
+func pushMiddle(dominoes []byte, lastR, currentIdx int) {
+	right := lastR + 1
+	left := currentIdx - 1
+
+	for right < left {
+		dominoes[right] = 'R'
+		dominoes[left] = 'L'
+
+		right++
+		left--
+	}
+}
+
+func PushDominoes(dom string) string {
+	dominoes := []byte(dom)
+	n := len(dominoes)
+
+	lastL := -1
+	lastR := -1
+
+	for i := 0; i < n; i++ {
+		if dominoes[i] == '.' {
+			continue
+		}
+
+		if dominoes[i] == 'L' {
+			if lastR == -1 || lastL > lastR {
+				pushLeft(dominoes, lastL, i)
+			} else {
+				pushMiddle(dominoes, lastR, i)
+			}
+
+			lastL = i
+		} else if dominoes[i] == 'R' {
+
+			if lastR > lastL {
+				pushRight(dominoes, lastR, i)
+			}
+
+			lastR = i
+		}
+	}
+
+	if lastR > lastL {
+		pushRight(dominoes, lastR, n)
+	}
+
+	return string(dominoes)
+}
