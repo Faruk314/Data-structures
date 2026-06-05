@@ -590,3 +590,17 @@ func checkSubarraySum(nums []int, k int) bool {
 
 	return false
 }
+
+func HasAllCodes(s string, k int) bool {
+	n := len(s)
+	combinations := make(map[string]struct{})
+	totalComb := 1 << k
+
+	for i := 0; i <= n-k; i++ {
+
+		substr := s[i : i+k]
+		combinations[substr] = struct{}{}
+	}
+
+	return len(combinations) == totalComb
+}
