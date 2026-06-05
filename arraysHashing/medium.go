@@ -562,3 +562,31 @@ func PushDominoes(dom string) string {
 
 	return string(dominoes)
 }
+
+func checkSubarraySum(nums []int, k int) bool {
+	remainderToIndex := make(map[int]int)
+
+	remainderToIndex[0] = -1
+	currSum := 0
+
+	for currIdx, num := range nums {
+		currSum += num
+
+		remainder := currSum % k
+
+		if remainder < 0 {
+			remainder += k
+		}
+
+		if foundIdx, exists := remainderToIndex[remainder]; exists {
+			if currIdx-foundIdx >= 2 {
+				return true
+			}
+		} else {
+			remainderToIndex[remainder] = currIdx
+		}
+
+	}
+
+	return false
+}
