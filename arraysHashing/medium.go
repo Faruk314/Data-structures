@@ -604,3 +604,27 @@ func HasAllCodes(s string, k int) bool {
 
 	return len(combinations) == totalComb
 }
+
+func numOfOddSubarays(arr []int) int {
+	const MOD = 1e9 + 7
+	prefixSum := 0
+	oddCount := 0
+	evenCount := 1
+	result := 0
+
+	for _, num := range arr {
+		prefixSum += num
+
+		if prefixSum%2 == 0 {
+
+			result = (result + oddCount) % MOD
+			evenCount++
+		} else {
+
+			result = (result + evenCount) % MOD
+			oddCount++
+		}
+	}
+
+	return result
+}
