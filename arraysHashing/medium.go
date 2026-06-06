@@ -628,3 +628,27 @@ func numOfOddSubarays(arr []int) int {
 
 	return result
 }
+
+func LongestSubarraySumEqualsK(nums []int, k int) int {
+	sumToIndex := make(map[int]int)
+	sumToIndex[0] = -1
+
+	longest := 0
+	currSum := 0
+
+	for currIdx, num := range nums {
+		currSum += num
+
+		if foundIdx, exists := sumToIndex[currSum-k]; exists {
+			if currIdx-foundIdx > longest {
+				longest = currIdx - foundIdx
+			}
+		}
+
+		if _, exists := sumToIndex[currSum]; !exists {
+			sumToIndex[currSum] = currIdx
+		}
+	}
+
+	return longest
+}
