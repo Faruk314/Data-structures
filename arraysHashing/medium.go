@@ -690,3 +690,30 @@ func minSubarray(nums []int, p int) int {
 
 	return minLen
 }
+
+func FindMaxLength(nums []int) int {
+	for i := 0; i < len(nums); i++ {
+		if nums[i] == 0 {
+			nums[i] = -1
+		}
+	}
+
+	sum := 0
+	maxLen := 0
+	sumToIndex := make(map[int]int)
+	sumToIndex[0] = -1
+
+	for currIdx, num := range nums {
+		sum += num
+
+		if foundIdx, exists := sumToIndex[sum]; exists {
+			if currIdx-foundIdx > maxLen {
+				maxLen = currIdx - foundIdx
+			}
+		} else {
+			sumToIndex[sum] = currIdx
+		}
+	}
+
+	return maxLen
+}
