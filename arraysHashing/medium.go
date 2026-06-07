@@ -652,3 +652,41 @@ func LongestSubarraySumEqualsK(nums []int, k int) int {
 
 	return longest
 }
+
+func minSubarray(nums []int, p int) int {
+	target := 0
+
+	for _, num := range nums {
+		target = (target + num) % p
+	}
+
+	if target == 0 {
+		return 0
+	}
+
+	modMap := make(map[int]int)
+	modMap[0] = -1
+
+	currentMod := 0
+	minLen := len(nums)
+
+	for currIdx, num := range nums {
+		currentMod = (currentMod + num) % p
+
+		neededMod := (currentMod - target + p) % p
+
+		if foundIdx, exists := modMap[neededMod]; exists {
+			if currIdx-foundIdx < minLen {
+				minLen = currIdx - foundIdx
+			}
+		}
+
+		modMap[currentMod] = currIdx
+	}
+
+	if minLen == len(nums) {
+		return -1
+	}
+
+	return minLen
+}
