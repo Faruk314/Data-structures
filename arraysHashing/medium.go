@@ -750,3 +750,24 @@ func LongestCommonPrefixLength(arr1 []int, arr2 []int) int {
 
 	return maxLen
 }
+
+func sequentialDigits(low int, high int) []int {
+	minDigits := len(strconv.Itoa(low))
+	maxDigits := len(strconv.Itoa(high))
+
+	maxSequence := "123456789"
+	var result []int
+
+	for length := minDigits; length <= maxDigits; length++ {
+		for j := 0; j <= 9-length; j++ {
+			substr := maxSequence[j : j+length]
+			num, _ := strconv.Atoi(substr)
+
+			if num >= low && num <= high {
+				result = append(result, num)
+			}
+		}
+	}
+
+	return result
+}
