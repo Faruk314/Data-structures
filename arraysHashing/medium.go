@@ -2,6 +2,7 @@ package arrayshashing
 
 import (
 	"sort"
+	"strconv"
 	"strings"
 )
 
@@ -712,6 +713,38 @@ func FindMaxLength(nums []int) int {
 			}
 		} else {
 			sumToIndex[sum] = currIdx
+		}
+	}
+
+	return maxLen
+}
+
+func LongestCommonPrefixLength(arr1 []int, arr2 []int) int {
+	prefixes := make(map[int]struct{})
+
+	for _, num := range arr1 {
+		for num > 0 {
+			prefixes[num] = struct{}{}
+			num /= 10
+		}
+	}
+
+	maxLen := 0
+
+	for _, num := range arr2 {
+		for num > 0 {
+
+			if _, exists := prefixes[num]; exists {
+
+				length := len(strconv.Itoa(num))
+
+				if length > maxLen {
+					maxLen = length
+				}
+				break
+			}
+
+			num /= 10
 		}
 	}
 
