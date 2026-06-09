@@ -788,3 +788,27 @@ func largestNumber(nums []int) string {
 
 	return strings.Join(strs, "")
 }
+
+func LeastBricks(wall [][]int) int {
+	gapCounts := make(map[int]int)
+
+	for i := 0; i < len(wall); i++ {
+
+		prefixSum := 0
+		for j := 0; j < len(wall[i])-1; j++ {
+			prefixSum += wall[i][j]
+
+			gapCounts[prefixSum]++
+		}
+	}
+
+	maxGaps := 0
+
+	for _, value := range gapCounts {
+		if value > maxGaps {
+			maxGaps = value
+		}
+	}
+
+	return len(wall) - maxGaps
+}
