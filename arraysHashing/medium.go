@@ -812,3 +812,19 @@ func LeastBricks(wall [][]int) int {
 
 	return len(wall) - maxGaps
 }
+
+func zeroFilledSubarray(nums []int) int64 {
+	var totalSubarrays int64 = 0
+	var currentStreak int64 = 0
+
+	for _, num := range nums {
+		if num == 0 {
+			currentStreak++
+			totalSubarrays += currentStreak
+		} else {
+			currentStreak = 0
+		}
+	}
+
+	return totalSubarrays
+}
