@@ -828,3 +828,47 @@ func zeroFilledSubarray(nums []int) int64 {
 
 	return totalSubarrays
 }
+
+func WordSubsets(words1 []string, words2 []string) []string {
+	maxLetters := [26]int{}
+
+	for _, word := range words2 {
+		currentLetters := [26]int{}
+
+		for i := 0; i < len(word); i++ {
+			currentLetters[word[i]-'a']++
+		}
+
+		for k := 0; k < 26; k++ {
+			if currentLetters[k] > maxLetters[k] {
+				maxLetters[k] = currentLetters[k]
+			}
+		}
+
+	}
+
+	result := []string{}
+
+	for _, word := range words1 {
+		currentLetters := [26]int{}
+
+		for i := 0; i < len(word); i++ {
+			currentLetters[word[i]-'a']++
+		}
+
+		isUniversal := true
+
+		for k := 0; k < 26; k++ {
+			if currentLetters[k] < maxLetters[k] {
+				isUniversal = false
+				break
+			}
+		}
+
+		if isUniversal {
+			result = append(result, word)
+		}
+	}
+
+	return result
+}
