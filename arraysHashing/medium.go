@@ -872,3 +872,26 @@ func WordSubsets(words1 []string, words2 []string) []string {
 
 	return result
 }
+
+func WaysToSplitArray(nums []int) int {
+	prefixSum := make([]int64, len(nums)+1)
+	sufixSum := make([]int64, len(nums)+1)
+
+	for i := 1; i < len(nums)+1; i++ {
+		prefixSum[i] = int64(nums[i-1]) + prefixSum[i-1]
+	}
+
+	for i := len(nums) - 1; i >= 0; i-- {
+		sufixSum[i] = int64(nums[i]) + sufixSum[i+1]
+	}
+
+	count := 0
+
+	for i := 1; i < len(prefixSum)-1; i++ {
+		if prefixSum[i] >= sufixSum[i] {
+			count += 1
+		}
+	}
+
+	return count
+}
