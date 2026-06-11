@@ -714,3 +714,33 @@ func maxBeauty(nums []int, k int) int {
 
 	return maxBeauty
 }
+
+func takeCharacters(s string, k int) int {
+	counts := [3]int{}
+
+	for i := 0; i < len(s); i++ {
+		counts[s[i]-'a']++
+	}
+
+	if counts[0] < k || counts[1] < k || counts[2] < k {
+		return -1
+	}
+
+	left := 0
+	maxWindow := 0
+
+	for right := 0; right < len(s); right++ {
+		counts[s[right]-'a']--
+
+		for counts[s[right]-'a'] < k {
+			counts[s[left]-'a']++
+			left++
+		}
+
+		if right-left+1 > maxWindow {
+			maxWindow = right - left + 1
+		}
+	}
+
+	return len(s) - maxWindow
+}
