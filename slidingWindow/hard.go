@@ -38,3 +38,35 @@ func isDesirable(mapS []int, mapT []int) bool {
 	}
 	return true
 }
+
+func help(nums []int, k int) int {
+	if k < 0 {
+		return 0
+	}
+
+	freq := make(map[int]int)
+	count := 0
+	left := 0
+
+	for right := 0; right < len(nums); right++ {
+		freq[nums[right]]++
+
+		for len(freq) > k {
+			freq[nums[left]]--
+
+			if freq[nums[left]] == 0 {
+				delete(freq, nums[left])
+			}
+
+			left++
+		}
+
+		count += right - left + 1
+	}
+
+	return count
+}
+
+func subarraysWithKDistinct(nums []int, k int) int {
+	return help(nums, k) - help(nums, k-1)
+}
