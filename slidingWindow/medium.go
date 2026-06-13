@@ -744,3 +744,46 @@ func takeCharacters(s string, k int) int {
 
 	return len(s) - maxWindow
 }
+
+func longestCont(nums []int, limit int) int {
+	max_dq := []int{}
+	min_dq := []int{}
+
+	left := 0
+	max_window := 0
+
+	for right := 0; right < len(nums); right++ {
+
+		for len(max_dq) > 0 && max_dq[len(max_dq)-1] < nums[right] {
+			max_dq = max_dq[:len(max_dq)-1]
+		}
+
+		max_dq = append(max_dq, nums[right])
+
+		for len(min_dq) > 0 && min_dq[len(min_dq)-1] > nums[right] {
+			min_dq = min_dq[:len(min_dq)-1]
+		}
+
+		min_dq = append(min_dq, nums[right])
+
+		for max_dq[0]-min_dq[0] > limit {
+
+			if max_dq[0] == nums[left] {
+				max_dq = max_dq[1:]
+			}
+
+			if min_dq[0] == nums[left] {
+				min_dq = min_dq[1:]
+			}
+
+			left++
+		}
+
+		if right-left+1 > max_window {
+			max_window = right - left + 1
+		}
+
+	}
+
+	return max_window
+}
