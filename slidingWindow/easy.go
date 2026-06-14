@@ -175,3 +175,39 @@ func MinimumDifference(nums []int, k int) int {
 
 	return min_diff
 }
+
+func Decrypt(code []int, k int) []int {
+	n := len(code)
+	result := make([]int, n)
+
+	if k == 0 {
+		return result
+	}
+
+	start, end := 0, 0
+
+	if k > 0 {
+		start = 1
+		end = k
+	} else {
+		start = n + k
+		end = n - 1
+	}
+
+	sum := 0
+	for i := start; i <= end; i++ {
+		sum += code[i%n]
+	}
+
+	for i := 0; i < n; i++ {
+		result[i] = sum
+
+		sum -= code[start%n]
+		start++
+
+		end++
+		sum += code[end%n]
+	}
+
+	return result
+}
