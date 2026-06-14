@@ -787,3 +787,27 @@ func longestCont(nums []int, limit int) int {
 
 	return max_window
 }
+
+func NumberOfAlternatingGroups(colors []int, k int) int {
+	n := len(colors)
+	total := 0
+	alternatingLength := 1
+
+	for i := 1; i < n+k-1; i++ {
+
+		current := colors[i%n]
+		prev := colors[(i-1)%n]
+
+		if current != prev {
+			alternatingLength++
+		} else {
+			alternatingLength = 1
+		}
+
+		if alternatingLength >= k {
+			total++
+		}
+	}
+
+	return total
+}
