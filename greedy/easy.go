@@ -1,6 +1,8 @@
 package greedy
 
 import (
+	"cmp"
+	"slices"
 	"sort"
 )
 
@@ -64,4 +66,23 @@ func minMovesToSeat(seats []int, students []int) int {
 	}
 
 	return moves
+}
+
+func maximumOddBinaryNumber(s string) string {
+	runes := []rune(s)
+
+	slices.SortFunc(runes, func(a, b rune) int {
+		return cmp.Compare(b, a)
+	})
+
+	lastOneIdx := 0
+	for i := 0; i < len(runes); i++ {
+		if runes[i] == '1' {
+			lastOneIdx = i
+		}
+	}
+
+	runes[len(runes)-1], runes[lastOneIdx] = runes[lastOneIdx], runes[len(runes)-1]
+
+	return string(runes)
 }
