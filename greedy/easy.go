@@ -44,3 +44,24 @@ func lemonadeChange(bills []int) bool {
 
 	return true
 }
+
+func abs(n int) int {
+	if n < 0 {
+		return -n
+	}
+
+	return n
+}
+
+func minMovesToSeat(seats []int, students []int) int {
+	sort.Ints(seats)
+	sort.Ints(students)
+
+	moves := 0
+
+	for idx, seat := range seats {
+		moves += abs(seat - students[idx])
+	}
+
+	return moves
+}
