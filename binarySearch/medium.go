@@ -298,3 +298,25 @@ func missingElement(nums []int, k int) int {
 	missingBeforeRight := nums[right] - nums[0] - right
 	return nums[right] + (k - missingBeforeRight)
 }
+
+func singleNonDuplicate(nums []int) int {
+	right := len(nums) - 1
+	left := 0
+
+	for left < right {
+		mid := left + (right-left)/2
+
+		if mid%2 != 0 {
+			mid--
+		}
+
+		if nums[mid] == nums[mid+1] {
+			left = mid + 2
+		} else {
+			right = mid
+		}
+
+	}
+
+	return nums[left]
+}
