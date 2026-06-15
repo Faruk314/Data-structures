@@ -86,3 +86,22 @@ func maximumOddBinaryNumber(s string) string {
 
 	return string(runes)
 }
+
+func maxDepth(s string) int {
+	count := 0
+	maxCount := 0
+
+	for i := 0; i < len(s); i++ {
+		if s[i] == '(' {
+			count++
+
+			if count > maxCount {
+				maxCount = count
+			}
+		} else if s[i] == ')' {
+			count--
+		}
+	}
+
+	return maxCount
+}
