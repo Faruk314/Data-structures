@@ -21,3 +21,21 @@ func minOperations(nums []int) int {
 
 	return ops
 }
+
+func FindBuildings(heights []int) []int {
+	result := []int{}
+	maxHeight := -1
+
+	for i := len(heights) - 1; i >= 0; i-- {
+		if heights[i] > maxHeight {
+			result = append(result, i)
+			maxHeight = heights[i]
+		}
+	}
+
+	for l, r := 0, len(result)-1; l < r; l, r = l+1, r-1 {
+		result[l], result[r] = result[r], result[l]
+	}
+
+	return result
+}
