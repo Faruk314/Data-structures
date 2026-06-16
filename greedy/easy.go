@@ -105,3 +105,27 @@ func maxDepth(s string) int {
 
 	return maxCount
 }
+
+func AreAlmostEqual(s1 string, s2 string) bool {
+	if s1 == s2 {
+		return true
+	}
+
+	if len(s1) != len(s2) {
+		return false
+	}
+
+	var swaps []int
+
+	for i := 0; i < len(s1); i++ {
+		if s1[i] != s2[i] {
+			swaps = append(swaps, i)
+
+			if len(swaps) > 2 {
+				return false
+			}
+		}
+	}
+
+	return len(swaps) == 2 && s1[swaps[0]] == s2[swaps[1]] && s1[swaps[1]] == s2[swaps[0]]
+}
