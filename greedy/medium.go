@@ -39,3 +39,28 @@ func FindBuildings(heights []int) []int {
 
 	return result
 }
+
+func minimumLength(s string) int {
+	frequencies := [26]int{}
+
+	for i := 0; i < len(s); i++ {
+		frequencies[s[i]-'a']++
+	}
+
+	total := 0
+
+	for _, count := range frequencies {
+		if count == 0 {
+			continue
+		}
+
+		if count%2 == 0 {
+			total += 2
+		} else {
+			total += 1
+		}
+
+	}
+
+	return total
+}
