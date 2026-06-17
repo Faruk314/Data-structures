@@ -1,5 +1,7 @@
 package greedy
 
+import "sort"
+
 func minOperations(nums []int) int {
 	ops := 0
 
@@ -78,4 +80,19 @@ func MinimumSteps(s string) int64 {
 	}
 
 	return total
+}
+
+func MinIncrementForUnique(nums []int) int {
+	sort.Ints(nums)
+	moves := 0
+
+	for i := 1; i < len(nums); i++ {
+		if nums[i] <= nums[i-1] {
+			diff := nums[i-1] - nums[i] + 1
+			moves += diff
+			nums[i] = nums[i] + diff
+		}
+	}
+
+	return moves
 }
