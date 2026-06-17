@@ -96,3 +96,23 @@ func MinIncrementForUnique(nums []int) int {
 
 	return moves
 }
+
+func maxAbsoluteSum(nums []int) int {
+	maxSum := 0
+	minSum := 0
+	prefix := 0
+
+	for i := 0; i < len(nums); i++ {
+		prefix += nums[i]
+
+		if prefix > maxSum {
+			maxSum = prefix
+		}
+
+		if prefix < minSum {
+			minSum = prefix
+		}
+	}
+
+	return maxSum - minSum
+}
