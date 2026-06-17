@@ -64,3 +64,18 @@ func minimumLength(s string) int {
 
 	return total
 }
+
+func MinimumSteps(s string) int64 {
+	var zeroCount int64 = 0
+	var total int64 = 0
+
+	for i := len(s) - 1; i >= 0; i-- {
+		if s[i] == '0' {
+			zeroCount++
+		} else {
+			total += zeroCount
+		}
+	}
+
+	return total
+}
