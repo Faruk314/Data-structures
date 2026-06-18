@@ -1,6 +1,8 @@
 package greedy
 
-import "sort"
+import (
+	"sort"
+)
 
 func minOperations(nums []int) int {
 	ops := 0
@@ -97,7 +99,7 @@ func MinIncrementForUnique(nums []int) int {
 	return moves
 }
 
-func maxAbsoluteSum(nums []int) int {
+func MaxAbsoluteSum(nums []int) int {
 	maxSum := 0
 	minSum := 0
 	prefix := 0
@@ -115,4 +117,21 @@ func maxAbsoluteSum(nums []int) int {
 	}
 
 	return maxSum - minSum
+}
+
+func MaxSubArray(nums []int) int {
+	if len(nums) == 0 {
+		return 0
+	}
+
+	currentMax := nums[0]
+	globalMax := nums[0]
+
+	for i := 1; i < len(nums); i++ {
+		currentMax = max(nums[i], currentMax+nums[i])
+
+		globalMax = max(currentMax, globalMax)
+	}
+
+	return globalMax
 }
