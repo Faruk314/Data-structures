@@ -129,3 +129,23 @@ func AreAlmostEqual(s1 string, s2 string) bool {
 
 	return len(swaps) == 2 && s1[swaps[0]] == s2[swaps[1]] && s1[swaps[1]] == s2[swaps[0]]
 }
+
+func NumOfApples(nums []int) int {
+	sort.Ints(nums)
+
+	maxWeight := 5000
+	currWeight := 0
+
+	total := 0
+
+	for _, num := range nums {
+		if currWeight+num > maxWeight {
+			return total
+		} else {
+			currWeight += num
+			total += 1
+		}
+	}
+
+	return total
+}
