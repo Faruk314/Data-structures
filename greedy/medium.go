@@ -135,3 +135,24 @@ func MaxSubArray(nums []int) int {
 
 	return globalMax
 }
+
+func canConstruct(s string, k int) bool {
+	if len(s) < k {
+		return false
+	}
+
+	var freq [26]int
+
+	for i := 0; i < len(s); i++ {
+		freq[s[i]-'a']++
+	}
+
+	oddCount := 0
+	for i := 0; i < 26; i++ {
+		if freq[i]%2 != 0 {
+			oddCount++
+		}
+	}
+
+	return oddCount <= k
+}
