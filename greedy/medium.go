@@ -156,3 +156,26 @@ func canConstruct(s string, k int) bool {
 
 	return oddCount <= k
 }
+
+func MaxSubarraySumCircular(nums []int) int {
+	currMax, globalMax := nums[0], nums[0]
+	currMin, globalMin := nums[0], nums[0]
+
+	totalSum := nums[0]
+
+	for i := 1; i < len(nums); i++ {
+		currMax = max(nums[i], currMax+nums[i])
+		globalMax = max(currMax, globalMax)
+
+		currMin = min(nums[i], currMin+nums[i])
+		globalMin = min(currMin, globalMin)
+
+		totalSum += nums[i]
+	}
+
+	if globalMax < 0 {
+		return globalMax
+	}
+
+	return max(globalMax, totalSum-globalMin)
+}
