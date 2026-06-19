@@ -179,3 +179,47 @@ func MaxSubarraySumCircular(nums []int) int {
 
 	return max(globalMax, totalSum-globalMin)
 }
+
+func minSwaps(nums []int) int {
+	totalOnes := 0
+
+	for _, num := range nums {
+		if num == 1 {
+			totalOnes += 1
+		}
+	}
+
+	if totalOnes <= 1 {
+		return 0
+	}
+
+	nums = append(nums, nums...)
+	minSwaps := len(nums)
+	currentZeroes := 0
+	left := 0
+
+	for right := 0; right < len(nums); right++ {
+
+		if nums[right] == 0 {
+			currentZeroes++
+		}
+
+		if right-left+1 > totalOnes {
+
+			if nums[left] == 0 {
+				currentZeroes--
+			}
+
+			left++
+		}
+
+		if right-left+1 == totalOnes {
+			if currentZeroes < minSwaps {
+				minSwaps = currentZeroes
+			}
+		}
+
+	}
+
+	return minSwaps
+}
