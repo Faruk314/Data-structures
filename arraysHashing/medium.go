@@ -895,3 +895,44 @@ func WaysToSplitArray(nums []int) int {
 
 	return count
 }
+
+func CountUnguarded(row int, col int, guards [][]int, walls [][]int) int {
+	grid := make([][]byte, row)
+	for i := range grid {
+		grid[i] = make([]byte, col)
+	}
+
+	for _, g := range guards {
+		grid[g[0]][g[1]] = 'G'
+	}
+	for _, w := range walls {
+		grid[w[0]][w[1]] = 'W'
+	}
+
+	directions := [4][2]int{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}
+
+	for _, guard := range guards {
+		for _, d := range directions {
+			r, c := guard[0]+d[0], guard[1]+d[1]
+
+			for r >= 0 && r < row && c >= 0 && c < col && grid[r][c] != 'W' && grid[r][c] != 'G' {
+				if grid[r][c] == 0 {
+					grid[r][c] = 'R'
+				}
+				r += d[0]
+				c += d[1]
+			}
+		}
+	}
+
+	totalUnguarded := 0
+	for i := 0; i < row; i++ {
+		for j := 0; j < col; j++ {
+			if grid[i][j] == 0 {
+				totalUnguarded++
+			}
+		}
+	}
+
+	return totalUnguarded
+}
