@@ -223,3 +223,34 @@ func minSwaps(nums []int) int {
 
 	return minSwaps
 }
+
+func maxTurbulenceSize(arr []int) int {
+	if len(arr) == 1 {
+		return 1
+	}
+
+	left := 0
+	longest := 1
+	var prev string
+
+	for right := 1; right < len(arr); right++ {
+		if arr[right-1] > arr[right] && prev != ">" {
+			prev = ">"
+			longest = max(longest, right-left+1)
+
+		} else if arr[right-1] < arr[right] && prev != "<" {
+			prev = "<"
+			longest = max(longest, right-left+1)
+
+		} else if arr[right-1] == arr[right] {
+
+			left = right
+
+			prev = ""
+		} else {
+			left = right - 1
+		}
+	}
+
+	return longest
+}
