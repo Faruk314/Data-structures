@@ -254,3 +254,15 @@ func maxTurbulenceSize(arr []int) int {
 
 	return longest
 }
+
+func canJump(nums []int) bool {
+	topIdx := len(nums) - 1
+
+	for i := len(nums) - 2; i >= 0; i-- {
+		if i+nums[i] >= topIdx {
+			topIdx = i
+		}
+	}
+
+	return topIdx == 0
+}
