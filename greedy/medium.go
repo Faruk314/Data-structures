@@ -266,3 +266,30 @@ func canJump(nums []int) bool {
 
 	return topIdx == 0
 }
+
+func jump(nums []int) int {
+	n := len(nums)
+	destination := n - 1
+	coverage := 0
+	lastJumpIdx := 0
+	totalJumps := 0
+
+	if n == 1 {
+		return 0
+	}
+
+	for i := 0; i < len(nums); i++ {
+		coverage = max(coverage, i+nums[i])
+
+		if i == lastJumpIdx {
+			lastJumpIdx = coverage
+			totalJumps++
+
+			if coverage >= destination {
+				return totalJumps
+			}
+		}
+	}
+
+	return totalJumps
+}
