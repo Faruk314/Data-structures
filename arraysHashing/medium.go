@@ -936,3 +936,34 @@ func CountUnguarded(row int, col int, guards [][]int, walls [][]int) int {
 
 	return totalUnguarded
 }
+
+func findAnagrams(s string, p string) []int {
+	result := []int{}
+	freq := [26]int{}
+	k := len(p)
+
+	for i := 0; i < k; i++ {
+		freq[p[i]-'a']++
+	}
+
+	left := 0
+	currFreq := [26]int{}
+
+	for right := 0; right < len(s); right++ {
+		currFreq[s[right]-'a']++
+
+		if right-left+1 > k {
+			currFreq[s[left]-'a']--
+			left++
+		}
+
+		if right-left+1 == k {
+			if freq == currFreq {
+				result = append(result, left)
+			}
+		}
+
+	}
+
+	return result
+}
