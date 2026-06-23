@@ -1,6 +1,7 @@
 package arrayshashing
 
 import (
+	"math"
 	"sort"
 	"strconv"
 	"strings"
@@ -966,4 +967,35 @@ func findAnagrams(s string, p string) []int {
 	}
 
 	return result
+}
+
+func GridGame(grid [][]int) int64 {
+	prefixSum := make([]int64, len(grid[0])+1)
+	sufixSum := make([]int64, len(grid[1])+1)
+
+	for i := 1; i < len(grid[0])+1; i++ {
+		prefixSum[i] = prefixSum[i-1] + int64(grid[0][i-1])
+	}
+
+	for i := len(grid[1]) - 1; i >= 0; i-- {
+		sufixSum[i] = sufixSum[i+1] + int64(grid[1][i])
+	}
+
+	ans := int64(math.MaxInt64)
+	totalPrefixSum := prefixSum[len(prefixSum)-1]
+	totalSufixSum := sufixSum[0]
+
+	for i := 1; i < len(prefixSum); i++ {
+		remainingTop := totalPrefixSum - prefixSum[i]
+		remainingBottom := totalSufixSum - sufixSum[i-1]
+
+		robot2 := max(remainingTop, remainingBottom)
+
+		if robot2 < ans {
+			ans = robot2
+		}
+
+	}
+
+	return ans
 }
