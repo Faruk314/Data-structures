@@ -999,3 +999,33 @@ func GridGame(grid [][]int) int64 {
 
 	return ans
 }
+
+type NumMatrix struct {
+	Sums [][]int
+}
+
+func Constructor(matrix [][]int) NumMatrix {
+	if len(matrix) == 0 || len(matrix[0]) == 0 {
+		return NumMatrix{}
+	}
+
+	rows, cols := len(matrix), len(matrix[0])
+
+	sums := make([][]int, rows+1)
+
+	for i := range sums {
+		sums[i] = make([]int, cols+1)
+	}
+
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
+			sums[i+1][j+1] = matrix[i][j] + sums[i+1][j] + sums[i][j+1] - sums[i][j]
+		}
+	}
+
+	return NumMatrix{Sums: sums}
+}
+
+func (this *NumMatrix) SumRegion(row1, col1, row2, col2 int) int {
+	return this.Sums[row2+1][col2+1] - this.Sums[row1][col2+1] - this.Sums[row2+1][col1] + this.Sums[row1][col1]
+}
