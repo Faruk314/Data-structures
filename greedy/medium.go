@@ -321,3 +321,35 @@ func canCompleteCircuit(gas []int, cost []int) int {
 
 	return startIndex
 }
+
+func isNStraightHand(hand []int, groupSize int) bool {
+	if len(hand)%groupSize != 0 {
+		return false
+	}
+
+	freq := make(map[int]int)
+
+	for _, card := range hand {
+		freq[card]++
+	}
+
+	uniques := make([]int, 0, len(freq))
+	for card := range freq {
+		uniques = append(uniques, card)
+	}
+
+	sort.Ints(uniques)
+
+	for _, card := range uniques {
+		for freq[card] > 0 {
+			for next := card; next < card+groupSize; next++ {
+				if freq[next] == 0 {
+					return false
+				}
+				freq[next]--
+			}
+		}
+	}
+
+	return true
+}
