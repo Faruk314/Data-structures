@@ -1029,3 +1029,43 @@ func Constructor(matrix [][]int) NumMatrix {
 func (this *NumMatrix) SumRegion(row1, col1, row2, col2 int) int {
 	return this.Sums[row2+1][col2+1] - this.Sums[row1][col2+1] - this.Sums[row2+1][col1] + this.Sums[row1][col1]
 }
+
+type FirstUnique struct {
+	freq  map[int]int
+	queue []int
+	head  int
+}
+
+func Cons(nums []int) FirstUnique {
+	fu := FirstUnique{
+		freq:  make(map[int]int),
+		queue: make([]int, 0),
+		head:  0,
+	}
+
+	for _, num := range nums {
+		fu.Add(num)
+	}
+
+	return fu
+}
+
+func (this *FirstUnique) ShowFirstUnique() int {
+	for this.head < len(this.queue) && this.freq[this.queue[this.head]] > 1 {
+		this.head++
+	}
+
+	if this.head < len(this.queue) {
+		return this.queue[this.head]
+	}
+
+	return -1
+}
+
+func (this *FirstUnique) Add(value int) {
+	this.freq[value]++
+
+	if this.freq[value] == 1 {
+		this.queue = append(this.queue, value)
+	}
+}
