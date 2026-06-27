@@ -1069,3 +1069,33 @@ func (this *FirstUnique) Add(value int) {
 		this.queue = append(this.queue, value)
 	}
 }
+
+func LonelyPixel(picture [][]byte) int {
+	if len(picture) == 0 || len(picture[0]) == 0 {
+		return 0
+	}
+
+	maxRows, maxCols := len(picture), len(picture[0])
+	rowsCount, colsCount := make([]int, maxRows), make([]int, maxCols)
+
+	for i := 0; i < maxRows; i++ {
+		for j := 0; j < maxCols; j++ {
+			if picture[i][j] == 'B' {
+				rowsCount[i]++
+				colsCount[j]++
+			}
+		}
+	}
+
+	totalValid := 0
+
+	for i := 0; i < maxRows; i++ {
+		for j := 0; j < maxCols; j++ {
+			if picture[i][j] == 'B' && rowsCount[i] == 1 && colsCount[j] == 1 {
+				totalValid++
+			}
+		}
+	}
+
+	return totalValid
+}
