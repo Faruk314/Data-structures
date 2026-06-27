@@ -1099,3 +1099,42 @@ func LonelyPixel(picture [][]byte) int {
 
 	return totalValid
 }
+
+type Seen struct {
+	LastSeenRow int
+	Count       int
+}
+
+func LongestCommon(matrix [][]int) int {
+	freq := make(map[int]Seen)
+
+	for i := 0; i < len(matrix[0]); i++ {
+		if _, exists := freq[matrix[0][i]]; !exists {
+			freq[matrix[0][i]] = Seen{LastSeenRow: 0, Count: 1}
+		}
+	}
+
+	for row := 1; row < len(matrix); row++ {
+		for col := 0; col < len(matrix[0]); col++ {
+			if value, exists := freq[matrix[row][col]]; exists && freq[matrix[row][col]].LastSeenRow != row {
+				value.Count++
+				value.LastSeenRow = row
+				freq[matrix[row][col]] = value
+			}
+		}
+	}
+
+	min := math.MaxInt
+
+	for num, value := range freq {
+		if value.Count == len(matrix) && num < min {
+			min = num
+		}
+	}
+
+	if min == math.MaxInt {
+		return -1
+	}
+
+	return min
+}
