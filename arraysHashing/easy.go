@@ -501,3 +501,19 @@ func findMissingAndRepeatedValues(grid [][]int) []int {
 
 	return res
 }
+
+func validWordSquare(words []string) bool {
+	for r := 0; r < len(words); r++ {
+		for c := 0; c < len(words[r]); c++ {
+
+			if c >= len(words) || r >= len(words[c]) {
+				return false
+			}
+
+			if words[r][c] != words[c][r] {
+				return false
+			}
+		}
+	}
+	return true
+}
