@@ -1138,3 +1138,36 @@ func LongestCommon(matrix [][]int) int {
 
 	return min
 }
+
+func maxSumDistinctTriplet(x []int, y []int) int {
+	maxToY := make(map[int]int)
+
+	for i := 0; i < len(x); i++ {
+		if value, exists := maxToY[x[i]]; !exists {
+			maxToY[x[i]] = y[i]
+		} else {
+			maxToY[x[i]] = max(value, y[i])
+		}
+	}
+
+	if len(maxToY) < 3 {
+		return -1
+	}
+
+	first, second, third := math.MinInt, math.MinInt, math.MinInt
+
+	for _, value := range maxToY {
+		if value > first {
+			third = second
+			second = first
+			first = value
+		} else if value > second {
+			third = second
+			second = value
+		} else if value > third {
+			third = value
+		}
+	}
+
+	return first + second + third
+}
