@@ -532,3 +532,38 @@ func replaceElements(arr []int) []int {
 
 	return arr
 }
+
+func ConfusingNum(n int) bool {
+	invalid := map[byte]struct{}{
+		'2': {},
+		'3': {},
+		'4': {},
+		'5': {},
+		'7': {},
+	}
+
+	numStr := strconv.Itoa(n)
+
+	for i := 0; i < len(numStr); i++ {
+		if _, exists := invalid[numStr[i]]; exists {
+			return false
+		}
+	}
+
+	rotated := make([]byte, len(numStr))
+	idx := 0
+
+	for i := len(numStr) - 1; i >= 0; i-- {
+		switch numStr[i] {
+		case '6':
+			rotated[idx] = '9'
+		case '9':
+			rotated[idx] = '6'
+		default:
+			rotated[idx] = numStr[i]
+		}
+		idx++
+	}
+
+	return string(rotated) != numStr
+}
