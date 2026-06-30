@@ -1171,3 +1171,86 @@ func maxSumDistinctTriplet(x []int, y []int) int {
 
 	return first + second + third
 }
+
+type Direction string
+
+const (
+	Up    Direction = "U"
+	Down  Direction = "D"
+	Right Direction = "R"
+	Left  Direction = "L"
+)
+
+type SnakeGame struct {
+	Height  int
+	Width   int
+	Grid    [][]int
+	Score   int
+	Food    [][]int
+	Tail    [][]int
+	Dir     map[Direction][]int
+	FoodIdx int
+}
+
+func SnakeGameConstructor(width int, height int, food [][]int) SnakeGame {
+	dir := map[Direction][]int{
+		Up:    {-1, 0},
+		Down:  {1, 0},
+		Right: {0, 1},
+		Left:  {0, -1},
+	}
+
+	return SnakeGame{Height: height, Width: width, Food: food, Score: 0, Tail: [][]int{{0, 0}}, Dir: dir, FoodIdx: 0}
+}
+
+func (this *SnakeGame) Move(dir Direction) int {
+	newRow := this.Tail[0][0] + this.Dir[dir][0]
+	newCol := this.Tail[0][1] + this.Dir[dir][1]
+
+	if newRow >= 0 && newRow < this.Height && newCol >= 0 && newCol < this.Width {
+
+		hasFood := this.FoodIdx < len(this.Food) && this.Food[this.FoodIdx][0] == newRow && this.Food[this.FoodIdx][1] == newCol
+
+		if this.isColided(newRow, newCol, hasFood) {
+			return -1
+		}
+
+		this.MoveTail(newRow, newCol, hasFood)
+
+		return this.Score
+
+	}
+
+	return -1
+}
+
+func (this *SnakeGame) isColided(newRow int, newCol int, hasFood bool) bool {
+	tailLength := len(this.Tail)
+
+	if !hasFood {
+		tailLength--
+	}
+
+	for i := 0; i < tailLength; i++ {
+		if this.Tail[i][0] == newRow && this.Tail[i][1] == newCol {
+			return true
+		}
+	}
+
+	return false
+}
+
+func (this *SnakeGame) MoveTail(newRow int, newCol int, hasFood bool) {
+	if hasFood {
+		this.Tail = append(this.Tail, []int{0, 0})
+
+		this.FoodIdx++
+		this.Score++
+	}
+
+	prevRow, prevCol := newRow, newCol
+
+	for i := 0; i < len(this.Tail); i++ {
+		this.Tail[i][0], this.Tail[i][1], prevRow, prevCol = prevRow, prevCol, this.Tail[i][0], this.Tail[i][1]
+	}
+}
