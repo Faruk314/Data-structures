@@ -1248,3 +1248,59 @@ func (this *SnakeGame) Move(dir Direction) int {
 
 	return this.Score
 }
+
+type Toe struct {
+	Positions map[string][]int
+	Size      int
+}
+
+func ToeGame(n int) Toe {
+	positions := make(map[string][]int)
+
+	for i := 0; i < n; i++ {
+		positions[fmt.Sprintf("%dR", i)] = []int{0, 0}
+		positions[fmt.Sprintf("%dC", i)] = []int{0, 0}
+	}
+
+	positions["LD"] = []int{0, 0}
+	positions["RD"] = []int{0, 0}
+
+	return Toe{Positions: positions, Size: n}
+}
+
+func (this *Toe) Move(row, col, pIdx int) int {
+	playerIdx := pIdx - 1
+
+	this.Positions[fmt.Sprintf("%dR", row)][playerIdx]++
+
+	if this.Positions[fmt.Sprintf("%dR", row)][playerIdx] == this.Size {
+		return pIdx
+	}
+
+	this.Positions[fmt.Sprintf("%dC", col)][playerIdx]++
+
+	if this.Positions[fmt.Sprintf("%dC", col)][playerIdx] == this.Size {
+		return pIdx
+	}
+
+	if row == col {
+		this.Positions["LD"][playerIdx]++
+
+		if this.Positions["LD"][playerIdx] == this.Size {
+			return pIdx
+		}
+
+	}
+
+	if (this.Size-1)-col == row {
+
+		this.Positions["RD"][playerIdx]++
+
+		if this.Positions["RD"][playerIdx] == this.Size {
+			return pIdx
+		}
+
+	}
+
+	return 0
+}
