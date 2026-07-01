@@ -1,6 +1,8 @@
 package arrayshashing
 
 import (
+	"container/list"
+	"fmt"
 	"math"
 	"sort"
 	"strconv"
@@ -1184,10 +1186,10 @@ const (
 type SnakeGame struct {
 	Height  int
 	Width   int
-	Grid    [][]int
 	Score   int
 	Food    [][]int
-	Tail    [][]int
+	Queue   *list.List
+	HashSet map[string]struct{}
 	Dir     map[Direction][]int
 	FoodIdx int
 }
@@ -1200,57 +1202,49 @@ func SnakeGameConstructor(width int, height int, food [][]int) SnakeGame {
 		Left:  {0, -1},
 	}
 
-	return SnakeGame{Height: height, Width: width, Food: food, Score: 0, Tail: [][]int{{0, 0}}, Dir: dir, FoodIdx: 0}
+	queue := list.New()
+	queue.PushFront([]int{0, 0})
+
+	hashSet := map[string]struct{}{
+		"0,0": {},
+	}
+
+	return SnakeGame{Height: height, Width: width, Food: food, Score: 0, Dir: dir, FoodIdx: 0, HashSet: hashSet, Queue: queue}
 }
 
 func (this *SnakeGame) Move(dir Direction) int {
-	newRow := this.Tail[0][0] + this.Dir[dir][0]
-	newCol := this.Tail[0][1] + this.Dir[dir][1]
+	currHead := this.Queue.Front().Value.([]int)
 
-	if newRow >= 0 && newRow < this.Height && newCol >= 0 && newCol < this.Width {
+	newRow := currHead[0] + this.Dir[dir][0]
+	newCol := currHead[1] + this.Dir[dir][1]
 
-		hasFood := this.FoodIdx < len(this.Food) && this.Food[this.FoodIdx][0] == newRow && this.Food[this.FoodIdx][1] == newCol
-
-		if this.isColided(newRow, newCol, hasFood) {
-			return -1
-		}
-
-		this.MoveTail(newRow, newCol, hasFood)
-
-		return this.Score
-
+	if newRow < 0 || newRow >= this.Height || newCol < 0 || newCol >= this.Width {
+		return -1
 	}
 
-	return -1
-}
-
-func (this *SnakeGame) isColided(newRow int, newCol int, hasFood bool) bool {
-	tailLength := len(this.Tail)
+	hasFood := this.FoodIdx < len(this.Food) && this.Food[this.FoodIdx][0] == newRow && this.Food[this.FoodIdx][1] == newCol
 
 	if !hasFood {
-		tailLength--
+		tailTip := this.Queue.Back().Value.([]int)
+		tailTipKey := fmt.Sprintf("%d,%d", tailTip[0], tailTip[1])
+		delete(this.HashSet, tailTipKey)
 	}
 
-	for i := 0; i < tailLength; i++ {
-		if this.Tail[i][0] == newRow && this.Tail[i][1] == newCol {
-			return true
-		}
+	newHeadKey := fmt.Sprintf("%d,%d", newRow, newCol)
+
+	if _, isColided := this.HashSet[newHeadKey]; isColided {
+		return -1
 	}
 
-	return false
-}
+	this.Queue.PushFront([]int{newRow, newCol})
+	this.HashSet[newHeadKey] = struct{}{}
 
-func (this *SnakeGame) MoveTail(newRow int, newCol int, hasFood bool) {
 	if hasFood {
-		this.Tail = append(this.Tail, []int{0, 0})
-
-		this.FoodIdx++
 		this.Score++
+		this.FoodIdx++
+	} else {
+		this.Queue.Remove(this.Queue.Back())
 	}
 
-	prevRow, prevCol := newRow, newCol
-
-	for i := 0; i < len(this.Tail); i++ {
-		this.Tail[i][0], this.Tail[i][1], prevRow, prevCol = prevRow, prevCol, this.Tail[i][0], this.Tail[i][1]
-	}
+	return this.Score
 }
