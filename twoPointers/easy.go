@@ -3,6 +3,7 @@ package twopointers
 import (
 	"regexp"
 	"sort"
+	"strconv"
 	"strings"
 )
 
@@ -309,4 +310,35 @@ func arrayStringsAreEqual(word1 []string, word2 []string) bool {
 	}
 
 	return sb1.String() == sb2.String()
+}
+
+func validWordAbbreviation(word string, abbr string) bool {
+	j := 0
+	i := 0
+
+	for i < len(abbr) {
+		if abbr[i] == '0' {
+			return false
+		} else if j < len(word) && abbr[i] == word[j] {
+			j++
+			i++
+		} else if abbr[i] >= '1' && abbr[i] <= '9' {
+
+			var sb strings.Builder
+
+			for i < len(abbr) && abbr[i] >= '0' && abbr[i] <= '9' {
+				sb.WriteByte(abbr[i])
+				i++
+			}
+
+			num, _ := strconv.Atoi(sb.String())
+
+			j += num
+			continue
+		} else {
+			return false
+		}
+	}
+
+	return i == len(abbr) && j == len(word)
 }
