@@ -567,3 +567,21 @@ func ConfusingNum(n int) bool {
 
 	return string(rotated) != numStr
 }
+
+func FindAnagramMappings(nums1, nums2 []int) []int {
+	numToIdxs := make(map[int][]int)
+
+	for idx, num := range nums2 {
+		numToIdxs[num] = append(numToIdxs[num], idx)
+	}
+
+	result := make([]int, len(nums1))
+
+	for idx, num := range nums1 {
+		idxs := numToIdxs[num]
+		result[idx] = idxs[0]
+		numToIdxs[num] = idxs[1:]
+	}
+
+	return result
+}
