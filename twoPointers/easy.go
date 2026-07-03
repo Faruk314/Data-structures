@@ -342,3 +342,43 @@ func validWordAbbreviation(word string, abbr string) bool {
 
 	return i == len(abbr) && j == len(word)
 }
+
+func mergeArrays(nums1 [][]int, nums2 [][]int) [][]int {
+	i := 0
+	j := 0
+
+	result := [][]int{}
+
+	for i < len(nums1) || j < len(nums2) {
+		if j >= len(nums2) {
+			result = append(result, []int{nums1[i][0], nums1[i][1]})
+			i++
+
+		} else if i >= len(nums1) {
+			result = append(result, []int{nums2[j][0], nums2[j][1]})
+			j++
+
+		} else if nums1[i][0] == nums2[j][0] {
+			result = append(result, []int{nums1[i][0], nums1[i][1] + nums2[j][1]})
+			i++
+			j++
+		} else if nums1[i][0] < nums2[j][0] {
+
+			for i < len(nums1) && nums1[i][0] < nums2[j][0] {
+				result = append(result, []int{nums1[i][0], nums1[i][1]})
+				i++
+			}
+			continue
+
+		} else if nums1[i][0] > nums2[j][0] {
+
+			for j < len(nums2) && nums2[j][0] < nums1[i][0] {
+				result = append(result, []int{nums2[j][0], nums2[j][1]})
+				j++
+			}
+			continue
+		}
+	}
+
+	return result
+}
