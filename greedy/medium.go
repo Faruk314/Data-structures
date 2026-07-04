@@ -1,6 +1,7 @@
 package greedy
 
 import (
+	"math"
 	"sort"
 )
 
@@ -364,4 +365,35 @@ func minChanges(s string) int {
 	}
 
 	return changes
+}
+
+func minDifference(nums []int) int {
+	if len(nums) <= 4 {
+		return 0
+	}
+
+	sort.Ints(nums)
+	n := len(nums)
+
+	right := n - 1
+	left := n - 3
+	minDiff := math.MaxInt
+
+	for i := 0; i < 4; i++ {
+		min := (right + 1) % n
+		max := left - 1
+
+		if left-1 < 0 {
+			max = n - 1
+		}
+
+		if nums[max]-nums[min] < minDiff {
+			minDiff = nums[max] - nums[min]
+		}
+
+		left = (left + 1) % n
+		right = (right + 1) % n
+	}
+
+	return minDiff
 }
