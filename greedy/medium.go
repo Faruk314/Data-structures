@@ -1,6 +1,7 @@
 package greedy
 
 import (
+	"fmt"
 	"math"
 	"sort"
 )
@@ -396,4 +397,25 @@ func minDifference(nums []int) int {
 	}
 
 	return minDiff
+}
+
+func MaximumImportance(n int, roads [][]int) int64 {
+	freq := make([]int, n)
+
+	for _, road := range roads {
+		freq[road[0]]++
+		freq[road[1]]++
+	}
+
+	sort.Ints(freq)
+
+	fmt.Println(freq)
+
+	var totalSum int64
+
+	for i := 1; i <= n; i++ {
+		totalSum += int64(freq[i-1]) * int64(i)
+	}
+
+	return totalSum
 }
