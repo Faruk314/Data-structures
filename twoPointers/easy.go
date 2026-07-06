@@ -382,3 +382,36 @@ func mergeArrays(nums1 [][]int, nums2 [][]int) [][]int {
 
 	return result
 }
+
+func applyOperations(nums []int) []int {
+	for i := 1; i < len(nums); i++ {
+		if nums[i] != nums[i-1] {
+			continue
+		} else {
+			nums[i], nums[i-1] = 0, nums[i-1]*2
+		}
+	}
+
+	left := 0
+
+	for left < len(nums) {
+
+		if nums[left] == 0 {
+			right := left
+
+			for right < len(nums) && nums[right] == 0 {
+				right++
+			}
+
+			if right >= len(nums) {
+				break
+			}
+
+			nums[right], nums[left] = nums[left], nums[right]
+		}
+
+		left++
+	}
+
+	return nums
+}
