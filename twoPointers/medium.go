@@ -402,3 +402,28 @@ func MinimumLength(s string) int {
 
 	return right - left + 1
 }
+
+func KthGrammar(n int, k int) int {
+	left := 1
+	right := 1 << (n - 1)
+
+	current := 0
+
+	for left < right {
+		mid := left + (right-left)/2
+
+		if k <= mid {
+			right = mid
+		} else {
+			if current == 0 {
+				current = 1
+			} else {
+				current = 0
+			}
+
+			left = mid + 1
+		}
+	}
+
+	return current
+}
