@@ -419,3 +419,29 @@ func MaximumImportance(n int, roads [][]int) int64 {
 
 	return totalSum
 }
+
+func MinimumPushes(word string) int {
+	freq := make([]int, 26)
+
+	for _, c := range word {
+		freq[c-'a']++
+	}
+
+	sort.Ints(freq)
+
+	counter := 0
+	multiplier := 1
+	total := 0
+
+	for i := 25; i >= 0; i-- {
+		counter++
+		total += multiplier * freq[i]
+
+		if counter == 8 {
+			multiplier += 1
+			counter = 0
+		}
+	}
+
+	return total
+}
