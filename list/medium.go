@@ -429,3 +429,34 @@ func mergeNodes(head *Node) *Node {
 
 	return head.Next
 }
+
+func insertGreatestCommonDivisors(head *Node) *Node {
+	dummy := &Node{Next: head}
+	curr := dummy
+
+	for curr.Next != nil && curr.Next.Next != nil {
+
+		biggerNum := curr.Next
+		smallerNum := curr.Next.Next
+
+		if smallerNum.Value > biggerNum.Value {
+			biggerNum, smallerNum = smallerNum, biggerNum
+		}
+
+		gcd := 0
+
+		for i := smallerNum.Value; i > 0; i-- {
+			if biggerNum.Value%i == 0 && smallerNum.Value%i == 0 {
+				gcd = i
+				break
+			}
+		}
+
+		newNode := &Node{Value: gcd, Next: curr.Next.Next}
+		curr.Next.Next = newNode
+
+		curr = newNode
+	}
+
+	return dummy.Next
+}
