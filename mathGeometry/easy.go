@@ -98,3 +98,50 @@ func ConvertToTitle(columnNum int32) string {
 
 	return result
 }
+
+func GcdOfStrings(str1 string, str2 string) string {
+	match := ""
+
+	shorter := str1
+	bigger := str2
+
+	if len(shorter) > len(bigger) {
+		shorter, bigger = bigger, shorter
+	}
+
+	for i := len(shorter); i > 0; i-- {
+		key := shorter[:i]
+		didMatch := false
+
+		if len(bigger)%len(key) != 0 || len(shorter)%len(key) != 0 {
+			continue
+		}
+
+		for j := 0; j < len(bigger); j += len(key) {
+			if bigger[j:len(key)+j] == key {
+				didMatch = true
+			} else {
+				didMatch = false
+				break
+			}
+		}
+
+		if didMatch {
+			for j := 0; j < len(shorter); j += len(key) {
+				if shorter[j:len(key)+j] == key {
+					didMatch = true
+				} else {
+					didMatch = false
+					break
+				}
+			}
+		}
+
+		if didMatch {
+			match = key
+			break
+		}
+	}
+
+	return match
+}
