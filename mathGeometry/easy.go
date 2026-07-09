@@ -145,3 +145,35 @@ func GcdOfStrings(str1 string, str2 string) string {
 
 	return match
 }
+
+func diagonalSum(mat [][]int) int {
+	width, height := len(mat[0]), len(mat)
+	dir := [2][2]int{{0, 0}, {0, width - 1}}
+
+	totalSum := 0
+
+	for idx, d := range dir {
+
+		row := d[0]
+		col := d[1]
+
+		for row >= 0 && row < height && col >= 0 && col < width {
+			totalSum += mat[row][col]
+
+			row++
+
+			if idx == 0 {
+				col = row
+			} else {
+				col = width - row - 1
+			}
+		}
+
+	}
+
+	if width%2 == 0 {
+		return totalSum
+	}
+
+	return totalSum - mat[height/2][width/2]
+}
