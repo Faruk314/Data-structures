@@ -177,3 +177,16 @@ func diagonalSum(mat [][]int) int {
 
 	return totalSum - mat[height/2][width/2]
 }
+
+func largestOddNumber(num string) string {
+	result := ""
+
+	for i := len(num) - 1; i >= 0; i-- {
+		if num[i]%2 != 0 {
+			result = num[:i+1]
+			break
+		}
+	}
+
+	return result
+}
