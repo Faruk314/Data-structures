@@ -3,6 +3,7 @@ package twopointers
 import (
 	"slices"
 	"sort"
+	"strconv"
 )
 
 func ThreeSum(nums []int) [][]int {
@@ -426,4 +427,39 @@ func KthGrammar(n int, k int) int {
 	}
 
 	return current
+}
+
+func compress(chars []byte) int {
+	if len(chars) == 1 {
+		return 1
+	}
+
+	left := 0
+	charsIdx := 0
+
+	for left < len(chars) {
+		right := left
+
+		for right < len(chars) && chars[left] == chars[right] {
+			right++
+		}
+
+		total := right - left
+
+		chars[charsIdx] = chars[left]
+		charsIdx++
+
+		if total > 1 {
+			str := strconv.Itoa(total)
+
+			for i := 0; i < len(str); i++ {
+				chars[charsIdx] = str[i]
+				charsIdx++
+			}
+		}
+
+		left = right
+	}
+
+	return charsIdx
 }
