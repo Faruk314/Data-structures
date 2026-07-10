@@ -241,3 +241,19 @@ func imageSmoother(img [][]int) [][]int {
 
 	return result
 }
+
+func numberOfMatches(n int) int {
+	totalMatches := 0
+
+	for n > 1 {
+		numMatches := n / 2
+		remainder := n % 2
+
+		totalMatches += numMatches
+
+		n = numMatches + remainder
+
+	}
+
+	return totalMatches
+}
