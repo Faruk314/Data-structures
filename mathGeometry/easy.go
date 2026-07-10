@@ -190,3 +190,21 @@ func largestOddNumber(num string) string {
 
 	return result
 }
+
+func transpose(matrix [][]int) [][]int {
+	height, width := len(matrix), len(matrix[0])
+
+	res := make([][]int, width)
+
+	for i := 0; i < len(res); i++ {
+		res[i] = make([]int, height)
+	}
+
+	for i := 0; i < height; i++ {
+		for j := 0; j < width; j++ {
+			res[j][i] = matrix[i][j]
+		}
+	}
+
+	return res
+}
