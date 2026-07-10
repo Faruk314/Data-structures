@@ -208,3 +208,36 @@ func transpose(matrix [][]int) [][]int {
 
 	return res
 }
+
+func imageSmoother(img [][]int) [][]int {
+	height, width := len(img), len(img[0])
+	dir := [8][2]int{{0, 1}, {0, -1}, {-1, 0}, {1, 0}, {-1, 1}, {-1, -1}, {1, 1}, {1, -1}}
+
+	result := make([][]int, height)
+
+	for i := 0; i < height; i++ {
+		result[i] = make([]int, width)
+	}
+
+	for i := 0; i < height; i++ {
+		for j := 0; j < width; j++ {
+			totalSum := img[i][j]
+			totalDir := 1
+
+			for _, d := range dir {
+				row := i + d[0]
+				col := j + d[1]
+
+				if row >= 0 && row < height && col >= 0 && col < width {
+					totalSum += img[row][col]
+					totalDir++
+				}
+			}
+
+			average := totalSum / totalDir
+			result[i][j] = average
+		}
+	}
+
+	return result
+}
