@@ -257,3 +257,20 @@ func numberOfMatches(n int) int {
 
 	return totalMatches
 }
+
+func numWaterBottles(numBottles int, numExchange int) int {
+	totalDrinked := 0
+
+	fullBottles := numBottles
+	emptyBottles := 0
+
+	for fullBottles > 0 {
+		emptyBottles += fullBottles
+		totalDrinked += fullBottles
+
+		fullBottles = emptyBottles / numExchange
+		emptyBottles = emptyBottles % numExchange
+	}
+
+	return totalDrinked
+}
