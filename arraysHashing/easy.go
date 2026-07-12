@@ -585,3 +585,20 @@ func FindAnagramMappings(nums1, nums2 []int) []int {
 
 	return result
 }
+
+func CanConstructRansomNote(ransomNote, magazine string) bool {
+	var counts [26]int
+
+	for i := 0; i < len(magazine); i++ {
+		counts[magazine[i]-'a']++
+	}
+
+	for i := 0; i < len(ransomNote); i++ {
+		counts[ransomNote[i]-'a']--
+		if counts[ransomNote[i]-'a'] < 0 {
+			return false
+		}
+	}
+
+	return true
+}
