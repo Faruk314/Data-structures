@@ -602,3 +602,33 @@ func CanConstructRansomNote(ransomNote, magazine string) bool {
 
 	return true
 }
+
+func countCharacters(words []string, chars string) int {
+	var charCount [26]int
+	for i := 0; i < len(chars); i++ {
+		charCount[chars[i]-'a']++
+	}
+
+	totalLen := 0
+
+	for _, word := range words {
+		var wordCount [26]int
+		for i := 0; i < len(word); i++ {
+			wordCount[word[i]-'a']++
+		}
+
+		canForm := true
+		for i := 0; i < 26; i++ {
+			if wordCount[i] > charCount[i] {
+				canForm = false
+				break
+			}
+		}
+
+		if canForm {
+			totalLen += len(word)
+		}
+	}
+
+	return totalLen
+}
