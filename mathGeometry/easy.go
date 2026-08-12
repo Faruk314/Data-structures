@@ -274,3 +274,30 @@ func numWaterBottles(numBottles int, numExchange int) int {
 
 	return totalDrinked
 }
+
+func LargestLocal(grid [][]int) [][]int {
+	n := len(grid)
+	maxLocal := make([][]int, n-2)
+
+	for i := 0; i < n-2; i++ {
+		maxLocal[i] = make([]int, n-2)
+	}
+
+	for i := 0; i < n-2; i++ {
+		for j := 0; j < n-2; j++ {
+			maxVal := 0
+
+			for r := i; r < i+3; r++ {
+				for c := j; c < j+3; c++ {
+					if grid[r][c] > maxVal {
+						maxVal = grid[r][c]
+					}
+				}
+			}
+
+			maxLocal[i][j] = maxVal
+		}
+	}
+
+	return maxLocal
+}
