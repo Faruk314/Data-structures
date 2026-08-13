@@ -346,3 +346,28 @@ func LuckyNumbers(matrix [][]int) []int {
 
 	return result
 }
+
+func CountDistinct(s string) int64 {
+	distinct := make(map[byte]int)
+	left := 0
+	var count int64
+
+	for right := 0; right < len(s); right++ {
+		distinct[s[right]]++
+
+		for len(distinct) > 1 {
+			distinct[s[left]]--
+
+			if distinct[s[left]] == 0 {
+				delete(distinct, s[left])
+			}
+
+			left++
+		}
+
+		count += int64(right - left + 1)
+
+	}
+
+	return count
+}
