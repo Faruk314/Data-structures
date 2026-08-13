@@ -1,6 +1,9 @@
 package mathgeometry
 
-import "math"
+import (
+	"math"
+	"strconv"
+)
 
 // first solution
 func RomanToInt(s string) int {
@@ -370,4 +373,19 @@ func CountDistinct(s string) int64 {
 	}
 
 	return count
+}
+
+func IsArmstrongNum(n int) bool {
+	strNum := strconv.Itoa(n)
+	k := len(strNum)
+
+	var result int64
+
+	for _, char := range strNum {
+		digit := int(char - '0')
+
+		result += int64(math.Pow(float64(digit), float64(k)))
+	}
+
+	return result == int64(n)
 }
