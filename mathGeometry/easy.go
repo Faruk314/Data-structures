@@ -1,5 +1,7 @@
 package mathgeometry
 
+import "math"
+
 // first solution
 func RomanToInt(s string) int {
 	romanToIntMap := map[string]int{
@@ -300,4 +302,47 @@ func LargestLocal(grid [][]int) [][]int {
 	}
 
 	return maxLocal
+}
+
+func LuckyNumbers(matrix [][]int) []int {
+	m := len(matrix)
+	n := len(matrix[0])
+
+	rowMins := make([]int, m)
+	colMaxes := make([]int, n)
+
+	for i := 0; i < m; i++ {
+		minValue := math.MaxInt
+		for j := 0; j < n; j++ {
+			if matrix[i][j] < minValue {
+				minValue = matrix[i][j]
+			}
+		}
+
+		rowMins[i] = minValue
+	}
+
+	for i := 0; i < n; i++ {
+		maxValue := 0
+
+		for j := 0; j < m; j++ {
+			if matrix[j][i] > maxValue {
+				maxValue = matrix[j][i]
+			}
+		}
+
+		colMaxes[i] = maxValue
+	}
+
+	result := []int{}
+
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			if matrix[i][j] == rowMins[i] && matrix[i][j] == colMaxes[j] {
+				result = append(result, matrix[i][j])
+			}
+		}
+	}
+
+	return result
 }
