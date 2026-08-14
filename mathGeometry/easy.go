@@ -389,3 +389,48 @@ func IsArmstrongNum(n int) bool {
 
 	return result == int64(n)
 }
+
+func isMagic(grid [][]int, r, c int) int {
+	distincts := make(map[int]struct{})
+
+	for i := r; i < r+3; i++ {
+		for j := c; j < c+3; j++ {
+			if _, exists := distincts[grid[i][j]]; exists || grid[i][j] > 9 || grid[i][j] < 1 {
+				return 0
+			}
+
+			distincts[grid[i][j]] = struct{}{}
+		}
+	}
+
+	for i := r; i < r+3; i++ {
+		if grid[i][c]+grid[i][c+1]+grid[i][c+2] != 15 {
+			return 0
+		}
+	}
+
+	for j := c; j < c+3; j++ {
+		if grid[r][j]+grid[r+1][j]+grid[r+2][j] != 15 {
+			return 0
+		}
+	}
+
+	if grid[r][c]+grid[r+1][c+1]+grid[r+2][c+2] != 15 || grid[r][c+2]+grid[r+1][c+1]+grid[r+2][c] != 15 {
+		return 0
+	}
+
+	return 1
+}
+
+func numMagicSquaresInside(grid [][]int) int {
+	rows, cols := len(grid), len(grid[0])
+	count := 0
+
+	for row := 0; row < rows-2; row++ {
+		for col := 0; col < cols-2; col++ {
+			count += isMagic(grid, row, col)
+		}
+	}
+
+	return count
+}
