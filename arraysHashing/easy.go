@@ -648,3 +648,24 @@ func removeElement(nums []int, val int) int {
 
 	return left
 }
+
+func LargestGoodInteger(num string) string {
+	left := 0
+	result := ""
+	count := 0
+
+	for right := 0; right < len(num); right++ {
+		count++
+
+		if num[right] != num[left] || count > 3 {
+			left = right
+			count = 1
+		} else if count == 3 {
+			if num[left:right+1] > result {
+				result = num[left : right+1]
+			}
+		}
+	}
+
+	return result
+}
