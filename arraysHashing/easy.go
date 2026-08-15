@@ -669,3 +669,31 @@ func LargestGoodInteger(num string) string {
 
 	return result
 }
+
+func maxScore(s string) int {
+	numOnes := 0
+
+	for i := 0; i < len(s); i++ {
+		if s[i] == '1' {
+			numOnes++
+		}
+	}
+
+	maxScore := 0
+	zeroesLeft := 0
+
+	for left := 0; left < len(s)-1; left++ {
+
+		if s[left] == '0' {
+			zeroesLeft++
+		} else {
+			numOnes--
+		}
+
+		if zeroesLeft+numOnes > maxScore {
+			maxScore = zeroesLeft + numOnes
+		}
+	}
+
+	return maxScore
+}
