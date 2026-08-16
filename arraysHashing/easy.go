@@ -697,3 +697,29 @@ func maxScore(s string) int {
 
 	return maxScore
 }
+
+func countConsistentStrings(allowed string, words []string) int {
+	count := 0
+	distinct := make(map[byte]struct{})
+
+	for i := 0; i < len(allowed); i++ {
+		distinct[allowed[i]] = struct{}{}
+	}
+
+	for i := 0; i < len(words); i++ {
+		isValid := true
+
+		for j := 0; j < len(words[i]); j++ {
+			if _, exists := distinct[words[i][j]]; !exists {
+				isValid = false
+				break
+			}
+		}
+
+		if isValid {
+			count++
+		}
+	}
+
+	return count
+}
