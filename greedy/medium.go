@@ -445,3 +445,50 @@ func MinimumPushes(word string) int {
 
 	return total
 }
+
+func PredictPartyVictory(senate string) string {
+	radiants := 0
+	dires := 0
+
+	for i := 0; i < len(senate); i++ {
+		if senate[i] == 'D' {
+			dires++
+		} else {
+			radiants++
+		}
+	}
+
+	bSenate := []byte(senate)
+	banR := 0
+	banD := 0
+	i := 0
+
+	for radiants > 0 && dires > 0 {
+		if bSenate[i] == 'R' {
+			if banR > 0 {
+
+				radiants--
+				banR--
+				bSenate[i] = 'X'
+			} else {
+				banD++
+			}
+		} else if bSenate[i] == 'D' {
+			if banD > 0 {
+
+				dires--
+				banD--
+				bSenate[i] = 'X'
+			} else {
+				banR++
+			}
+		}
+
+		i = (i + 1) % len(bSenate)
+	}
+
+	if radiants > 0 {
+		return "Radiant"
+	}
+	return "Dire"
+}
