@@ -723,3 +723,26 @@ func countConsistentStrings(allowed string, words []string) int {
 
 	return count
 }
+
+func minOperations(s string) int {
+	startZero := 0
+	startOne := 0
+
+	for i := 0; i < len(s); i++ {
+		if i%2 == 0 {
+			if s[i] == '1' {
+				startZero++
+			} else {
+				startOne++
+			}
+		} else {
+			if s[i] == '0' {
+				startZero++
+			} else {
+				startOne++
+			}
+		}
+	}
+
+	return min(startZero, startOne)
+}
