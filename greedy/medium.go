@@ -492,3 +492,29 @@ func PredictPartyVictory(senate string) string {
 	}
 	return "Dire"
 }
+
+func maxScore(cardPoints []int, k int) int {
+	n := len(cardPoints)
+	prefixSum := make([]int, n+1)
+	suffixSum := make([]int, n+1)
+
+	for i := 0; i < n; i++ {
+		prefixSum[i+1] = prefixSum[i] + cardPoints[i]
+	}
+
+	for j := 0; j < n; j++ {
+		suffixSum[j+1] = suffixSum[j] + cardPoints[n-1-j]
+	}
+
+	maxPoints := 0
+
+	for x := 0; x <= k; x++ {
+		y := k - x
+		points := prefixSum[x] + suffixSum[y]
+		if points > maxPoints {
+			maxPoints = points
+		}
+	}
+
+	return maxPoints
+}
