@@ -746,3 +746,26 @@ func minOperations(s string) int {
 
 	return min(startZero, startOne)
 }
+
+func makeEqual(words []string) bool {
+	count := [26]int{}
+	n := len(words)
+
+	for i := 0; i < len(words); i++ {
+		for j := 0; j < len(words[i]); j++ {
+			count[words[i][j]-'a']++
+		}
+	}
+
+	for _, value := range count {
+		if value == 0 {
+			continue
+		}
+
+		if value%n != 0 {
+			return false
+		}
+	}
+
+	return true
+}
