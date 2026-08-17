@@ -769,3 +769,20 @@ func makeEqual(words []string) bool {
 
 	return true
 }
+
+func maxLengthBetweenEqualCharacters(s string) int {
+	seen := make(map[byte]int)
+	distance := -1
+
+	for right := 0; right < len(s); right++ {
+		if left, exists := seen[s[right]]; exists {
+			if right-left-1 > distance {
+				distance = right - left - 1
+			}
+		} else {
+			seen[s[right]] = right
+		}
+	}
+
+	return distance
+}
