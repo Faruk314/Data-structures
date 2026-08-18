@@ -518,3 +518,23 @@ func maxScore(cardPoints []int, k int) int {
 
 	return maxPoints
 }
+
+func mergeTriplets(triplets [][]int, target []int) bool {
+	valid := make(map[int]struct{})
+
+	for i := 0; i < len(triplets); i++ {
+
+		if triplets[i][0] > target[0] || triplets[i][1] > target[1] || triplets[i][2] > target[2] {
+			continue
+		}
+
+		for j := 0; j < 3; j++ {
+			if triplets[i][j] == target[j] {
+				valid[j] = struct{}{}
+			}
+		}
+
+	}
+
+	return len(valid) == 3
+}
