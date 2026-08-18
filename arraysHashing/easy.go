@@ -1,6 +1,7 @@
 package arrayshashing
 
 import (
+	"fmt"
 	"math"
 	"sort"
 	"strconv"
@@ -785,4 +786,38 @@ func maxLengthBetweenEqualCharacters(s string) int {
 	}
 
 	return distance
+}
+
+func isPathCrossing(path string) bool {
+	cords := make(map[string]struct{})
+
+	x := 0
+	y := 0
+
+	cords["0,0"] = struct{}{}
+
+	for _, dir := range path {
+		switch dir {
+		case 'W':
+			x -= 1
+		case 'E':
+			x += 1
+
+		case 'N':
+			y += 1
+
+		case 'S':
+			y -= 1
+		}
+
+		newCord := fmt.Sprintf("%d,%d", x, y)
+
+		if _, exists := cords[newCord]; exists {
+			return true
+		}
+		cords[newCord] = struct{}{}
+
+	}
+
+	return false
 }
