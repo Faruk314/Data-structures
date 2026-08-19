@@ -538,3 +538,28 @@ func mergeTriplets(triplets [][]int, target []int) bool {
 
 	return len(valid) == 3
 }
+
+func partitionLabels(s string) []int {
+	lastIndex := [26]int{}
+	for i := 0; i < len(s); i++ {
+		lastIndex[s[i]-'a'] = i
+	}
+
+	left := 0
+	maxEnd := 0
+	result := []int{}
+
+	for right := 0; right < len(s); right++ {
+		charLast := lastIndex[s[right]-'a']
+		if charLast > maxEnd {
+			maxEnd = charLast
+		}
+
+		if right == maxEnd {
+			result = append(result, right-left+1)
+			left = right + 1
+		}
+	}
+
+	return result
+}
