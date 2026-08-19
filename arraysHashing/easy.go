@@ -821,3 +821,27 @@ func isPathCrossing(path string) bool {
 
 	return false
 }
+
+func intersection(nums1 []int, nums2 []int) []int {
+	set := make(map[int]struct{})
+
+	for i := 0; i < len(nums1); i++ {
+		set[nums1[i]] = struct{}{}
+	}
+
+	resultSet := make(map[int]struct{})
+
+	for i := 0; i < len(nums2); i++ {
+		if _, exists := set[nums2[i]]; exists {
+			resultSet[nums2[i]] = struct{}{}
+		}
+	}
+
+	result := []int{}
+
+	for value := range resultSet {
+		result = append(result, value)
+	}
+
+	return result
+}
