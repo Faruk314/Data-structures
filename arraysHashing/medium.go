@@ -1304,3 +1304,27 @@ func (this *Toe) Move(row, col, pIdx int) int {
 
 	return 0
 }
+
+func groupShiftedStrings(stringsList []string) [][]string {
+	sequenceGroup := make(map[string][]string)
+
+	for _, str := range stringsList {
+		var sequence strings.Builder
+
+		for j := 1; j < len(str); j++ {
+			diff := (int(str[j]) - int(str[j-1]) + 26) % 26
+			sequence.WriteString(strconv.Itoa(diff))
+			sequence.WriteByte(',')
+		}
+
+		key := sequence.String()
+		sequenceGroup[key] = append(sequenceGroup[key], str)
+	}
+
+	result := make([][]string, 0, len(sequenceGroup))
+	for _, group := range sequenceGroup {
+		result = append(result, group)
+	}
+
+	return result
+}
