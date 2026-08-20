@@ -859,3 +859,21 @@ func numIdenticalPairs(nums []int) int {
 
 	return count
 }
+
+func LargestUnique(nums []int) int {
+	numCount := make(map[int]int)
+
+	for _, num := range nums {
+		numCount[num]++
+	}
+
+	maxNum := -1
+
+	for num, count := range numCount {
+		if count == 1 && num > maxNum {
+			maxNum = num
+		}
+	}
+
+	return maxNum
+}
