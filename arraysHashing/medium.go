@@ -1328,3 +1328,24 @@ func groupShiftedStrings(stringsList []string) [][]string {
 
 	return result
 }
+
+func minimumIndex(nums []int) int {
+	totalCount := make(map[int]int)
+
+	for i := 0; i < len(nums); i++ {
+		totalCount[nums[i]]++
+	}
+
+	leftCount := make(map[int]int)
+
+	for i := 0; i < len(nums); i++ {
+		totalCount[nums[i]]--
+		leftCount[nums[i]]++
+
+		if leftCount[nums[i]]*2 > i+1 && totalCount[nums[i]]*2 > len(nums)-i-1 {
+			return i
+		}
+	}
+
+	return -1
+}
