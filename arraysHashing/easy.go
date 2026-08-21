@@ -911,3 +911,31 @@ func wordPattern(pattern string, s string) bool {
 
 	return true
 }
+
+func firstUniqChar(s string) int {
+	order := make(map[byte][2]int)
+
+	for i := 0; i < len(s); i++ {
+		if data, exists := order[s[i]]; exists {
+			data[0]++
+			data[1] = i
+			order[s[i]] = data
+		} else {
+			order[s[i]] = [2]int{1, i}
+		}
+	}
+
+	minIdx := len(s)
+
+	for _, data := range order {
+		if data[0] == 1 && data[1] < minIdx {
+			minIdx = data[1]
+		}
+	}
+
+	if minIdx == len(s) {
+		return -1
+	}
+
+	return minIdx
+}
