@@ -460,3 +460,45 @@ func insertGreatestCommonDivisors(head *Node) *Node {
 
 	return dummy.Next
 }
+
+func nodesBetweenCriticalPoints(head *Node) []int {
+	if head == nil || head.Next == nil || head.Next.Next == nil {
+		return []int{-1, -1}
+	}
+
+	nodeOne := head
+	result := []int{-1, -1}
+	currIdx := 0
+	secondCriticalIdx := 0
+	firstCriticalIdx := -1
+
+	for nodeOne.Next != nil && nodeOne.Next.Next != nil {
+		middleNode := nodeOne.Next
+		nodeThree := nodeOne.Next.Next
+
+		isLocalMax := middleNode.Value > nodeOne.Value && middleNode.Value > nodeThree.Value
+		isLocalMin := middleNode.Value < nodeOne.Value && middleNode.Value < nodeThree.Value
+
+		if isLocalMax || isLocalMin {
+			if firstCriticalIdx == -1 {
+				firstCriticalIdx = currIdx
+			} else {
+				result[1] = currIdx - firstCriticalIdx
+
+				currDist := currIdx - secondCriticalIdx
+
+				if result[0] == -1 || currDist < result[0] {
+					result[0] = currDist
+				}
+
+			}
+
+			secondCriticalIdx = currIdx
+		}
+
+		nodeOne = nodeOne.Next
+		currIdx++
+	}
+
+	return result
+}
