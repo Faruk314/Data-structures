@@ -2,6 +2,7 @@ package greedy
 
 import (
 	"fmt"
+	"golang/stack"
 	"math"
 	"sort"
 )
@@ -562,4 +563,53 @@ func partitionLabels(s string) []int {
 	}
 
 	return result
+}
+
+func removePairs(s string, target string, score int) (string, int) {
+	st := stack.Stack[byte]{}
+	gainedScore := 0
+
+	firstChar := target[0]
+	secondChar := target[1]
+
+	for i := 0; i < len(s); i++ {
+		char := s[i]
+		top, exists := st.Peek()
+
+		if exists && top == firstChar && char == secondChar {
+			st.Pop()
+			gainedScore += score
+		} else {
+			st.Push(char)
+		}
+	}
+
+	remaining := make([]byte, len(st))
+
+	for i := len(st) - 1; i >= 0; i-- {
+		char, _ := st.Pop()
+		remaining[i] = char
+	}
+
+	return string(remaining), gainedScore
+}
+
+func maxGain(s string, x int, y int) int {
+	firstPair, firstScore := "ab", x
+	secondPair, secondScore := "ba", y
+
+	if y > x {
+		firstPair, firstScore = "ba", y
+		secondPair, secondScore = "ab", x
+	}
+
+	totalScore := 0
+
+	sAfterFirstPass, score1 := removePairs(s, firstPair, firstScore)
+	totalScore += score1
+
+	_, score2 := removePairs(sAfterFirstPass, secondPair, secondScore)
+	totalScore += score2
+
+	return totalScore
 }
