@@ -613,3 +613,30 @@ func maxGain(s string, x int, y int) int {
 
 	return totalScore
 }
+
+func winnerOfGame(colors string) bool {
+	alicePairs := 0
+	bobPairs := 0
+
+	left := 0
+
+	for right := 0; right < len(colors); right++ {
+		if right-left+1 == 3 {
+			pattern := colors[left : right+1]
+
+			if pattern == "AAA" {
+				alicePairs++
+			} else if pattern == "BBB" {
+				bobPairs++
+			}
+
+			left++
+		}
+	}
+
+	if alicePairs > bobPairs {
+		return true
+	}
+
+	return false
+}
