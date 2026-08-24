@@ -955,3 +955,19 @@ func divideArray(nums []int) bool {
 
 	return true
 }
+
+func destCity(paths [][]string) string {
+	flightMap := make(map[string]string)
+
+	for i := 0; i < len(paths); i++ {
+		flightMap[paths[i][0]] = paths[i][1]
+	}
+
+	for i := 0; i < len(paths); i++ {
+		if _, exists := flightMap[paths[i][1]]; !exists {
+			return paths[i][1]
+		}
+	}
+
+	return ""
+}
