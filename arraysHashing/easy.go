@@ -986,3 +986,36 @@ func heightChecker(heights []int) int {
 
 	return count
 }
+
+func CommonChars(words []string) []string {
+	common := [26]int{}
+
+	for i := 0; i < len(words[0]); i++ {
+		common[words[0][i]-'a']++
+	}
+
+	for i := 1; i < len(words); i++ {
+		newCommon := [26]int{}
+
+		for j := 0; j < len(words[i]); j++ {
+			if common[words[i][j]-'a'] > 0 {
+				common[words[i][j]-'a']--
+				newCommon[words[i][j]-'a']++
+			}
+		}
+
+		common = newCommon
+	}
+
+	result := []string{}
+
+	for i := 0; i < 26; i++ {
+		if common[i] > 0 {
+			for j := 0; j < common[i]; j++ {
+				result = append(result, string(i+'a'))
+			}
+		}
+	}
+
+	return result
+}
