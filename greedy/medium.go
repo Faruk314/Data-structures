@@ -640,3 +640,21 @@ func winnerOfGame(colors string) bool {
 
 	return false
 }
+
+func minimumDeletions(s string) int {
+	st := stack.Stack[byte]{}
+	count := 0
+
+	for i := 0; i < len(s); i++ {
+		char := s[i]
+
+		if char == 'a' && !st.IsEmpty() {
+			st.Pop()
+			count++
+		} else if char == 'b' {
+			st.Push(char)
+		}
+	}
+
+	return count
+}
