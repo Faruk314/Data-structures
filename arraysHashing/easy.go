@@ -3,6 +3,7 @@ package arrayshashing
 import (
 	"fmt"
 	"math"
+	"slices"
 	"sort"
 	"strconv"
 	"strings"
@@ -970,4 +971,18 @@ func destCity(paths [][]string) string {
 	}
 
 	return ""
+}
+
+func heightChecker(heights []int) int {
+	sorted := slices.Clone(heights)
+	slices.Sort(sorted)
+	count := 0
+
+	for i := 0; i < len(heights); i++ {
+		if sorted[i] != heights[i] {
+			count++
+		}
+	}
+
+	return count
 }
