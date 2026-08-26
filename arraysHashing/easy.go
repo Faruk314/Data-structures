@@ -1019,3 +1019,31 @@ func CommonChars(words []string) []string {
 
 	return result
 }
+
+func ShortestWordDistance(words []string, word1 string, word2 string) int {
+	minDist := len(words)
+	idx1, idx2 := -1, -1
+
+	for idx, word := range words {
+
+		if word == word1 {
+			idx1 = idx
+		} else if word == word2 {
+			idx2 = idx
+		}
+
+		if idx1 != -1 && idx2 != -1 {
+			dist := idx1 - idx2
+
+			if dist < 0 {
+				dist = -dist
+			}
+
+			if dist < minDist {
+				minDist = dist
+			}
+		}
+	}
+
+	return minDist
+}
