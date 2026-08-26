@@ -1047,3 +1047,25 @@ func ShortestWordDistance(words []string, word1 string, word2 string) int {
 
 	return minDist
 }
+
+func countStudents(students []int, sandwiches []int) int {
+	rotations := 0
+
+	for len(students) > 0 {
+		if rotations == len(students) {
+			break
+		}
+
+		if students[0] == sandwiches[0] {
+			students = students[1:]
+			sandwiches = sandwiches[1:]
+			rotations = 0
+		} else {
+			front := students[0]
+			students = append(students[1:], front)
+			rotations++
+		}
+	}
+
+	return len(students)
+}
