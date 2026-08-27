@@ -658,3 +658,29 @@ func minimumDeletions(s string) int {
 
 	return count
 }
+
+func minDeletions(s string) int {
+	freq := [26]int{}
+
+	for i := 0; i < len(s); i++ {
+		freq[s[i]-'a']++
+	}
+
+	usedFreq := make(map[int]struct{})
+	res := 0
+
+	for _, count := range freq {
+		for count > 0 {
+			if _, exists := usedFreq[count]; !exists {
+				break
+			}
+
+			count--
+			res++
+		}
+
+		usedFreq[count] = struct{}{}
+	}
+
+	return res
+}
