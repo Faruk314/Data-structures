@@ -1069,3 +1069,28 @@ func countStudents(students []int, sandwiches []int) int {
 
 	return len(students)
 }
+
+func timeRequiredToBuy(tickets []int, k int) int {
+	time := 0
+
+	for len(tickets) > 0 {
+		tickets[0]--
+		time++
+
+		if tickets[0] == 0 {
+			if k == 0 {
+				break
+			}
+
+			tickets = tickets[1:]
+		} else {
+			front := tickets[0]
+			tickets = append(tickets[1:], front)
+		}
+
+		k = (k - 1 + len(tickets)) % len(tickets)
+
+	}
+
+	return time
+}
