@@ -1094,3 +1094,26 @@ func timeRequiredToBuy(tickets []int, k int) int {
 
 	return time
 }
+
+func SingleRowKeyboard(keyboard, word string) int {
+	charToIndex := [26]int{}
+
+	for i := 0; i < len(keyboard); i++ {
+		charToIndex[keyboard[i]-'a'] = i
+	}
+
+	totalTime := charToIndex[word[0]-'a']
+
+	for i := 1; i < len(word); i++ {
+		time := charToIndex[word[i]-'a'] - charToIndex[word[i-1]-'a']
+
+		if time < 0 {
+			time = -time
+		}
+
+		totalTime += time
+
+	}
+
+	return totalTime
+}
