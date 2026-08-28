@@ -684,3 +684,34 @@ func minDeletions(s string) int {
 
 	return res
 }
+
+func numberOfBeams(bank []string) int {
+	leftCount := 0
+
+	for i := 0; i < len(bank[0]); i++ {
+		if bank[0][i] == '1' {
+			leftCount++
+		}
+	}
+
+	totalCount := 0
+
+	for right := 1; right < len(bank); right++ {
+		rightCount := 0
+
+		for j := 0; j < len(bank[right]); j++ {
+			if bank[right][j] == '1' {
+				rightCount++
+			}
+		}
+
+		if rightCount > 0 && leftCount > 0 {
+			totalCount += leftCount * rightCount
+			leftCount = rightCount
+		} else if rightCount > 0 && leftCount == 0 {
+			leftCount = rightCount
+		}
+	}
+
+	return totalCount
+}
