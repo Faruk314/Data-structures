@@ -1117,3 +1117,21 @@ func SingleRowKeyboard(keyboard, word string) int {
 
 	return totalTime
 }
+
+func findLucky(arr []int) int {
+	freq := make(map[int]int)
+
+	for _, num := range arr {
+		freq[num]++
+	}
+
+	max := -1
+
+	for key, value := range freq {
+		if key == value && value > max {
+			max = value
+		}
+	}
+
+	return max
+}
