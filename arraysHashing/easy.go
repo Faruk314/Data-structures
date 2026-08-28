@@ -1135,3 +1135,33 @@ func findLucky(arr []int) int {
 
 	return max
 }
+
+func CountCharacters(words []string, chars string) int {
+	charFreq := [26]int{}
+
+	for i := 0; i < len(chars); i++ {
+		charFreq[chars[i]-'a']++
+	}
+
+	sum := 0
+
+	for i := 0; i < len(words); i++ {
+		isValid := true
+		freq := charFreq
+
+		for j := 0; j < len(words[i]); j++ {
+			if freq[words[i][j]-'a'] > 0 {
+				freq[words[i][j]-'a']--
+			} else {
+				isValid = false
+				break
+			}
+		}
+
+		if isValid {
+			sum += len(words[i])
+		}
+	}
+
+	return sum
+}
