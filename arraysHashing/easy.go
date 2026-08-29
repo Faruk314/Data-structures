@@ -1194,3 +1194,24 @@ func numUniqueEmails(emails []string) int {
 
 	return len(uniques)
 }
+
+func isCircularSentence(sentence string) bool {
+	words := strings.Fields(sentence)
+
+	if sentence[0] != sentence[len(sentence)-1] {
+		return false
+	}
+
+	for i := 0; i < len(words); i++ {
+
+		if i+1 > len(words)-1 {
+			break
+		}
+
+		if words[i][len(words[i])-1] != words[i+1][0] {
+			return false
+		}
+	}
+
+	return true
+}
