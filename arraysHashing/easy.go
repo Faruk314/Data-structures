@@ -1165,3 +1165,32 @@ func CountCharacters(words []string, chars string) int {
 
 	return sum
 }
+
+func numUniqueEmails(emails []string) int {
+	uniques := make(map[string]struct{})
+
+	for i := 0; i < len(emails); i++ {
+		var str strings.Builder
+		inDomain := true
+		ignoreLocal := false
+
+		for j := 0; j < len(emails[i]); j++ {
+			char := emails[i][j]
+
+			if char == '@' {
+				inDomain = false
+			} else if inDomain {
+				str.WriteByte(char)
+			} else if char == '+' {
+				ignoreLocal = true
+			} else if !ignoreLocal && char != '+' {
+				str.WriteByte(char)
+			}
+
+		}
+
+		uniques[str.String()] = struct{}{}
+	}
+
+	return len(uniques)
+}
