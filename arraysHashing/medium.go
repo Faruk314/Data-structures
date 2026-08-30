@@ -1349,3 +1349,141 @@ func minimumIndex(nums []int) int {
 
 	return -1
 }
+
+func markRow(row []int) bool {
+	left := 0
+	found := false
+
+	for right := 1; right < len(row); right++ {
+		isLast := right == len(row)-1
+		isMatch := row[left] != 0 &&
+			row[right] != 0 &&
+			abs(row[right]) == abs(row[left])
+
+		if !isMatch || isLast {
+			runLen := right - left
+
+			if isLast && isMatch {
+				runLen++
+			}
+
+			if runLen >= 3 {
+				end := right
+
+				if isLast && isMatch {
+					end++
+				}
+
+				for i := left; i < end; i++ {
+					row[i] = -abs(row[i])
+				}
+
+				found = true
+			}
+
+			if !isMatch {
+				left = right
+			}
+		}
+	}
+
+	return found
+}
+
+func markCol(grid [][]int, col int) bool {
+	top := 0
+	found := false
+
+	for bottom := 1; bottom < len(grid); bottom++ {
+		isLast := bottom == len(grid)-1
+		isMatch := grid[top][col] != 0 &&
+			grid[bottom][col] != 0 &&
+			abs(grid[bottom][col]) == abs(grid[top][col])
+
+		if !isMatch || isLast {
+			runLen := bottom - top
+
+			if isLast && isMatch {
+				runLen++
+			}
+
+			if runLen >= 3 {
+				end := bottom
+
+				if isLast && isMatch {
+					end++
+				}
+
+				for i := top; i < end; i++ {
+					grid[i][col] = -abs(grid[i][col])
+				}
+
+				found = true
+			}
+
+			if !isMatch {
+				top = bottom
+			}
+		}
+	}
+
+	return found
+}
+
+func crush(grid [][]int) {
+	for row := 0; row < len(grid); row++ {
+		for col := 0; col < len(grid[row]); col++ {
+			if grid[row][col] < 0 {
+				grid[row][col] = 0
+			}
+		}
+	}
+}
+
+func gravity(grid [][]int) {
+	rows := len(grid)
+	cols := len(grid[0])
+
+	for col := 0; col < cols; col++ {
+		write := rows - 1
+
+		for row := rows - 1; row >= 0; row-- {
+			if grid[row][col] != 0 {
+				grid[write][col] = grid[row][col]
+				write--
+			}
+		}
+
+		for row := write; row >= 0; row-- {
+			grid[row][col] = 0
+		}
+	}
+}
+
+func CandyCrush(grid [][]int) [][]int {
+	for {
+		found := false
+
+		for row := 0; row < len(grid); row++ {
+			if markRow(grid[row]) {
+				found = true
+			}
+		}
+
+		for col := 0; col < len(grid[0]); col++ {
+			if markCol(grid, col) {
+				found = true
+			}
+		}
+
+		if !found {
+			break
+		}
+
+		crush(grid)
+
+		gravity(grid)
+	}
+
+	return grid
+}
