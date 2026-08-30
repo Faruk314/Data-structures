@@ -1215,3 +1215,20 @@ func isCircularSentence(sentence string) bool {
 
 	return true
 }
+
+func strStr(haystack string, needle string) int {
+	left := 0
+
+	for right := 0; right < len(haystack); right++ {
+		if right-left+1 == len(needle) {
+
+			if haystack[left:right+1] == needle {
+				return left
+			}
+
+			left++
+		}
+	}
+
+	return -1
+}
