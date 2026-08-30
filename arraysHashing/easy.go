@@ -1232,3 +1232,31 @@ func strStr(haystack string, needle string) int {
 
 	return -1
 }
+
+func findDifference(nums1 []int, nums2 []int) [][]int {
+	result := make([][]int, 2)
+	uniquesTwo := make(map[int]struct{})
+	uniquesOne := make(map[int]struct{})
+
+	for _, num := range nums1 {
+		uniquesOne[num] = struct{}{}
+	}
+
+	for _, num := range nums2 {
+		uniquesTwo[num] = struct{}{}
+	}
+
+	for num := range uniquesOne {
+		if _, exists := uniquesTwo[num]; !exists {
+			result[0] = append(result[0], num)
+		}
+	}
+
+	for num := range uniquesTwo {
+		if _, exists := uniquesOne[num]; !exists {
+			result[1] = append(result[1], num)
+		}
+	}
+
+	return result
+}
