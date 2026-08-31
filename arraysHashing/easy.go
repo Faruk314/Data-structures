@@ -2,6 +2,7 @@ package arrayshashing
 
 import (
 	"fmt"
+	"golang/stack"
 	"math"
 	"slices"
 	"sort"
@@ -1275,4 +1276,35 @@ func majorityElement(nums []int) int {
 	}
 
 	return 0
+}
+
+func nextGreaterElement(nums1 []int, nums2 []int) []int {
+	st := stack.Stack[int]{}
+	nextGreater := make(map[int]int)
+
+	for _, num := range nums2 {
+		for !st.IsEmpty() {
+			top, _ := st.Peek()
+			if top > num {
+				break
+			}
+
+			el, _ := st.Pop()
+			nextGreater[el] = num
+		}
+
+		st.Push(num)
+	}
+
+	result := make([]int, len(nums1))
+
+	for i, num := range nums1 {
+		if val, exists := nextGreater[num]; exists {
+			result[i] = val
+		} else {
+			result[i] = -1
+		}
+	}
+
+	return result
 }
