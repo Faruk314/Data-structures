@@ -1260,3 +1260,19 @@ func findDifference(nums1 []int, nums2 []int) [][]int {
 
 	return result
 }
+
+func majorityElement(nums []int) int {
+	freq := make(map[int]int)
+
+	for _, num := range nums {
+		freq[num]++
+	}
+
+	for num, count := range freq {
+		if count > len(nums)/2 {
+			return num
+		}
+	}
+
+	return 0
+}
