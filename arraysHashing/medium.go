@@ -1487,3 +1487,20 @@ func CandyCrush(grid [][]int) [][]int {
 
 	return grid
 }
+
+func findDuplicates(nums []int) []int {
+	duplicates := []int{}
+
+	for _, num := range nums {
+		val := abs(num)
+		idx := val - 1
+
+		if nums[idx] < 0 {
+			duplicates = append(duplicates, val)
+		} else {
+			nums[idx] = -nums[idx]
+		}
+	}
+
+	return duplicates
+}
