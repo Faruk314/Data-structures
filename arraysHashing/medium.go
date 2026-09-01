@@ -1504,3 +1504,21 @@ func findDuplicates(nums []int) []int {
 
 	return duplicates
 }
+
+func partitionString(s string) int {
+	count := 1
+	freq := [26]int{}
+
+	for right := 0; right < len(s); right++ {
+		freq[s[right]-'a']++
+
+		if freq[s[right]-'a'] > 1 {
+			count++
+			freq = [26]int{}
+			freq[s[right]-'a']++
+
+		}
+	}
+
+	return count
+}
