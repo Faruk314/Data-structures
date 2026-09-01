@@ -1522,3 +1522,28 @@ func partitionString(s string) int {
 
 	return count
 }
+
+func findMatrix(nums []int) [][]int {
+	freq := make(map[int]int)
+	max := 0
+
+	for _, num := range nums {
+		freq[num]++
+	}
+
+	for _, count := range freq {
+		if count > max {
+			max = count
+		}
+	}
+
+	result := make([][]int, max)
+
+	for num, count := range freq {
+		for i := 0; i < count; i++ {
+			result[i] = append(result[i], num)
+		}
+	}
+
+	return result
+}
