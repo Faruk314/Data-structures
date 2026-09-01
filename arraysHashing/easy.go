@@ -1308,3 +1308,35 @@ func nextGreaterElement(nums1 []int, nums2 []int) []int {
 
 	return result
 }
+
+func uncommonFromSentences(s1 string, s2 string) []string {
+	uniqueWords1 := make(map[string]int)
+	uniqueWords2 := make(map[string]int)
+
+	words1 := strings.Fields(s1)
+	words2 := strings.Fields(s2)
+
+	for i := 0; i < len(words1); i++ {
+		uniqueWords1[words1[i]]++
+	}
+
+	for i := 0; i < len(words2); i++ {
+		uniqueWords2[words2[i]]++
+	}
+
+	result := []string{}
+
+	for word, count := range uniqueWords1 {
+		if _, exists := uniqueWords2[word]; !exists && count == 1 {
+			result = append(result, word)
+		}
+	}
+
+	for word, count := range uniqueWords2 {
+		if _, exists := uniqueWords1[word]; !exists && count == 1 {
+			result = append(result, word)
+		}
+	}
+
+	return result
+}
