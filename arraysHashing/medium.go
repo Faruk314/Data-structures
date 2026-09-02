@@ -1547,3 +1547,25 @@ func findMatrix(nums []int) [][]int {
 
 	return result
 }
+
+func getSumAbsoluteDifferences(nums []int) []int {
+	totalSum := 0
+	leftSum := 0
+
+	for _, num := range nums {
+		totalSum += num
+	}
+
+	result := make([]int, len(nums))
+
+	for i, num := range nums {
+		leftSize, rightSize := i, len(nums)-i-1
+		rightSum := totalSum - leftSum - num
+
+		result[i] = leftSize*num - leftSum + rightSum - rightSize*num
+
+		leftSum += num
+	}
+
+	return result
+}
