@@ -1357,3 +1357,20 @@ func arraySign(nums []int) int {
 
 	return sign
 }
+
+func isArraySpecial(nums []int) bool {
+	if len(nums) == 1 {
+		return true
+	}
+
+	for i := 1; i < len(nums); i++ {
+		twoOdd := nums[i]%2 == 0 && nums[i-1]%2 == 0
+		twoEven := nums[i]%2 != 0 && nums[i-1]%2 != 0
+
+		if twoOdd || twoEven {
+			return false
+		}
+	}
+
+	return true
+}
