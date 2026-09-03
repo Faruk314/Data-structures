@@ -1392,3 +1392,19 @@ func NumArrayConstructor(nums []int) NumArray {
 func (this *NumArray) SumRange(left int, right int) int {
 	return this.prefixSums[right+1] - this.prefixSums[left]
 }
+
+func check(nums []int) bool {
+	drop := 0
+
+	for i := 0; i < len(nums); i++ {
+		if nums[i] > nums[(i+1)%len(nums)] {
+			drop++
+		}
+
+		if drop > 1 {
+			return false
+		}
+	}
+
+	return true
+}
