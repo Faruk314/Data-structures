@@ -1374,3 +1374,21 @@ func isArraySpecial(nums []int) bool {
 
 	return true
 }
+
+type NumArray struct {
+	prefixSums []int
+}
+
+func NumArrayConstructor(nums []int) NumArray {
+	prefix := make([]int, len(nums)+1)
+
+	for i, num := range nums {
+		prefix[i+1] = prefix[i] + num
+	}
+
+	return NumArray{prefixSums: prefix}
+}
+
+func (this *NumArray) SumRange(left int, right int) int {
+	return this.prefixSums[right+1] - this.prefixSums[left]
+}
