@@ -3,6 +3,7 @@ package arrayshashing
 import (
 	"container/list"
 	"fmt"
+	"golang/stack"
 	"math"
 	"sort"
 	"strconv"
@@ -1568,4 +1569,30 @@ func getSumAbsoluteDifferences(nums []int) []int {
 	}
 
 	return result
+}
+
+func minSwaps(s string) int {
+	st := stack.Stack[byte]{}
+
+	for i := 0; i < len(s); i++ {
+		char := s[i]
+		if !st.IsEmpty() {
+			top, _ := st.Peek()
+
+			if top == '[' && char == ']' {
+				st.Pop()
+				continue
+			}
+		}
+
+		st.Push(char)
+	}
+
+	if len(st) == 0 {
+		return 0
+	}
+
+	unmatched := len(st) / 2
+
+	return (unmatched + 1) / 2
 }
