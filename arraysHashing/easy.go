@@ -1428,3 +1428,26 @@ func longestPalindrome(s string) int {
 
 	return count
 }
+
+func isMonotonic(nums []int) bool {
+	isIncreasing := true
+
+	for i := 1; i < len(nums); i++ {
+		if nums[i] < nums[i-1] {
+			isIncreasing = false
+			break
+		}
+	}
+
+	if isIncreasing {
+		return true
+	}
+
+	for i := 1; i < len(nums); i++ {
+		if nums[i] > nums[i-1] {
+			return false
+		}
+	}
+
+	return true
+}
