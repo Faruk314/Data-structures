@@ -1596,3 +1596,37 @@ func minSwaps(s string) int {
 
 	return (unmatched + 1) / 2
 }
+
+func minRemoveToMakeValid(s string) string {
+	st := stack.Stack[int]{}
+	toRemove := make(map[int]struct{})
+
+	for i := 0; i < len(s); i++ {
+		char := s[i]
+
+		if char == '(' {
+			st.Push(i)
+		} else if char == ')' {
+			if !st.IsEmpty() {
+				st.Pop()
+			} else {
+				toRemove[i] = struct{}{}
+			}
+		}
+
+	}
+
+	for i := 0; i < len(st); i++ {
+		toRemove[st[i]] = struct{}{}
+	}
+
+	var result strings.Builder
+
+	for i := 0; i < len(s); i++ {
+		if _, exists := toRemove[i]; !exists {
+			result.WriteByte(s[i])
+		}
+	}
+
+	return result.String()
+}
