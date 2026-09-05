@@ -1408,3 +1408,23 @@ func check(nums []int) bool {
 
 	return true
 }
+
+func longestPalindrome(s string) int {
+	chars := make(map[byte]struct{})
+	count := 0
+
+	for i := 0; i < len(s); i++ {
+		if _, exists := chars[s[i]]; exists {
+			count += 2
+			delete(chars, s[i])
+		} else {
+			chars[s[i]] = struct{}{}
+		}
+	}
+
+	if len(chars) > 0 {
+		return count + 1
+	}
+
+	return count
+}
