@@ -728,3 +728,29 @@ func maximumElementAfterDecrementingAndRearranging(arr []int) int {
 
 	return arr[len(arr)-1]
 }
+
+func deckRevealedIncreasing(deck []int) []int {
+	n := len(deck)
+	sort.Ints(deck)
+
+	res := make([]int, n)
+
+	cardIdx := 0
+	resIdx := 0
+	skip := false
+
+	for cardIdx < n {
+		if res[resIdx] == 0 {
+			if !skip {
+				res[resIdx] = deck[cardIdx]
+				cardIdx++
+			}
+
+			skip = !skip
+		}
+
+		resIdx = (resIdx + 1) % n
+	}
+
+	return res
+}
