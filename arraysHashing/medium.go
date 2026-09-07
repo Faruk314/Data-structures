@@ -1646,3 +1646,35 @@ func DivideArray(nums []int, k int) [][]int {
 
 	return result
 }
+
+func countPalindromicSubsequence(s string) int {
+	left := make(map[byte]bool)
+	right := make(map[byte]int)
+	result := make(map[[3]byte]struct{})
+
+	for i := 0; i < len(s); i++ {
+		right[s[i]]++
+	}
+
+	for i := 0; i < len(s); i++ {
+		mid := s[i]
+		right[mid]--
+
+		if right[mid] == 0 {
+			delete(right, mid)
+		}
+
+		for j := 0; j < 26; j++ {
+			outer := byte(j) + 'a'
+
+			if right[outer] > 0 && left[outer] {
+				result[[3]byte{outer, mid, outer}] = struct{}{}
+			}
+
+		}
+
+		left[mid] = true
+	}
+
+	return len(result)
+}
