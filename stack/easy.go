@@ -93,3 +93,25 @@ func minOperations(logs []string) int {
 
 	return depth
 }
+
+func finalPrices(prices []int) []int {
+	stack := Stack[int]{}
+
+	for idx, price := range prices {
+
+		for !stack.IsEmpty() {
+			top, _ := stack.Peek()
+
+			if prices[top] < price {
+				break
+			}
+
+			prices[top] = prices[top] - price
+			stack.Pop()
+		}
+
+		stack.Push(idx)
+	}
+
+	return prices
+}
