@@ -3,6 +3,7 @@ package stack
 import (
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 func CalPoints(operations []string) int {
@@ -114,4 +115,30 @@ func finalPrices(prices []int) []int {
 	}
 
 	return prices
+}
+
+func makeGood(s string) string {
+	st := Stack[byte]{}
+
+	for i := 0; i < len(s); i++ {
+
+		if !st.IsEmpty() {
+			top, _ := st.Peek()
+
+			if top != s[i] && unicode.ToLower(rune(top)) == unicode.ToLower(rune(s[i])) {
+				st.Pop()
+				continue
+			}
+		}
+
+		st.Push(s[i])
+	}
+
+	var result strings.Builder
+
+	for i := 0; i < len(st); i++ {
+		result.WriteByte(st[i])
+	}
+
+	return result.String()
 }
