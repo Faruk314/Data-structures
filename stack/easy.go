@@ -142,3 +142,23 @@ func makeGood(s string) string {
 
 	return result.String()
 }
+
+func minLength(s string) int {
+	st := Stack[byte]{}
+
+	for i := 0; i < len(s); i++ {
+
+		if !st.IsEmpty() {
+			top, _ := st.Peek()
+
+			if top == 'A' && s[i] == 'B' || top == 'C' && s[i] == 'D' {
+				st.Pop()
+				continue
+			}
+		}
+
+		st.Push(s[i])
+	}
+
+	return len(st)
+}
