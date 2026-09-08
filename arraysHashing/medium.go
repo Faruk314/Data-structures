@@ -1678,3 +1678,27 @@ func countPalindromicSubsequence(s string) int {
 
 	return len(result)
 }
+
+func minOperationsToMakeArrayEmpty(nums []int) int {
+	freq := make(map[int]int)
+
+	for i := 0; i < len(nums); i++ {
+		freq[nums[i]]++
+	}
+
+	total := 0
+
+	for _, count := range freq {
+		if count == 1 {
+			return -1
+		}
+
+		if count%3 == 0 {
+			total += count / 3
+		} else {
+			total += count/3 + 1
+		}
+	}
+
+	return total
+}
