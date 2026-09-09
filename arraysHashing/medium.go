@@ -1702,3 +1702,21 @@ func minOperationsToMakeArrayEmpty(nums []int) int {
 
 	return total
 }
+
+func countBadPairs(nums []int) int64 {
+	groups := make(map[int]int)
+
+	var totalPairs int64
+	var goodPairs int64
+
+	for i, num := range nums {
+		totalPairs += int64(i)
+
+		key := num - i
+
+		goodPairs += int64(groups[key])
+		groups[key]++
+	}
+
+	return totalPairs - goodPairs
+}
