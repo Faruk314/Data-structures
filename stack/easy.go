@@ -188,3 +188,21 @@ func clearDigits(s string) string {
 
 	return result.String()
 }
+
+func crawlerLogFolder(logs []string) int {
+	st := Stack[string]{}
+
+	for i := 0; i < len(logs); i++ {
+		if logs[i] == "../" {
+			if !st.IsEmpty() {
+				st.Pop()
+			}
+		} else if logs[i] == "./" {
+			continue
+		} else {
+			st.Push(logs[i])
+		}
+	}
+
+	return len(st)
+}
