@@ -754,3 +754,48 @@ func deckRevealedIncreasing(deck []int) []int {
 
 	return res
 }
+
+func repeatLimitedString(s string, repeatLimit int) string {
+	freq := [26]int{}
+
+	for i := 0; i < len(s); i++ {
+		freq[s[i]-'a']++
+	}
+
+	result := make([]byte, 0, len(s))
+	start := 25
+
+	for start >= 0 {
+		if freq[start] == 0 {
+
+			start--
+			continue
+		}
+
+		limit := min(freq[start], repeatLimit)
+
+		for i := 0; i < limit; i++ {
+			result = append(result, byte(start)+'a')
+		}
+
+		freq[start] -= limit
+
+		if freq[start] > 0 {
+			breaker := start - 1
+
+			for breaker >= 0 && freq[breaker] == 0 {
+				breaker--
+			}
+
+			if breaker < 0 {
+				break
+			}
+
+			result = append(result, byte(breaker)+'a')
+			freq[breaker]--
+
+		}
+	}
+
+	return string(result)
+}
