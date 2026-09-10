@@ -434,3 +434,24 @@ func numMagicSquaresInside(grid [][]int) int {
 
 	return count
 }
+
+func totalMoney(n int) int {
+	increment := 1
+	idx := 0
+	total := 0
+
+	for n > 0 {
+		total += idx + increment
+
+		if idx == 6 {
+			increment += 1
+			idx = 0
+		} else {
+			idx++
+		}
+
+		n--
+	}
+
+	return total
+}
