@@ -1720,3 +1720,18 @@ func countBadPairs(nums []int) int64 {
 
 	return totalPairs - goodPairs
 }
+
+func interchangeableRectangles(rectangles [][]int) int64 {
+	pairs := make(map[float64]int)
+	var count int64
+
+	for _, rec := range rectangles {
+
+		key := float64(rec[0]) / float64(rec[1])
+		count += int64(pairs[key])
+		pairs[key]++
+
+	}
+
+	return count
+}
