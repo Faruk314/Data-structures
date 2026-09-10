@@ -1,6 +1,9 @@
 package mathgeometry
 
-import "strings"
+import (
+	"math"
+	"strings"
+)
 
 func IntToRoman(num int) string {
 	type romanMap struct {
@@ -34,4 +37,42 @@ func IntToRoman(num int) string {
 	}
 
 	return result.String()
+}
+
+func checkPowersOfThree(n int) bool {
+	var currNum float64
+	nums := []float64{}
+	idx := 0
+
+	for {
+		currNum = math.Pow(3, float64(idx))
+
+		if currNum > float64(n) {
+			break
+		}
+
+		nums = append(nums, currNum)
+		idx++
+	}
+
+	totalSum := nums[len(nums)-1]
+
+	if totalSum == float64(n) {
+		return true
+	}
+
+	for i := len(nums) - 2; i >= 0; i-- {
+
+		if totalSum+nums[i] > float64(n) {
+			continue
+		}
+
+		totalSum += nums[i]
+
+		if totalSum == float64(n) {
+			return true
+		}
+	}
+
+	return false
 }
