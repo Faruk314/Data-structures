@@ -1473,3 +1473,28 @@ func PalindromePermutation(s string) bool {
 
 	return true
 }
+
+func SentenceSimilarity(s1 []string, s2 []string, similarPairs [][]string) bool {
+	if len(s1) != len(s2) {
+		return false
+	}
+
+	keys := make(map[string]struct{})
+
+	for _, pairs := range similarPairs {
+		keys[pairs[0]+"#"+pairs[1]] = struct{}{}
+		keys[pairs[1]+"#"+pairs[0]] = struct{}{}
+	}
+
+	for i := 0; i < len(s1); i++ {
+		if s1[i] == s2[i] {
+			continue
+		}
+
+		if _, exists := keys[s1[i]+"#"+s2[i]]; !exists {
+			return false
+		}
+	}
+
+	return true
+}
