@@ -1451,3 +1451,25 @@ func isMonotonic(nums []int) bool {
 
 	return true
 }
+
+func PalindromePermutation(s string) bool {
+	freq := [26]int{}
+
+	for i := 0; i < len(s); i++ {
+		freq[s[i]-'a']++
+	}
+
+	oddCount := 0
+
+	for i := 0; i < len(freq); i++ {
+		if freq[i]%2 != 0 {
+			oddCount++
+
+			if oddCount > 1 {
+				return false
+			}
+		}
+	}
+
+	return true
+}
