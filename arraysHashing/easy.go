@@ -1498,3 +1498,23 @@ func SentenceSimilarity(s1 []string, s2 []string, similarPairs [][]string) bool 
 
 	return true
 }
+
+func frequencySort(nums []int) []int {
+	freq := make(map[int]int)
+
+	for _, num := range nums {
+		freq[num]++
+	}
+
+	sort.Slice(nums, func(i, j int) bool {
+		a, b := nums[i], nums[j]
+
+		if freq[a] != freq[b] {
+			return freq[a] < freq[b]
+		}
+
+		return a > b
+	})
+
+	return nums
+}
