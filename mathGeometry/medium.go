@@ -1,6 +1,7 @@
 package mathgeometry
 
 import (
+	"fmt"
 	"math"
 	"strings"
 )
@@ -120,4 +121,71 @@ func isRobotBounded(instructions string) bool {
 	}
 
 	return (x == 0 && y == 0) || dir != 'N'
+}
+
+func robotSim(commands []int, obstacles [][]int) int {
+	maxDistance := 0
+	x := 0
+	y := 0
+	dir := 'N'
+	obstaclesMap := make(map[string]struct{})
+
+	for _, obstacle := range obstacles {
+		key := fmt.Sprintf("%d,%d", obstacle[0], obstacle[1])
+		obstaclesMap[key] = struct{}{}
+	}
+
+	for _, num := range commands {
+		if num == -2 {
+			switch dir {
+			case 'N':
+				dir = 'W'
+			case 'W':
+				dir = 'S'
+			case 'S':
+				dir = 'E'
+			case 'E':
+				dir = 'N'
+			}
+		} else if num == -1 {
+			switch dir {
+			case 'N':
+				dir = 'E'
+			case 'E':
+				dir = 'S'
+			case 'S':
+				dir = 'W'
+			case 'W':
+				dir = 'N'
+			}
+		} else {
+			for i := 0; i < num; i++ {
+				currX := x
+				currY := y
+
+				switch dir {
+				case 'N':
+					currY += 1
+				case 'S':
+					currY -= 1
+				case 'W':
+					currX -= 1
+				case 'E':
+					currX += 1
+				}
+
+				key := fmt.Sprintf("%d,%d", currX, currY)
+
+				if _, exists := obstaclesMap[key]; exists {
+					break
+				}
+
+				x = currX
+				y = currY
+				maxDistance = max(maxDistance, int(math.Pow(float64(x), 2)+math.Pow(float64(y), 2)))
+			}
+		}
+	}
+
+	return maxDistance
 }
