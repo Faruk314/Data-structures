@@ -76,3 +76,48 @@ func checkPowersOfThree(n int) bool {
 
 	return false
 }
+
+func isRobotBounded(instructions string) bool {
+	x := 0
+	y := 0
+	dir := 'N'
+
+	for _, instruction := range instructions {
+		if instruction == 'G' {
+			switch dir {
+			case 'N':
+				y += 1
+			case 'S':
+				y -= 1
+			case 'W':
+				x -= 1
+			case 'E':
+				x += 1
+			}
+		} else if instruction == 'L' {
+			switch dir {
+			case 'N':
+				dir = 'W'
+			case 'W':
+				dir = 'S'
+			case 'S':
+				dir = 'E'
+			case 'E':
+				dir = 'N'
+			}
+		} else if instruction == 'R' {
+			switch dir {
+			case 'N':
+				dir = 'E'
+			case 'E':
+				dir = 'S'
+			case 'S':
+				dir = 'W'
+			case 'W':
+				dir = 'N'
+			}
+		}
+	}
+
+	return (x == 0 && y == 0) || dir != 'N'
+}
