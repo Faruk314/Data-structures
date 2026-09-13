@@ -1735,3 +1735,19 @@ func interchangeableRectangles(rectangles [][]int) int64 {
 
 	return count
 }
+
+func largestPerimeter(nums []int) int64 {
+	sort.Ints(nums)
+	total := 0
+	var result int64 = -1
+
+	for _, num := range nums {
+		if total > num {
+			result = int64(total + num)
+		}
+
+		total += num
+	}
+
+	return result
+}
