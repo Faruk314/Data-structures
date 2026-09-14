@@ -189,3 +189,19 @@ func robotSim(commands []int, obstacles [][]int) int {
 
 	return maxDistance
 }
+
+func tupleSameProduct(nums []int) int {
+	ans := 0
+	freq := make(map[int]int)
+
+	for i := 0; i < len(nums); i++ {
+		for j := 0; j < i; j++ {
+			prod := nums[i] * nums[j]
+
+			ans += freq[prod] * 8
+			freq[prod]++
+		}
+	}
+
+	return ans
+}
