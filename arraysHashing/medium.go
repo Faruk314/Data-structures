@@ -1751,3 +1751,26 @@ func largestPerimeter(nums []int) int64 {
 
 	return result
 }
+
+func shortestWay(source string, target string) int {
+	res := 0
+	targetIdx := 0
+
+	for targetIdx < len(target) {
+		previousTargetIdx := targetIdx
+
+		for sourceIdx := 0; sourceIdx < len(source); sourceIdx++ {
+			if targetIdx < len(target) && source[sourceIdx] == target[targetIdx] {
+				targetIdx++
+			}
+		}
+
+		if previousTargetIdx == targetIdx {
+			return -1
+		}
+
+		res += 1
+	}
+
+	return res
+}
