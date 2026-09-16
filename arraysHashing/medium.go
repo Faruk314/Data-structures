@@ -1774,3 +1774,47 @@ func shortestWay(source string, target string) int {
 
 	return res
 }
+
+type WordDistance struct {
+	WordPositions map[string][]int
+}
+
+func WordDistanceCons(words []string) WordDistance {
+	wordPositions := make(map[string][]int)
+
+	for idx, word := range words {
+		wordPositions[word] = append(wordPositions[word], idx)
+	}
+
+	return WordDistance{WordPositions: wordPositions}
+}
+
+func (this *WordDistance) Shortest(word1 string, word2 string) int {
+	list1 := this.WordPositions[word1]
+	list2 := this.WordPositions[word2]
+
+	i, j := 0, 0
+	shortestDistance := math.MaxInt
+
+	for i < len(list1) && j < len(list2) {
+		idx1, idx2 := list1[i], list2[j]
+
+		diff := idx1 - idx2
+
+		if diff < 0 {
+			diff = -diff
+		}
+
+		if diff < shortestDistance {
+			shortestDistance = diff
+		}
+
+		if idx1 < idx2 {
+			i++
+		} else {
+			j++
+		}
+	}
+
+	return shortestDistance
+}
