@@ -1818,3 +1818,30 @@ func (this *WordDistance) Shortest(word1 string, word2 string) int {
 
 	return shortestDistance
 }
+
+func OneEditDist(s1 string, s2 string) bool {
+	diff := len(s1) - len(s2)
+
+	if diff > 1 || diff < -1 {
+		return false
+	}
+
+	i, j := 0, 0
+
+	for i < len(s1) && j < len(s2) {
+		if s1[i] == s2[j] {
+			i++
+			j++
+		} else {
+			if len(s1) == len(s2) {
+				return s1[i+1:] == s2[j+1:]
+			} else if len(s1) > len(s2) {
+				return s1[i+1:] == s2[j:]
+			} else {
+				return s1[i:] == s2[j+1:]
+			}
+		}
+	}
+
+	return len(s1)-i == 1 || len(s2)-j == 1
+}
