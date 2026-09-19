@@ -818,3 +818,22 @@ func twoCitySchedCost(costs [][]int) int {
 
 	return totalCost
 }
+
+func maxScoreSightseeingPair(values []int) int {
+	maxScore := 0
+	maxLeft := values[0] + 0
+
+	for j := 1; j < len(values); j++ {
+
+		currentScore := maxLeft + values[j] - j
+		if currentScore > maxScore {
+			maxScore = currentScore
+		}
+
+		if values[j]+j > maxLeft {
+			maxLeft = values[j] + j
+		}
+	}
+
+	return maxScore
+}
