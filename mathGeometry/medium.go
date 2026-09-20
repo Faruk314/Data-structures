@@ -205,3 +205,38 @@ func tupleSameProduct(nums []int) int {
 
 	return ans
 }
+
+func spiralOrder(matrix [][]int) []int {
+	top, bottom := 0, len(matrix)-1
+	left, right := 0, len(matrix[0])-1
+	result := make([]int, 0, len(matrix)*len(matrix[0]))
+
+	for top <= bottom && left <= right {
+
+		for j := left; j <= right; j++ {
+			result = append(result, matrix[top][j])
+		}
+		top++
+
+		for i := top; i <= bottom; i++ {
+			result = append(result, matrix[i][right])
+		}
+		right--
+
+		if top <= bottom {
+			for j := right; j >= left; j-- {
+				result = append(result, matrix[bottom][j])
+			}
+			bottom--
+		}
+
+		if left <= right {
+			for i := bottom; i >= top; i-- {
+				result = append(result, matrix[i][left])
+			}
+			left++
+		}
+	}
+
+	return result
+}
