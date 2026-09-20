@@ -1518,3 +1518,29 @@ func frequencySort(nums []int) []int {
 
 	return nums
 }
+
+func performShifts(s string, shifts [][]int) string {
+	bytes := []byte(s)
+	n := len(bytes)
+
+	for i := 0; i < len(shifts); i++ {
+		dir := shifts[i][0]
+		ammount := shifts[i][1] % n
+
+		if ammount == 0 {
+			continue
+		}
+
+		if dir == 0 {
+			prefix := bytes[:ammount]
+			suffix := bytes[ammount:]
+			bytes = append(suffix, prefix...)
+		} else {
+			prefix := bytes[:n-ammount]
+			suffix := bytes[n-ammount:]
+			bytes = append(suffix, prefix...)
+		}
+	}
+
+	return string(bytes)
+}
