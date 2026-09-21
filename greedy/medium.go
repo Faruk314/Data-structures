@@ -837,3 +837,28 @@ func maxScoreSightseeingPair(values []int) int {
 
 	return maxScore
 }
+
+func eliminateMaximum(dist []int, speed []int) int {
+	minDist := make([]int, 0, len(dist)/2)
+
+	for i := 0; i < len(dist); i++ {
+		s := int(math.Ceil(float64(dist[i]) / float64(speed[i])))
+
+		minDist = append(minDist, s)
+	}
+
+	sort.Ints(minDist)
+
+	count := 0
+
+	for i := 0; i < len(minDist); i++ {
+
+		if minDist[i] <= i {
+			return count
+		}
+		count++
+
+	}
+
+	return count
+}
