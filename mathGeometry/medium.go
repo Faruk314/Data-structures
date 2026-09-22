@@ -3,6 +3,8 @@ package mathgeometry
 import (
 	"fmt"
 	"math"
+	"sort"
+	"strconv"
 	"strings"
 )
 
@@ -239,4 +241,32 @@ func spiralOrder(matrix [][]int) []int {
 	}
 
 	return result
+}
+
+func findMinDifference(timePoints []string) int {
+	minutes := make([]int, len(timePoints))
+
+	for i, tp := range timePoints {
+		parts := strings.Split(tp, ":")
+		hours, _ := strconv.Atoi(parts[0])
+		mins, _ := strconv.Atoi(parts[1])
+		minutes[i] = hours*60 + mins
+	}
+
+	sort.Ints(minutes)
+
+	minDiff := 1440
+
+	for i := 1; i < len(minutes); i++ {
+		if minutes[i]-minutes[i-1] < minDiff {
+			minDiff = minutes[i] - minutes[i-1]
+		}
+	}
+
+	wrapDiff := (1440 + minutes[0]) - minutes[len(minutes)-1]
+	if wrapDiff < minDiff {
+		minDiff = wrapDiff
+	}
+
+	return minDiff
 }
