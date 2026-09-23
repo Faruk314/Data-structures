@@ -862,3 +862,22 @@ func eliminateMaximum(dist []int, speed []int) int {
 
 	return count
 }
+
+func findLongestChain(pairs [][]int) int {
+	count := 1
+
+	sort.Slice(pairs, func(i, j int) bool {
+		return pairs[i][1] < pairs[j][1]
+	})
+
+	chainEnd := pairs[0][1]
+
+	for i := 1; i < len(pairs); i++ {
+		if chainEnd < pairs[i][0] {
+			chainEnd = pairs[i][1]
+			count++
+		}
+	}
+
+	return count
+}
