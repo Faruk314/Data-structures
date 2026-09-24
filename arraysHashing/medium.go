@@ -1845,3 +1845,26 @@ func OneEditDist(s1 string, s2 string) bool {
 
 	return len(s1)-i == 1 || len(s2)-j == 1
 }
+
+func ReverseWords2(s []byte) []byte {
+	reverse(s, 0, len(s)-1)
+
+	start := 0
+
+	for end := 0; end <= len(s); end++ {
+		if len(s) == end || s[end] == ' ' {
+			reverse(s, start, end-1)
+			start = end + 1
+		}
+	}
+
+	return s
+}
+
+func reverse(s []byte, left int, right int) {
+	for left < right {
+		s[left], s[right] = s[right], s[left]
+		left++
+		right--
+	}
+}
