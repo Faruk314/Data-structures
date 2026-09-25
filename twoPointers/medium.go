@@ -463,3 +463,36 @@ func compress(chars []byte) int {
 
 	return charsIdx
 }
+
+func ProductOfTwoEncoded(encoded1, encoded2 [][]int) [][]int {
+	result := [][]int{}
+	i, j := 0, 0
+
+	for i < len(encoded1) && j < len(encoded2) {
+		val1, freq1 := encoded1[i][0], encoded1[i][1]
+		val2, freq2 := encoded2[j][0], encoded2[j][1]
+
+		prod := val1 * val2
+		minFreq := min(freq1, freq2)
+
+		if len(result) > 0 && result[len(result)-1][0] == prod {
+			result[len(result)-1][1] += minFreq
+		} else {
+			result = append(result, []int{prod, minFreq})
+		}
+
+		encoded1[i][1] -= minFreq
+
+		if encoded1[i][1] == 0 {
+			i++
+		}
+
+		encoded2[j][1] -= minFreq
+
+		if encoded2[j][1] == 0 {
+			j++
+		}
+	}
+
+	return result
+}
