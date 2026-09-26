@@ -496,3 +496,33 @@ func ProductOfTwoEncoded(encoded1, encoded2 [][]int) [][]int {
 
 	return result
 }
+
+func MeetingScheduler(slots1, slots2 [][]int, duration int) []int {
+	i, j := 0, 0
+
+	sort.Slice(slots1, func(i, j int) bool {
+		return slots1[i][0] < slots1[j][0]
+	})
+
+	sort.Slice(slots2, func(i, j int) bool {
+		return slots2[i][0] < slots2[j][0]
+	})
+
+	for i < len(slots1) && j < len(slots2) {
+		startTime := max(slots1[i][0], slots2[j][0])
+		endTime := min(slots1[i][1], slots2[j][1])
+
+		if endTime-duration >= startTime {
+			return []int{startTime, startTime + duration}
+		}
+
+		if slots1[i][1] < slots2[j][1] {
+			i++
+		} else {
+			j++
+		}
+
+	}
+
+	return []int{}
+}
