@@ -364,3 +364,30 @@ func ValidateStackSequences(pushed []int, popped []int) bool {
 
 	return stack.IsEmpty()
 }
+
+func TernaryExpressionParser(s string) string {
+	st := Stack[byte]{}
+
+	for i := len(s) - 1; i >= 0; i-- {
+		ch := s[i]
+
+		if ch == '?' {
+			cond := s[i-1]
+			i--
+
+			top, _ := st.Pop()
+			bottom, _ := st.Pop()
+
+			if cond == 'T' {
+				st.Push(top)
+			} else {
+				st.Push(bottom)
+			}
+		} else if ch != ':' {
+			st.Push(ch)
+		}
+	}
+
+	res, _ := st.Pop()
+	return string(res)
+}
