@@ -391,3 +391,44 @@ func TernaryExpressionParser(s string) string {
 	res, _ := st.Pop()
 	return string(res)
 }
+
+func Calculate(s string) int {
+	st := Stack[int]{}
+	prevOperand := '+'
+	currNum := 0
+
+	for i := 0; i < len(s); i++ {
+		char := s[i]
+
+		if char >= '0' && char <= '9' {
+			currNum = currNum*10 + int(char-'0')
+		}
+
+		if (char < '0' || char > '9') && char != ' ' || i == len(s)-1 {
+			switch prevOperand {
+			case '*':
+				prev, _ := st.Pop()
+				st.Push(prev * currNum)
+			case '/':
+				prev, _ := st.Pop()
+				st.Push(prev / currNum)
+			case '+':
+				st.Push(currNum)
+			case '-':
+				st.Push(-currNum)
+			}
+
+			prevOperand = rune(char)
+			currNum = 0
+		}
+	}
+
+	total := 0
+
+	for !st.IsEmpty() {
+		val, _ := st.Pop()
+		total += val
+	}
+
+	return total
+}
