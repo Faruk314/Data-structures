@@ -1,6 +1,9 @@
 package binarysearch
 
-import "slices"
+import (
+	"slices"
+	"sort"
+)
 
 func SeachMatrix(matrix [][]int, target int) bool {
 	if len(matrix) == 0 || len(matrix[0]) == 0 {
@@ -338,4 +341,30 @@ func findPeakElement(nums []int) int {
 	}
 
 	return 0
+}
+
+func successfulPairs(spells []int, potions []int, success int64) []int {
+	sort.Ints(potions)
+
+	for idx, spell := range spells {
+
+		left := 0
+		right := len(potions) - 1
+		firstValidIdx := len(potions)
+
+		for left <= right {
+			mid := left + (right-left)/2
+
+			if int64(spell)*int64(potions[mid]) >= success {
+				firstValidIdx = mid
+				right = mid - 1
+			} else {
+				left = mid + 1
+			}
+		}
+
+		spells[idx] = len(potions) - firstValidIdx
+	}
+
+	return spells
 }
