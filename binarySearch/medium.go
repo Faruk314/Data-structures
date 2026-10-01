@@ -343,7 +343,7 @@ func findPeakElement(nums []int) int {
 	return 0
 }
 
-func successfulPairs(spells []int, potions []int, success int64) []int {
+func SuccessfulPairs(spells []int, potions []int, success int64) []int {
 	sort.Ints(potions)
 
 	for idx, spell := range spells {
@@ -367,4 +367,38 @@ func successfulPairs(spells []int, potions []int, success int64) []int {
 	}
 
 	return spells
+}
+
+func MaximumCandies(candies []int, k int64) int {
+	maxCandy := 0
+	for _, num := range candies {
+		if num > maxCandy {
+			maxCandy = num
+		}
+	}
+
+	left, right := 1, maxCandy
+	res := 0
+
+	for left <= right {
+		mid := left + (right-left)/2
+
+		var count int64 = 0
+		for _, num := range candies {
+			count += int64(num / mid)
+
+			if count >= k {
+				break
+			}
+		}
+
+		if count >= k {
+			res = mid
+			left = mid + 1
+		} else {
+			right = mid - 1
+		}
+	}
+
+	return res
 }
