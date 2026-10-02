@@ -1868,3 +1868,39 @@ func reverse(s []byte, left int, right int) {
 		right--
 	}
 }
+
+func waysToMakeFair(nums []int) int {
+	rightEven, rightOdd := 0, 0
+
+	for i, num := range nums {
+		if i%2 == 0 {
+			rightEven += num
+		} else {
+			rightOdd += num
+		}
+	}
+
+	leftEven, leftOdd := 0, 0
+	count := 0
+
+	for i, num := range nums {
+
+		if i%2 == 0 {
+			rightEven -= num
+		} else {
+			rightOdd -= num
+		}
+
+		if leftEven+rightOdd == leftOdd+rightEven {
+			count++
+		}
+
+		if i%2 == 0 {
+			leftEven += num
+		} else {
+			leftOdd += num
+		}
+	}
+
+	return count
+}
