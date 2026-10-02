@@ -1904,3 +1904,37 @@ func waysToMakeFair(nums []int) int {
 
 	return count
 }
+
+func minimumAverageDifference(nums []int) int {
+	totalSum := 0
+	n := len(nums)
+
+	for _, num := range nums {
+		totalSum += num
+	}
+
+	leftSum := 0
+	minAverage := math.MaxInt
+	resultIdx := 0
+
+	for left, num := range nums {
+		leftSum += num
+
+		leftAverage := leftSum / (left + 1)
+
+		rightCount := n - left - 1
+		rightAverage := 0
+		if rightCount > 0 {
+			rightAverage = (totalSum - leftSum) / rightCount
+		}
+
+		avg := abs(leftAverage - rightAverage)
+
+		if avg < minAverage {
+			minAverage = avg
+			resultIdx = left
+		}
+	}
+
+	return resultIdx
+}
