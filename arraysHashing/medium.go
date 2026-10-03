@@ -1972,3 +1972,34 @@ func maxNonOverlapping(nums []int, target int) int {
 
 	return count
 }
+
+func carPooling(trips [][]int, capacity int) bool {
+	sort.Slice(trips, func(i, j int) bool {
+		return trips[i][1] < trips[j][1]
+	})
+
+	totalPeople := 0
+	dropOff := make(map[int]int)
+
+	for _, trip := range trips {
+		people := trip[0]
+		from := trip[1]
+		to := trip[2]
+
+		for dest, people := range dropOff {
+			if from >= dest {
+				totalPeople -= people
+				delete(dropOff, dest)
+			}
+		}
+
+		dropOff[to] += people
+		totalPeople += people
+
+		if totalPeople > capacity {
+			return false
+		}
+	}
+
+	return true
+}
