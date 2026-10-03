@@ -1938,3 +1938,15 @@ func minimumAverageDifference(nums []int) int {
 
 	return resultIdx
 }
+
+func corpFlightBookings(bookings [][]int, n int) []int {
+	result := make([]int, n)
+
+	for _, booking := range bookings {
+		for i := booking[0]; i <= booking[1]; i++ {
+			result[i-1] += booking[2]
+		}
+	}
+
+	return result
+}
