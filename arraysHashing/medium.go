@@ -1950,3 +1950,25 @@ func corpFlightBookings(bookings [][]int, n int) []int {
 
 	return result
 }
+
+func maxNonOverlapping(nums []int, target int) int {
+	seen := make(map[int]bool)
+	seen[0] = true
+	prefixSum := 0
+	count := 0
+
+	for _, num := range nums {
+		prefixSum += num
+
+		if seen[prefixSum-target] {
+			count++
+			seen = make(map[int]bool)
+			seen[0] = true
+			prefixSum = 0
+		} else {
+			seen[prefixSum] = true
+		}
+	}
+
+	return count
+}
