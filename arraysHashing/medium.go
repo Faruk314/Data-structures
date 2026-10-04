@@ -2003,3 +2003,50 @@ func carPooling(trips [][]int, capacity int) bool {
 
 	return true
 }
+
+type Submatrix struct {
+	xCount int
+	yCount int
+}
+
+func numberOfSubmatrices(grid [][]byte) int {
+	sums := make([][]Submatrix, len(grid)+1)
+	count := 0
+
+	for i := 0; i < len(sums); i++ {
+		sums[i] = make([]Submatrix, len(grid[0])+1)
+	}
+
+	for i := 0; i < len(grid); i++ {
+		for j := 0; j < len(grid[i]); j++ {
+			submatrixCount := Submatrix{xCount: 0, yCount: 0}
+
+			if grid[i][j] == 'Y' {
+				submatrixCount.yCount++
+			} else if grid[i][j] == 'X' {
+				submatrixCount.xCount++
+			}
+
+			leftSubmatrix := sums[i+1][j]
+			submatrixCount.xCount += leftSubmatrix.xCount
+			submatrixCount.yCount += leftSubmatrix.yCount
+
+			topSubmatrix := sums[i][j+1]
+			submatrixCount.xCount += topSubmatrix.xCount
+			submatrixCount.yCount += topSubmatrix.yCount
+
+			topLeftSubmatrix := sums[i][j]
+			submatrixCount.xCount -= topLeftSubmatrix.xCount
+			submatrixCount.yCount -= topLeftSubmatrix.yCount
+
+			sums[i+1][j+1] = submatrixCount
+
+			if submatrixCount.xCount > 0 && submatrixCount.xCount == submatrixCount.yCount {
+				count++
+			}
+
+		}
+	}
+
+	return count
+}
