@@ -402,3 +402,29 @@ func MaximumCandies(candies []int, k int64) int {
 
 	return res
 }
+
+func chalkReplacer(chalk []int, k int) int {
+	prefixSum := make([]int, len(chalk)+1)
+
+	for i := 1; i < len(prefixSum); i++ {
+		prefixSum[i] = chalk[i-1] + prefixSum[i-1]
+	}
+
+	left := 1
+	right := len(prefixSum) - 1
+	remainder := k % prefixSum[right]
+	ans := 0
+
+	for left <= right {
+		mid := left + (right-left)/2
+
+		if prefixSum[mid] > remainder {
+			ans = mid - 1
+			right = mid - 1
+		} else {
+			left = mid + 1
+		}
+	}
+
+	return ans
+}
