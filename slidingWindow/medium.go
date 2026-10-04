@@ -811,3 +811,30 @@ func NumberOfAlternatingGroups(colors []int, k int) int {
 
 	return total
 }
+
+func MaxConsecutiveAnswers(answerKey string, k int) int {
+	counts := make(map[byte]int)
+	maxFreq := 0
+	maxLen := 0
+	left := 0
+
+	for right := 0; right < len(answerKey); right++ {
+		counts[answerKey[right]]++
+
+		if counts[answerKey[right]] > maxFreq {
+			maxFreq = counts[answerKey[right]]
+		}
+
+		for right-left+1-maxFreq > k {
+			counts[answerKey[left]]--
+			left++
+		}
+
+		if right-left+1 > maxLen {
+			maxLen = right - left + 1
+		}
+
+	}
+
+	return maxLen
+}
