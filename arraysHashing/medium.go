@@ -2105,3 +2105,22 @@ func garbageCollection(garbage []string, travel []int) int {
 
 	return maxP + maxG + maxM
 }
+
+func findPrefixScore(nums []int) []int64 {
+	var currMax int64
+	var leftSum int64
+	result := make([]int64, len(nums))
+
+	for i, num := range nums {
+		currNum := int64(num)
+
+		if currNum > currMax {
+			currMax = currNum
+		}
+
+		result[i] = currNum + currMax + leftSum
+		leftSum += currNum + currMax
+	}
+
+	return result
+}
