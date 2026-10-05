@@ -2050,3 +2050,58 @@ func numberOfSubmatrices(grid [][]byte) int {
 
 	return count
 }
+
+type Amount struct {
+	G int
+	P int
+	M int
+}
+
+func garbageCollection(garbage []string, travel []int) int {
+	maxM := 0
+	maxG := 0
+	maxP := 0
+
+	prefixSum := make([]Amount, len(garbage)+1)
+	travelSum := make([]int, len(travel)+1)
+
+	for i := 0; i < len(travel); i++ {
+		travelSum[i+1] = travel[i] + travelSum[i]
+	}
+
+	for i := 0; i < len(garbage); i++ {
+		newSum := Amount{G: 0, P: 0, M: 0}
+
+		for _, char := range garbage[i] {
+			if char == 'M' {
+				newSum.M++
+			} else if char == 'G' {
+				newSum.G++
+			} else {
+				newSum.P++
+			}
+		}
+
+		newSum.M += prefixSum[i].M
+
+		if newSum.M > prefixSum[i].M {
+			maxM = newSum.M + travelSum[i]
+		}
+
+		newSum.G += prefixSum[i].G
+
+		if newSum.G > prefixSum[i].G {
+			maxG = newSum.G + travelSum[i]
+		}
+
+		newSum.P += prefixSum[i].P
+
+		if newSum.P > prefixSum[i].P {
+			maxP = newSum.P + travelSum[i]
+		}
+
+		prefixSum[i+1] = newSum
+	}
+
+	return maxP + maxG + maxM
+}
