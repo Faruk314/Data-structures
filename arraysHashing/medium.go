@@ -2124,3 +2124,27 @@ func findPrefixScore(nums []int) []int64 {
 
 	return result
 }
+
+func countSubmatrices(grid [][]int, k int) int {
+	sums := make([][]int, len(grid)+1)
+
+	for i := 0; i < len(sums); i++ {
+		sums[i] = make([]int, len(grid[0])+1)
+	}
+
+	total := 0
+
+	for i := 0; i < len(grid); i++ {
+		for j := 0; j < len(grid[i]); j++ {
+			sum := grid[i][j] + sums[i+1][j] + sums[i][j+1] - sums[i][j]
+
+			if sum <= k {
+				total++
+			}
+
+			sums[i+1][j+1] = sum
+		}
+	}
+
+	return total
+}
