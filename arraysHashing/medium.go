@@ -2148,3 +2148,36 @@ func countSubmatrices(grid [][]int, k int) int {
 
 	return total
 }
+
+func firstStableIndex(nums []int, k int) int {
+	n := len(nums)
+	prefixMax := make([]int, len(nums))
+	currMax := 0
+
+	for i := 0; i < n; i++ {
+		if nums[i] > currMax {
+			currMax = nums[i]
+		}
+
+		prefixMax[i] = currMax
+	}
+
+	suffixMin := make([]int, n)
+	currMin := currMax
+
+	for i := n - 1; i >= 0; i-- {
+		if nums[i] < currMin {
+			currMin = nums[i]
+		}
+
+		suffixMin[i] = currMin
+	}
+
+	for i := 0; i < n; i++ {
+		if prefixMax[i]-suffixMin[i] <= k {
+			return i
+		}
+	}
+
+	return -1
+}
