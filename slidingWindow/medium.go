@@ -1,6 +1,7 @@
 package slidingwindow
 
 import (
+	"fmt"
 	"math"
 	"sort"
 )
@@ -837,4 +838,44 @@ func MaxConsecutiveAnswers(answerKey string, k int) int {
 	}
 
 	return maxLen
+}
+
+func distinctPoints(s string, k int) int {
+	totalCount := [26]int{}
+
+	for i := 0; i < len(s); i++ {
+		totalCount[s[i]-'A']++
+	}
+
+	left := 0
+	currCount := [26]int{}
+	points := make(map[string]int)
+
+	for right := 0; right < len(s); right++ {
+		currCount[s[right]-'A']++
+
+		if right-left+1 == k {
+			uCount := totalCount['U'-'A'] - currCount['U'-'A']
+			lCount := totalCount['L'-'A'] - currCount['L'-'A']
+			rCount := totalCount['R'-'A'] - currCount['R'-'A']
+			dCount := totalCount['D'-'A'] - currCount['D'-'A']
+
+			x := 0
+			y := 0
+
+			x -= lCount
+			x += rCount
+
+			y -= dCount
+			y += uCount
+
+			key := fmt.Sprintf("%d, %d", x, y)
+			points[key]++
+
+			currCount[s[left]-'A']--
+			left++
+		}
+	}
+
+	return len(points)
 }
