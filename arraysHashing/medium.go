@@ -2211,3 +2211,43 @@ func findAndReplacePattern(words []string, pattern string) []string {
 
 	return result
 }
+
+func findDuplicate(paths []string) [][]string {
+	contentMap := make(map[string][]string)
+
+	for i := 0; i < len(paths); i++ {
+		path := paths[i]
+		files := strings.Split(path, " ")
+		rootDir := files[0]
+
+		for j := 1; j < len(files); j++ {
+			file := files[j]
+			startIdx := 0
+			endIdx := 0
+
+			for k := 0; k < len(file); k++ {
+				if file[k] == '(' {
+					startIdx = k
+				} else if file[k] == ')' {
+					endIdx = k
+				}
+			}
+
+			fullPath := rootDir + "/" + file[:startIdx]
+			content := file[startIdx+1 : endIdx]
+
+			contentMap[content] = append(contentMap[content], fullPath)
+		}
+
+	}
+
+	result := [][]string{}
+
+	for _, key := range contentMap {
+		if len(key) >= 2 {
+			result = append(result, key)
+		}
+	}
+
+	return result
+}
