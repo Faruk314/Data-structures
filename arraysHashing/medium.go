@@ -2181,3 +2181,33 @@ func firstStableIndex(nums []int, k int) int {
 
 	return -1
 }
+
+func getPattern(word string) string {
+	var pattern strings.Builder
+	uniques := make(map[byte]int)
+
+	for i := 0; i < len(word); i++ {
+		if _, exists := uniques[word[i]]; !exists {
+			uniques[word[i]] = len(uniques) + 1
+		}
+	}
+
+	for i := 0; i < len(word); i++ {
+		pattern.WriteString(strconv.Itoa(uniques[word[i]] + ','))
+	}
+
+	return pattern.String()
+}
+
+func findAndReplacePattern(words []string, pattern string) []string {
+	match := getPattern(pattern)
+	result := []string{}
+
+	for _, word := range words {
+		if getPattern(word) == match {
+			result = append(result, word)
+		}
+	}
+
+	return result
+}
