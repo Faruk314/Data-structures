@@ -2302,3 +2302,39 @@ func numPairsDivisibleBy60(time []int) int {
 
 	return totalPairs
 }
+
+type FindSumPairs struct {
+	nums1 []int
+	nums2 []int
+	freq2 map[int]int
+}
+
+func ConstructorFindSumPairs(nums1 []int, nums2 []int) FindSumPairs {
+	freq2 := make(map[int]int)
+	for _, v := range nums2 {
+		freq2[v]++
+	}
+	return FindSumPairs{
+		nums1: nums1,
+		nums2: nums2,
+		freq2: freq2,
+	}
+}
+
+func (this *FindSumPairs) Add(index int, val int) {
+	oldVal := this.nums2[index]
+	this.freq2[oldVal]--
+
+	this.nums2[index] += val
+	newVal := this.nums2[index]
+	this.freq2[newVal]++
+}
+
+func (this *FindSumPairs) Count(tot int) int {
+	pairs := 0
+	for _, num := range this.nums1 {
+		complement := tot - num
+		pairs += this.freq2[complement]
+	}
+	return pairs
+}
