@@ -2288,3 +2288,17 @@ func (this *MagicDictionary) Search(searchWord string) bool {
 
 	return false
 }
+
+func numPairsDivisibleBy60(time []int) int {
+	totalPairs := 0
+	count := make([]int, 60)
+
+	for _, num := range time {
+		remainder := num % 60
+		target := (60 - remainder) % 60
+		totalPairs += count[target]
+		count[remainder]++
+	}
+
+	return totalPairs
+}
