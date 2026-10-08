@@ -2251,3 +2251,40 @@ func findDuplicate(paths []string) [][]string {
 
 	return result
 }
+
+type MagicDictionary struct {
+	words []string
+}
+
+func MagicDictionaryCons() MagicDictionary {
+	return MagicDictionary{}
+}
+
+func (this *MagicDictionary) BuildDict(dictionary []string) {
+	this.words = dictionary
+}
+
+func (this *MagicDictionary) Search(searchWord string) bool {
+	for _, word := range this.words {
+		if len(word) != len(searchWord) {
+			continue
+		}
+
+		difs := 0
+		for j := 0; j < len(word); j++ {
+			if word[j] != searchWord[j] {
+				difs++
+			}
+
+			if difs > 1 {
+				break
+			}
+		}
+
+		if difs == 1 {
+			return true
+		}
+	}
+
+	return false
+}
