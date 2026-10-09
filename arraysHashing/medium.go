@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"golang/stack"
 	"math"
+	"slices"
 	"sort"
 	"strconv"
 	"strings"
@@ -2337,4 +2338,30 @@ func (this *FindSumPairs) Count(tot int) int {
 		pairs += this.freq2[complement]
 	}
 	return pairs
+}
+
+func numSpecialEquivGroups(words []string) int {
+	groups := make(map[string]int)
+
+	for i := 0; i < len(words); i++ {
+		oddGroup := []byte{}
+		evenGroup := []byte{}
+
+		for j := 0; j < len(words[i]); j++ {
+			if j%2 != 0 {
+				oddGroup = append(oddGroup, words[i][j])
+			} else {
+				evenGroup = append(evenGroup, words[i][j])
+			}
+		}
+
+		slices.Sort(oddGroup)
+		slices.Sort(evenGroup)
+
+		key := string(oddGroup) + string(evenGroup)
+
+		groups[key]++
+	}
+
+	return len(groups)
 }
