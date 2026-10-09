@@ -2365,3 +2365,47 @@ func numSpecialEquivGroups(words []string) int {
 
 	return len(groups)
 }
+
+type TopVotedCandidate struct {
+	Votes []int
+	Times []int
+}
+
+func ConstructorTopVoted(persons []int, times []int) TopVotedCandidate {
+	freq := make(map[int]int)
+	maxFreq := 0
+	candidate := 0
+	votes := make([]int, len(persons))
+
+	for i := 0; i < len(persons); i++ {
+		freq[persons[i]]++
+
+		if freq[persons[i]] >= maxFreq {
+			maxFreq = freq[persons[i]]
+			candidate = persons[i]
+		}
+
+		votes[i] = candidate
+	}
+
+	return TopVotedCandidate{Votes: votes, Times: times}
+}
+
+func (this *TopVotedCandidate) Q(t int) int {
+	timeIdx := 0
+	left := 0
+	right := len(this.Times) - 1
+
+	for left <= right {
+		mid := left + (right-left)/2
+
+		if this.Times[mid] <= t {
+			timeIdx = mid
+			left = mid + 1
+		} else {
+			right = mid - 1
+		}
+	}
+
+	return this.Votes[timeIdx]
+}
