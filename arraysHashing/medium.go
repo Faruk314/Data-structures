@@ -2409,3 +2409,55 @@ func (this *TopVotedCandidate) Q(t int) int {
 
 	return this.Votes[timeIdx]
 }
+
+func alphabetBoardPath(target string) string {
+	boardMap := make(map[byte][2]int)
+	board := []string{"abcde", "fghij", "klmno", "pqrst", "uvwxy", "z"}
+
+	for row, str := range board {
+		for col := 0; col < len(str); col++ {
+			boardMap[str[col]] = [2]int{col, row}
+		}
+	}
+
+	startX := 0
+	startY := 0
+
+	var result strings.Builder
+
+	for i := 0; i < len(target); i++ {
+		currX := boardMap[target[i]][0]
+		currY := boardMap[target[i]][1]
+
+		moveX := func() {
+			if currX > startX {
+				result.WriteString(strings.Repeat("R", currX-startX))
+			} else if currX < startX {
+				result.WriteString(strings.Repeat("L", startX-currX))
+			}
+		}
+
+		moveY := func() {
+			if currY > startY {
+				result.WriteString(strings.Repeat("D", currY-startY))
+			} else if currY < startY {
+				result.WriteString(strings.Repeat("U", startY-currY))
+			}
+		}
+
+		if target[i] == 'z' {
+			moveX()
+			moveY()
+		} else {
+			moveY()
+			moveX()
+		}
+
+		result.WriteString("!")
+
+		startX = currX
+		startY = currY
+	}
+
+	return result.String()
+}
