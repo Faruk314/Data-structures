@@ -2487,3 +2487,28 @@ func numberOfSpecialChars(word string) int {
 
 	return count
 }
+
+func isPossibleToRearrange(s string, t string, k int) bool {
+	substrings := make(map[string]int)
+	winLen := len(s) / k
+
+	for i := 0; i < len(s); i += winLen {
+		substrings[s[i:i+winLen]]++
+	}
+
+	for i := 0; i < len(t); i += winLen {
+		substring := t[i : i+winLen]
+		if _, exists := substrings[substring]; exists {
+			substrings[substring]--
+
+			if substrings[substring] == 0 {
+				delete(substrings, substring)
+			}
+
+		} else {
+			return false
+		}
+	}
+
+	return true
+}
