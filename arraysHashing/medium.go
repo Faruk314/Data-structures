@@ -2512,3 +2512,28 @@ func isPossibleToRearrange(s string, t string, k int) bool {
 
 	return true
 }
+
+func countPairs(words []string) int64 {
+	count := make(map[string]int64)
+	var totalPairs int64 = 0
+
+	for _, word := range words {
+		bytes := []byte(word)
+		first := bytes[0]
+
+		for i := range bytes {
+			diff := (bytes[i] - first%26) % 26
+			bytes[i] = diff + 'a'
+		}
+
+		key := string(bytes)
+
+		if count, exists := count[key]; exists {
+			totalPairs += count
+		}
+
+		count[key]++
+	}
+
+	return totalPairs
+}
