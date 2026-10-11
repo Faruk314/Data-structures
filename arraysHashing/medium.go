@@ -2461,3 +2461,29 @@ func alphabetBoardPath(target string) string {
 
 	return result.String()
 }
+
+func numberOfSpecialChars(word string) int {
+	chars := make(map[byte]int)
+	count := 0
+
+	for i := 0; i < len(word); i++ {
+		chars[word[i]] = i
+	}
+
+	for i := 0; i < len(word); i++ {
+		if word[i] >= 'A' {
+			target := word[i] + 32
+
+			if foundIdx, exists := chars[target]; exists {
+
+				if foundIdx < i {
+					count++
+				}
+
+				delete(chars, target)
+			}
+		}
+	}
+
+	return count
+}
