@@ -2537,3 +2537,40 @@ func countPairs(words []string) int64 {
 
 	return totalPairs
 }
+
+func digArtifacts(n int, artifacts [][]int, dig [][]int) int {
+	grid := make([][]int, n+1)
+	for i := range grid {
+		grid[i] = make([]int, n+1)
+	}
+
+	for _, d := range dig {
+		grid[d[0]+1][d[1]+1] = 1
+	}
+
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			grid[i+1][j+1] += grid[i+1][j] + grid[i][j+1] - grid[i][j]
+		}
+	}
+
+	count := 0
+
+	for _, art := range artifacts {
+		topRow, topCol := art[0], art[1]
+		bottomRow, bottomCol := art[2], art[3]
+
+		target := (bottomRow - topRow + 1) * (bottomCol - topCol + 1)
+
+		total := grid[bottomRow+1][bottomCol+1]
+		top := grid[topRow][bottomCol+1]
+		left := grid[bottomRow+1][topCol]
+		topLeft := grid[topRow][topCol]
+
+		if total-top-left+topLeft == target {
+			count++
+		}
+	}
+
+	return count
+}
