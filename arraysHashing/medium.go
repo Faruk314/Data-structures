@@ -2574,3 +2574,37 @@ func digArtifacts(n int, artifacts [][]int, dig [][]int) int {
 
 	return count
 }
+
+func evaluate(s string, knowledge [][]string) string {
+	keys := make(map[string]string)
+
+	for _, pair := range knowledge {
+		key := pair[0]
+		value := pair[1]
+
+		keys[key] = value
+	}
+
+	var result strings.Builder
+
+	start := -1
+
+	for i := 0; i < len(s); i++ {
+		if s[i] == '(' {
+			start = i
+		} else if s[i] == ')' {
+			key := s[start+1 : i]
+			start = -1
+
+			if value, exists := keys[key]; exists {
+				result.WriteString(value)
+			} else {
+				result.WriteString("?")
+			}
+		} else if start == -1 {
+			result.WriteByte(s[i])
+		}
+	}
+
+	return result.String()
+}
