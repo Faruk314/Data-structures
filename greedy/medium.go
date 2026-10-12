@@ -881,3 +881,27 @@ func findLongestChain(pairs [][]int) int {
 
 	return count
 }
+
+func minimumRounds(tasks []int) int {
+	sort.Ints(tasks)
+	i := 0
+	totalRounds := 0
+
+	for i < len(tasks) {
+		diff := tasks[i]
+		count := 0
+
+		for i < len(tasks) && tasks[i] == diff {
+			count++
+			i++
+		}
+
+		if count < 2 {
+			return -1
+		}
+
+		totalRounds += (count + 2) / 3
+	}
+
+	return totalRounds
+}
