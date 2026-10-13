@@ -2608,3 +2608,25 @@ func evaluate(s string, knowledge [][]string) string {
 
 	return result.String()
 }
+
+func maxOperations(nums []int, k int) int {
+	seen := make(map[int]int)
+	count := 0
+
+	for _, num := range nums {
+		complement := k - num
+
+		if _, exists := seen[complement]; exists {
+			count++
+			seen[complement]--
+
+			if seen[complement] == 0 {
+				delete(seen, complement)
+			}
+		} else {
+			seen[num]++
+		}
+	}
+
+	return count
+}
