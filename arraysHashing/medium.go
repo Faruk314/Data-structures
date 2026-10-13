@@ -2630,3 +2630,32 @@ func maxOperations(nums []int, k int) int {
 
 	return count
 }
+
+func flipgame(fronts []int, backs []int) int {
+	forbiden := make(map[int]bool)
+
+	for idx, num := range backs {
+		if fronts[idx] == num {
+			forbiden[num] = true
+		}
+	}
+
+	min := math.MaxInt
+
+	for idx, num := range fronts {
+
+		if !forbiden[num] && num < min {
+			min = num
+		}
+
+		if !forbiden[backs[idx]] && backs[idx] < min {
+			min = backs[idx]
+		}
+	}
+
+	if min == math.MaxInt {
+		return 0
+	}
+
+	return min
+}
