@@ -905,3 +905,33 @@ func minimumRounds(tasks []int) int {
 
 	return totalRounds
 }
+
+func isPossibleDivide(nums []int, k int) bool {
+	freq := make(map[int]int)
+
+	for _, num := range nums {
+		freq[num]++
+	}
+
+	uniques := make([]int, 0, len(freq))
+
+	for val := range freq {
+		uniques = append(uniques, val)
+	}
+
+	sort.Ints(uniques)
+
+	for _, num := range uniques {
+		for freq[num] > 0 {
+			for next := num; next < num+k; next++ {
+				if freq[next] == 0 {
+					return false
+				}
+
+				freq[next]--
+			}
+		}
+	}
+
+	return true
+}
