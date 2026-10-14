@@ -5,6 +5,7 @@ import (
 	"golang/stack"
 	"math"
 	"sort"
+	"strconv"
 )
 
 func minOperations(nums []int) int {
@@ -934,4 +935,36 @@ func isPossibleDivide(nums []int, k int) bool {
 	}
 
 	return true
+}
+
+func maximumSwap(num int) int {
+	numStr := strconv.Itoa(num)
+	bNums := []byte(numStr)
+	maxSuffix := make([]int, len(bNums))
+	var max byte
+	maxIdx := 0
+
+	for i := len(bNums) - 1; i >= 0; i-- {
+		if bNums[i] > max {
+			max = bNums[i]
+			maxIdx = i
+		}
+
+		maxSuffix[i] = maxIdx
+	}
+
+	for i := 0; i < len(numStr); i++ {
+		if bNums[i] == bNums[maxSuffix[i]] {
+			continue
+		}
+
+		if bNums[i] < bNums[maxSuffix[i]] {
+			bNums[i], bNums[maxSuffix[i]] = bNums[maxSuffix[i]], bNums[i]
+			break
+		}
+	}
+
+	nums, _ := strconv.Atoi(string(bNums))
+
+	return nums
 }
