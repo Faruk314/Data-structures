@@ -2659,3 +2659,41 @@ func flipgame(fronts []int, backs []int) int {
 
 	return min
 }
+
+type Item struct {
+	value int
+	label int
+}
+
+func largestValsFromLabels(values []int, labels []int, numWanted int, useLimit int) int {
+	items := make([]Item, len(values))
+
+	for i := 0; i < len(values); i++ {
+		items = append(items, Item{value: values[i], label: labels[i]})
+	}
+
+	sort.Slice(items, func(i, j int) bool {
+		return items[i].value > items[j].value
+	})
+
+	usedLabels := make(map[int]int)
+	sum := 0
+
+	for i := 0; i < len(items); i++ {
+		if count, exists := usedLabels[items[i].label]; exists {
+			if count >= useLimit {
+				continue
+			}
+		}
+
+		usedLabels[items[i].label]++
+		sum += items[i].value
+		numWanted--
+
+		if numWanted == 0 {
+			break
+		}
+	}
+
+	return sum
+}
