@@ -968,3 +968,39 @@ func maximumSwap(num int) int {
 
 	return nums
 }
+
+type Pair struct {
+	val int
+	idx int
+}
+
+func advantageCount(nums1 []int, nums2 []int) []int {
+	n := len(nums1)
+	sort.Ints(nums1)
+
+	result := make([]int, len(nums1))
+	sNums2 := make([]Pair, 0, len(nums2))
+
+	for i := 0; i < len(nums2); i++ {
+		sNums2 = append(sNums2, Pair{val: nums2[i], idx: i})
+	}
+
+	sort.Slice(sNums2, func(i, j int) bool {
+		return sNums2[i].val < sNums2[j].val
+	})
+
+	left := 0
+	right := n - 1
+
+	for i := n - 1; i >= 0; i-- {
+		if nums1[right] > sNums2[i].val {
+			result[sNums2[i].idx] = nums1[right]
+			right--
+		} else {
+			result[sNums2[i].idx] = nums1[left]
+			left++
+		}
+	}
+
+	return result
+}
