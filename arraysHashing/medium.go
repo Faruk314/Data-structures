@@ -2718,3 +2718,19 @@ func occurrencesOfElement(nums []int, queries []int, x int) []int {
 
 	return result
 }
+
+func minimumLength(s string) int {
+	freq := [26]int{}
+	removals := 0
+
+	for i := 0; i < len(s); i++ {
+		freq[s[i]-'a']++
+
+		if freq[s[i]-'a'] == 3 {
+			removals += 2
+			freq[s[i]-'a'] = 1
+		}
+	}
+
+	return len(s) - removals
+}
