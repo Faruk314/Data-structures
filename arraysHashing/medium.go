@@ -2697,3 +2697,24 @@ func largestValsFromLabels(values []int, labels []int, numWanted int, useLimit i
 
 	return sum
 }
+
+func occurrencesOfElement(nums []int, queries []int, x int) []int {
+	result := make([]int, 0, len(queries))
+	occur := []int{}
+
+	for idx, num := range nums {
+		if num == x {
+			occur = append(occur, idx)
+		}
+	}
+
+	for _, querie := range queries {
+		if querie > len(occur) {
+			result = append(result, -1)
+		} else {
+			result = append(result, occur[querie-1])
+		}
+	}
+
+	return result
+}
