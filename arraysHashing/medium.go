@@ -2734,3 +2734,36 @@ func minimumLength(s string) int {
 
 	return len(s) - removals
 }
+
+func countCoveredBuildings(n int, buildings [][]int) int {
+	g1 := make(map[int][]int)
+	g2 := make(map[int][]int)
+
+	for _, pos := range buildings {
+		x, y := pos[0], pos[1]
+
+		g1[x] = append(g1[x], y)
+		g2[y] = append(g2[y], x)
+	}
+
+	for i := range g1 {
+		sort.Ints(g1[i])
+	}
+
+	for i := range g2 {
+		sort.Ints(g2[i])
+	}
+
+	count := 0
+
+	for _, pos := range buildings {
+		x, y := pos[0], pos[1]
+
+		if y < g1[x][len(g1[x])-1] && y > g1[x][0] && x < g2[y][len(g2[y])-1] && x > g2[y][0] {
+			count++
+		}
+
+	}
+
+	return count
+}
