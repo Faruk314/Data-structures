@@ -2827,3 +2827,31 @@ func minAreaRect(points [][]int) int {
 
 	return minArea
 }
+
+func prefixConnected(words []string, k int) int {
+	prefixMap := make(map[string]int)
+
+	for _, word := range words {
+		if len(word) < k {
+			continue
+		}
+
+		var key strings.Builder
+
+		for j := 0; j < k; j++ {
+			key.WriteByte(word[j])
+		}
+
+		prefixMap[key.String()]++
+	}
+
+	total := 0
+
+	for _, count := range prefixMap {
+		if count > 1 {
+			total++
+		}
+	}
+
+	return total
+}
