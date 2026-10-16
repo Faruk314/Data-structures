@@ -2767,3 +2767,63 @@ func countCoveredBuildings(n int, buildings [][]int) int {
 
 	return count
 }
+
+type Line struct {
+	row    int
+	points []int
+}
+
+func minAreaRect(points [][]int) int {
+	vertical := make(map[int][]int)
+
+	for _, point := range points {
+		x, y := point[0], point[1]
+
+		vertical[x] = append(vertical[x], y)
+	}
+
+	for i := range vertical {
+		sort.Ints(vertical[i])
+	}
+
+	lastSeen := make(map[string]int)
+	lines := make([]Line, 0, len(vertical))
+
+	for r, p := range vertical {
+		lines = append(lines, Line{row: r, points: p})
+	}
+
+	sort.Slice(lines, func(i, j int) bool {
+		return lines[i].row < lines[j].row
+	})
+
+	minArea := math.MaxInt
+
+	for _, line := range lines {
+		for j := 0; j < len(line.points); j++ {
+			for i := j + 1; i < len(line.points); i++ {
+				key := fmt.Sprintf("%d,%d", line.points[j], line.points[i])
+
+				if foundRow, exists := lastSeen[key]; exists {
+					a := line.points[i] - line.points[j]
+					b := line.row - foundRow
+
+					area := a * b
+
+					if area < minArea {
+						minArea = area
+					}
+
+				}
+
+				lastSeen[key] = line.row
+			}
+		}
+	}
+
+	if minArea == math.MaxInt {
+		return 0
+	}
+
+	return minArea
+}
