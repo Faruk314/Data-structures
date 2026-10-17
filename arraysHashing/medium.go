@@ -2855,3 +2855,35 @@ func prefixConnected(words []string, k int) int {
 
 	return total
 }
+
+type Cashier struct {
+	prodPrice map[int]float64
+	disc      float64
+	customer  int
+	num       int
+}
+
+func ConstructorCashier(n int, discount int, products []int, prices []int) Cashier {
+	pPrice := make(map[int]float64)
+
+	for i := 0; i < len(products); i++ {
+		pPrice[products[i]] = float64(prices[i])
+	}
+
+	return Cashier{prodPrice: pPrice, disc: float64(discount), customer: 0, num: n}
+}
+
+func (this *Cashier) GetBill(product []int, amount []int) float64 {
+	var total float64
+	this.customer += 1
+
+	for i := 0; i < len(product); i++ {
+		total += this.prodPrice[product[i]] * float64(amount[i])
+	}
+
+	if this.customer%this.num == 0 {
+		return total * ((100 - this.disc) / 100)
+	}
+
+	return total
+}
