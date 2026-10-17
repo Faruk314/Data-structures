@@ -2887,3 +2887,30 @@ func (this *Cashier) GetBill(product []int, amount []int) float64 {
 
 	return total
 }
+
+func minMirrorPairDistance(nums []int) int {
+	pos := make(map[string]int)
+	minDist := len(nums) + 1
+
+	for idx, num := range nums {
+		key := strconv.Itoa(num)
+		runes := []rune(key)
+		slices.Reverse(runes)
+
+		if foundIdx, exists := pos[key]; exists {
+			if idx-foundIdx < minDist {
+				minDist = idx - foundIdx
+			}
+		}
+
+		revInt, _ := strconv.Atoi(string(runes))
+
+		pos[strconv.Itoa(revInt)] = idx
+	}
+
+	if minDist == len(nums)+1 {
+		return -1
+	}
+
+	return minDist
+}
