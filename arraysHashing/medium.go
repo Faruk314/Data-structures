@@ -2914,3 +2914,35 @@ func minMirrorPairDistance(nums []int) int {
 
 	return minDist
 }
+
+func countSpecialIntegers(nums []int) int {
+	indiciesMap := make(map[int][]int)
+
+	for idx, num := range nums {
+		indiciesMap[num] = append(indiciesMap[num], idx)
+	}
+
+	count := 0
+
+	for _, indicies := range indiciesMap {
+		if len(indicies) < 3 {
+			continue
+		}
+
+		isValid := true
+		diff := indicies[1] - indicies[0]
+
+		for i := 2; i < len(indicies); i++ {
+			if indicies[i]-indicies[i-1] != diff {
+				isValid = false
+				break
+			}
+		}
+
+		if isValid {
+			count++
+		}
+	}
+
+	return count
+}
