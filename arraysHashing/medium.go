@@ -3003,3 +3003,30 @@ func relocateMarbles(nums []int, moveFrom []int, moveTo []int) []int {
 
 	return res
 }
+
+type ProductOfNumbers struct {
+	nums []int
+}
+
+func ConstructorProdNum() ProductOfNumbers {
+	return ProductOfNumbers{nums: []int{1}}
+}
+
+func (this *ProductOfNumbers) Add(num int) {
+	if num == 0 {
+		this.nums = []int{1}
+	} else {
+		last := this.nums[len(this.nums)-1]
+		this.nums = append(this.nums, last*num)
+	}
+}
+
+func (this *ProductOfNumbers) GetProduct(k int) int {
+	n := len(this.nums)
+
+	if k >= n {
+		return 0
+	}
+
+	return this.nums[n-1] / this.nums[n-1-k]
+}
