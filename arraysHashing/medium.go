@@ -2980,3 +2980,26 @@ func firstCompleteIndex(arr []int, mat [][]int) int {
 
 	return -1
 }
+
+func relocateMarbles(nums []int, moveFrom []int, moveTo []int) []int {
+	pos := make(map[int]struct{})
+
+	for _, num := range nums {
+		pos[num] = struct{}{}
+	}
+
+	for i := 0; i < len(moveFrom); i++ {
+		delete(pos, moveFrom[i])
+		pos[moveTo[i]] = struct{}{}
+	}
+
+	res := make([]int, 0, len(pos))
+
+	for pos := range pos {
+		res = append(res, pos)
+	}
+
+	sort.Ints(res)
+
+	return res
+}
