@@ -2946,3 +2946,37 @@ func countSpecialIntegers(nums []int) int {
 
 	return count
 }
+
+func firstCompleteIndex(arr []int, mat [][]int) int {
+	m, n := len(mat), len(mat[0])
+	pos := make(map[int][2]int)
+
+	for row := 0; row < m; row++ {
+		for col := 0; col < n; col++ {
+			pos[mat[row][col]] = [2]int{row, col}
+		}
+	}
+
+	paintedRows := make([]int, m)
+	paintedCols := make([]int, n)
+
+	for idx, num := range arr {
+		if cord, exists := pos[num]; exists {
+			row, col := cord[0], cord[1]
+
+			paintedRows[row]++
+
+			if paintedRows[row] == n {
+				return idx
+			}
+
+			paintedCols[col]++
+
+			if paintedCols[col] == m {
+				return idx
+			}
+		}
+	}
+
+	return -1
+}
