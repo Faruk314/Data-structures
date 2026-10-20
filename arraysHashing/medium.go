@@ -3030,3 +3030,27 @@ func (this *ProductOfNumbers) GetProduct(k int) int {
 
 	return this.nums[n-1] / this.nums[n-1-k]
 }
+
+func rangeSum(nums []int, n int, left int, right int) int {
+	var result []int
+
+	for i := 0; i < n; i++ {
+		sum := 0
+
+		for j := i; j < n; j++ {
+			sum += nums[j]
+			result = append(result, sum)
+		}
+	}
+
+	sort.Ints(result)
+
+	const mod = 1e9 + 7
+	total := 0
+
+	for i := left - 1; i < right; i++ {
+		total = (total + result[i]) % mod
+	}
+
+	return total
+}
