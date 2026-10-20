@@ -3054,3 +3054,50 @@ func rangeSum(nums []int, n int, left int, right int) int {
 
 	return total
 }
+
+func rangeAddQueries(n int, queries [][]int) [][]int {
+	diff := make([][]int, n+1)
+
+	for i := 0; i < n+1; i++ {
+		diff[i] = make([]int, n+1)
+	}
+
+	for _, querie := range queries {
+		topRow, topCol := querie[0], querie[1]
+		bottRow, bottCol := querie[2], querie[3]
+
+		diff[topRow][topCol]++
+		diff[topRow][bottCol+1]--
+		diff[bottRow+1][topCol]--
+		diff[bottRow+1][bottCol+1]++
+	}
+
+	matrix := make([][]int, n)
+
+	for i := 0; i < n; i++ {
+		matrix[i] = make([]int, n)
+	}
+
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			sum := diff[i][j]
+
+			if i > 0 {
+				sum += matrix[i-1][j]
+			}
+
+			if j > 0 {
+				sum += matrix[i][j-1]
+			}
+
+			if i > 0 && j > 0 {
+				sum -= matrix[i-1][j-1]
+			}
+
+			matrix[i][j] = sum
+
+		}
+	}
+
+	return matrix
+}
