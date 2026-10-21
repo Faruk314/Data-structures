@@ -3101,3 +3101,23 @@ func rangeAddQueries(n int, queries [][]int) [][]int {
 
 	return matrix
 }
+
+func minSteps(s string, t string) int {
+	freq := [26]int{}
+
+	for i := 0; i < len(s); i++ {
+		freq[s[i]-'a']++
+	}
+
+	count := 0
+
+	for i := 0; i < len(t); i++ {
+		if freq[t[i]-'a'] > 0 {
+			freq[t[i]-'a']--
+		} else {
+			count++
+		}
+	}
+
+	return count
+}
