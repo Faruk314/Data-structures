@@ -3169,3 +3169,33 @@ func minCost(s string, cost []int) int64 {
 
 	return total - maxCost
 }
+
+func splitPainting(segments [][]int) [][]int64 {
+	diff := make(map[int]int64)
+
+	for _, segment := range segments {
+		start, end, color := segment[0], segment[1], segment[2]
+		diff[start] += int64(color)
+		diff[end] -= int64(color)
+	}
+
+	points := make([]int, 0, len(diff))
+
+	for key := range diff {
+		points = append(points, key)
+	}
+
+	sort.Ints(points)
+	var result [][]int64
+	var sum int64
+
+	for i := 0; i < len(points)-1; i++ {
+		sum += diff[points[i]]
+
+		if sum > 0 {
+			result = append(result, []int64{int64(points[i]), int64(points[i+1]), sum})
+		}
+	}
+
+	return result
+}
