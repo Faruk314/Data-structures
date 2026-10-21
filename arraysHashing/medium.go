@@ -3151,3 +3151,21 @@ func findLonely(nums []int) []int {
 
 	return result
 }
+
+func minCost(s string, cost []int) int64 {
+	costFreq := [26]int{}
+	var maxCost int64
+	var total int64
+
+	for i := 0; i < len(s); i++ {
+		costFreq[s[i]-'a'] += cost[i]
+
+		if int64(costFreq[s[i]-'a']) > maxCost {
+			maxCost = int64(costFreq[s[i]-'a'])
+		}
+
+		total += int64(cost[i])
+	}
+
+	return total - maxCost
+}
