@@ -3121,3 +3121,33 @@ func minSteps(s string, t string) int {
 
 	return count
 }
+
+func findLonely(nums []int) []int {
+	freq := make(map[int]int)
+
+	for _, num := range nums {
+		freq[num]++
+	}
+
+	result := []int{}
+
+	for _, num := range nums {
+		count, exists := freq[num]
+
+		if exists && count > 1 {
+			continue
+		}
+
+		if _, exists := freq[num+1]; exists {
+			continue
+		}
+
+		if _, exists := freq[num-1]; exists {
+			continue
+		}
+
+		result = append(result, num)
+	}
+
+	return result
+}
