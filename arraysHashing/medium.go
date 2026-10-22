@@ -3261,3 +3261,24 @@ func numSmallerByFrequency(queries []string, words []string) []int {
 
 	return result
 }
+
+func minimumCardPickup(cards []int) int {
+	min := math.MaxInt
+	seen := make(map[int]int)
+
+	for idx, card := range cards {
+		if foundIdx, exists := seen[card]; exists {
+			if idx-foundIdx+1 < min {
+				min = idx - foundIdx + 1
+			}
+		}
+
+		seen[card] = idx
+	}
+
+	if min == math.MaxInt {
+		return -1
+	}
+
+	return min
+}
