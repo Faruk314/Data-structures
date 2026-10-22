@@ -3199,3 +3199,65 @@ func splitPainting(segments [][]int) [][]int64 {
 
 	return result
 }
+
+func f(s string) int {
+	freq := [26]int{}
+
+	for i := 0; i < len(s); i++ {
+		freq[s[i]-'a']++
+	}
+
+	target := 0
+
+	for i := 0; i < 26; i++ {
+		if freq[i] == 0 {
+			continue
+		}
+
+		if freq[i] > 0 {
+			target = freq[i]
+			break
+		}
+	}
+
+	return target
+}
+
+func numSmallerByFrequency(queries []string, words []string) []int {
+	queriesCount := make([]int, 0, len(queries))
+	wordCount := make([]int, 0, len(words))
+
+	for _, q := range queries {
+		queriesCount = append(queriesCount, f(q))
+	}
+
+	for _, w := range words {
+		wordCount = append(wordCount, f(w))
+	}
+
+	sort.Ints(wordCount)
+
+	result := []int{}
+	n := len(words)
+
+	for _, num := range queriesCount {
+		left := 0
+		right := n - 1
+		ans := 0
+
+		for left <= right {
+			mid := left + (right-left)/2
+
+			if wordCount[mid] > num {
+				ans = n - mid
+				right = mid - 1
+			} else {
+				left = mid + 1
+			}
+		}
+
+		result = append(result, ans)
+	}
+
+	return result
+}
