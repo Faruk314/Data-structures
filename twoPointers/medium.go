@@ -586,3 +586,22 @@ func maxDistance(nums1 []int, nums2 []int) int {
 
 	return max
 }
+
+func minPrice(prices []int, discounts []int) float64 {
+	sort.Ints(prices)
+	sort.Ints(discounts)
+
+	var total float64
+	j := len(discounts) - 1
+
+	for i := len(prices) - 1; i >= 0; i-- {
+		if j >= 0 {
+			total += float64(prices[i]) * (100 - float64(discounts[j])) / 100
+			j--
+		} else {
+			total += float64(prices[i])
+		}
+	}
+
+	return total
+}
