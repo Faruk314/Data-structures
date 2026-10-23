@@ -605,3 +605,52 @@ func minPrice(prices []int, discounts []int) float64 {
 
 	return total
 }
+
+func reverse(bytes []byte) string {
+	left := 0
+	right := len(bytes) - 1
+
+	for left < right {
+		bytes[left], bytes[right] = bytes[right], bytes[left]
+		left++
+		right--
+	}
+
+	return string(bytes)
+}
+
+func getVowelCount(word string) int {
+	vowelCount := 0
+	vowels := map[byte]bool{
+		'a': true,
+		'e': true,
+		'i': true,
+		'o': true,
+		'u': true,
+	}
+
+	for i := 0; i < len(word); i++ {
+		if vowels[word[i]] {
+			vowelCount++
+		}
+	}
+
+	return vowelCount
+}
+
+func reverseWordsWithSameVowels(s string) string {
+	words := strings.Fields(s)
+	totalCount := getVowelCount(words[0])
+
+	for i := 1; i < len(words); i++ {
+		count := getVowelCount(words[i])
+
+		if count == totalCount {
+			bytes := []byte(words[i])
+			reversed := reverse(bytes)
+			words[i] = reversed
+		}
+	}
+
+	return strings.Join(words, " ")
+}
