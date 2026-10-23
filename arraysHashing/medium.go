@@ -3282,3 +3282,32 @@ func minimumCardPickup(cards []int) int {
 
 	return min
 }
+
+func maximumUniqueSubarray(nums []int) int {
+	freq := make(map[int]int)
+	max := 0
+	sum := 0
+	left := 0
+
+	for right := 0; right < len(nums); right++ {
+		freq[nums[right]]++
+		sum += nums[right]
+
+		for freq[nums[right]] > 1 {
+			freq[nums[left]]--
+			sum -= nums[left]
+
+			if freq[nums[left]] == 0 {
+				delete(freq, nums[left])
+			}
+
+			left++
+		}
+
+		if sum > max {
+			max = sum
+		}
+	}
+
+	return max
+}
