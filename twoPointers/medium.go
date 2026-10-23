@@ -654,3 +654,23 @@ func reverseWordsWithSameVowels(s string) string {
 
 	return strings.Join(words, " ")
 }
+
+func getBound(nums []int, bound int) int {
+	count := 0
+	ans := 0
+
+	for _, num := range nums {
+		if num <= bound {
+			count++
+		} else {
+			count = 0
+		}
+		ans += count
+	}
+
+	return ans
+}
+
+func numSubarrayBoundedMax(nums []int, left int, right int) int {
+	return getBound(nums, right) - getBound(nums, left-1)
+}
