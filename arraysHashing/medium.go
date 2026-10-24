@@ -3348,3 +3348,21 @@ func maximizeSquareArea(m int, n int, hFences []int, vFences []int) int {
 	const MOD = 1e9 + 7
 	return int((int64(maxLen) * int64(maxLen)) % MOD)
 }
+
+func arrayChange(nums []int, operations [][]int) []int {
+	pos := make(map[int]int)
+
+	for idx, num := range nums {
+		pos[num] = idx
+	}
+
+	for _, op := range operations {
+		if foundIdx, exists := pos[op[0]]; exists {
+			nums[foundIdx] = op[1]
+			pos[op[1]] = foundIdx
+			delete(pos, op[0])
+		}
+	}
+
+	return nums
+}
