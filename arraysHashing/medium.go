@@ -3366,3 +3366,61 @@ func arrayChange(nums []int, operations [][]int) []int {
 
 	return nums
 }
+
+func largestWordCount(messages []string, senders []string) string {
+	count := make(map[string]int, len(senders))
+
+	for i, message := range messages {
+		words := strings.Fields(message)
+		count[senders[i]] += len(words)
+	}
+
+	maxCount := 0
+
+	for _, c := range count {
+		if c > maxCount {
+			maxCount = c
+		}
+	}
+
+	winners := []string{}
+
+	for sender, c := range count {
+		if c == maxCount {
+			winners = append(winners, sender)
+		}
+	}
+
+	if len(winners) == 1 {
+		return winners[0]
+	}
+
+	finalWinner := winners[0]
+
+	for i := 1; i < len(winners); i++ {
+		isTie := true
+		shorterLen := min(len(winners[i]), len(finalWinner))
+		largerWord := finalWinner
+
+		if len(winners[i]) > len(finalWinner) {
+			largerWord = winners[i]
+		}
+
+		for j := 0; j < shorterLen; j++ {
+			if finalWinner[j] < winners[i][j] {
+				finalWinner = winners[i]
+				isTie = false
+				break
+			} else if winners[i][j] < finalWinner[j] {
+				isTie = false
+				break
+			}
+		}
+
+		if isTie {
+			finalWinner = largerWord
+		}
+	}
+
+	return finalWinner
+}
