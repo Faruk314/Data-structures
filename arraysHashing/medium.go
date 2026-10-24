@@ -3311,3 +3311,40 @@ func maximumUniqueSubarray(nums []int) int {
 
 	return max
 }
+
+func maximizeSquareArea(m int, n int, hFences []int, vFences []int) int {
+	hFences = append(hFences, 1, m)
+	vFences = append(vFences, 1, n)
+	hLen := make(map[int]struct{})
+
+	sort.Ints(hFences)
+	sort.Ints(vFences)
+
+	for i := 0; i < len(hFences); i++ {
+		for j := i + 1; j < len(hFences); j++ {
+			d := hFences[j] - hFences[i]
+			hLen[d] = struct{}{}
+		}
+	}
+
+	maxLen := -1
+
+	for i := 0; i < len(vFences); i++ {
+		for j := i + 1; j < len(vFences); j++ {
+			d := vFences[j] - vFences[i]
+
+			if _, exists := hLen[d]; exists {
+				if d > maxLen {
+					maxLen = d
+				}
+			}
+		}
+	}
+
+	if maxLen == -1 {
+		return -1
+	}
+
+	const MOD = 1e9 + 7
+	return int((int64(maxLen) * int64(maxLen)) % MOD)
+}
