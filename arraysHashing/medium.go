@@ -3424,3 +3424,23 @@ func largestWordCount(messages []string, senders []string) string {
 
 	return finalWinner
 }
+
+func centeredSubarrays(nums []int) int {
+	total := 0
+
+	for i := 0; i < len(nums); i++ {
+		seen := make(map[int]struct{})
+		sum := 0
+
+		for j := i; j < len(nums); j++ {
+			sum += nums[j]
+			seen[nums[j]] = struct{}{}
+
+			if _, exists := seen[sum]; exists {
+				total++
+			}
+		}
+	}
+
+	return total
+}
