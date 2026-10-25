@@ -3444,3 +3444,42 @@ func centeredSubarrays(nums []int) int {
 
 	return total
 }
+
+func findWinners(matches [][]int) [][]int {
+	result := [][]int{}
+
+	max := 0
+	for _, match := range matches {
+		if match[0] > max {
+			max = match[0]
+		}
+
+		if match[1] > max {
+			max = match[1]
+		}
+	}
+
+	losers := make([]int, max+1)
+	playersWhoPlayed := make([]bool, max+1)
+
+	for _, match := range matches {
+		losers[match[1]]++
+		playersWhoPlayed[match[0]] = true
+		playersWhoPlayed[match[1]] = true
+	}
+
+	winnersWithoutLose := []int{}
+	losersWithOneLose := []int{}
+
+	for i, totalLost := range losers {
+		if totalLost == 0 && playersWhoPlayed[i] {
+			winnersWithoutLose = append(winnersWithoutLose, i)
+		} else if totalLost == 1 {
+			losersWithOneLose = append(losersWithOneLose, i)
+		}
+	}
+
+	result = append(result, winnersWithoutLose, losersWithOneLose)
+
+	return result
+}
