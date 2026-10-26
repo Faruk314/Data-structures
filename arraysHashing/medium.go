@@ -3506,3 +3506,44 @@ func findingUsersActiveMinutes(logs [][]int, k int) []int {
 
 	return result
 }
+
+type TargetGroup struct {
+	count  int
+	minVal int
+}
+
+func destroyTargets(nums []int, space int) int {
+	groups := make(map[int]TargetGroup)
+
+	for _, num := range nums {
+		r := num % space
+
+		group, exists := groups[r]
+
+		if !exists {
+			groups[r] = TargetGroup{count: 1, minVal: num}
+		} else {
+			group.count++
+
+			if num < group.minVal {
+				group.minVal = num
+			}
+
+			groups[r] = group
+		}
+	}
+
+	maxDestroyed := 0
+	minVal := -1
+
+	for _, group := range groups {
+		if group.count > maxDestroyed {
+			maxDestroyed = group.count
+			minVal = group.minVal
+		} else if group.count == maxDestroyed {
+			minVal = min(minVal, group.minVal)
+		}
+	}
+
+	return minVal
+}
