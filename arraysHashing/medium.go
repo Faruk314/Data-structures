@@ -3483,3 +3483,26 @@ func findWinners(matches [][]int) [][]int {
 
 	return result
 }
+
+func findingUsersActiveMinutes(logs [][]int, k int) []int {
+	active := make(map[int]map[int]struct{})
+	result := make([]int, k)
+
+	for _, log := range logs {
+		userId, min := log[0], log[1]
+
+		if _, exists := active[userId]; !exists {
+			activeMin := make(map[int]struct{})
+			activeMin[min] = struct{}{}
+			active[userId] = activeMin
+		} else {
+			active[userId][min] = struct{}{}
+		}
+	}
+
+	for _, activeMins := range active {
+		result[len(activeMins)-1]++
+	}
+
+	return result
+}
