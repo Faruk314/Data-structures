@@ -3597,3 +3597,44 @@ func canArrange(arr []int, k int) bool {
 
 	return len(groups) == 0
 }
+
+func alertNames(keyName []string, keyTime []string) []string {
+	userTimes := make(map[string][]int)
+
+	for i, name := range keyName {
+		parts := strings.Split(keyTime[i], ":")
+		hours, _ := strconv.Atoi(parts[0])
+		mins, _ := strconv.Atoi(parts[1])
+		total := (hours * 60) + mins
+
+		userTimes[name] = append(userTimes[name], total)
+	}
+
+	result := []string{}
+
+	for user, times := range userTimes {
+		sort.Ints(times)
+
+		isAlerted := false
+		left := 0
+
+		for right := 0; right < len(times); right++ {
+			if right-left+1 == 3 {
+
+				if times[right]-times[left] <= 60 {
+					isAlerted = true
+					break
+				}
+				left++
+			}
+		}
+
+		if isAlerted {
+			result = append(result, user)
+		}
+	}
+
+	sort.Strings(result)
+
+	return result
+}
