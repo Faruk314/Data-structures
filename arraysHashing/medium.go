@@ -3576,3 +3576,24 @@ func countCompleteSubarrays(nums []int) int {
 
 	return count
 }
+
+func canArrange(arr []int, k int) bool {
+	groups := make(map[int]int)
+
+	for _, num := range arr {
+		remainder := (num%k + k) % k
+		target := (k - remainder) % k
+
+		if _, exists := groups[target]; exists {
+			groups[target]--
+
+			if groups[target] == 0 {
+				delete(groups, target)
+			}
+		} else {
+			groups[remainder]++
+		}
+	}
+
+	return len(groups) == 0
+}
