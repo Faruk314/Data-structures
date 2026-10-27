@@ -3547,3 +3547,32 @@ func destroyTargets(nums []int, space int) int {
 
 	return minVal
 }
+
+func countCompleteSubarrays(nums []int) int {
+	globalDist := make(map[int]struct{})
+
+	for _, num := range nums {
+		globalDist[num] = struct{}{}
+	}
+
+	count := 0
+
+	for left := 0; left < len(nums); left++ {
+		distinct := make(map[int]struct{})
+
+		for right := left; right < len(nums); right++ {
+
+			if _, exists := globalDist[nums[right]]; exists {
+				distinct[nums[right]] = struct{}{}
+			} else {
+				break
+			}
+
+			if len(distinct) == len(globalDist) {
+				count++
+			}
+		}
+	}
+
+	return count
+}
