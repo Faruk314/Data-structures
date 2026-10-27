@@ -1,6 +1,7 @@
 package binarysearch
 
 import (
+	"math"
 	"slices"
 	"sort"
 )
@@ -427,4 +428,41 @@ func chalkReplacer(chalk []int, k int) int {
 	}
 
 	return ans
+}
+
+func smallestDivisor(nums []int, threshold int) int {
+	max := 0
+
+	for _, num := range nums {
+		if num > max {
+			max = num
+		}
+	}
+
+	left := 1
+	right := max
+	smallestDivisor := math.MaxInt
+
+	for left <= right {
+		mid := left + (right-left)/2
+
+		var result float64
+
+		for _, num := range nums {
+			result += math.Ceil(float64(num) / float64(mid))
+
+			if result > float64(threshold) {
+				break
+			}
+		}
+
+		if result <= float64(threshold) {
+			smallestDivisor = mid
+			right = mid - 1
+		} else {
+			left = mid + 1
+		}
+	}
+
+	return smallestDivisor
 }
