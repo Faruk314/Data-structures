@@ -879,3 +879,35 @@ func distinctPoints(s string, k int) int {
 
 	return len(points)
 }
+
+func maxFreq(s string, maxLetters int, minSize int, maxSize int) int {
+	left := 0
+	freq := make(map[byte]int)
+	occur := make(map[string]int)
+	maxOccur := 0
+
+	for right := 0; right < len(s); right++ {
+		freq[s[right]]++
+
+		if right-left+1 == minSize {
+			if len(freq) <= maxLetters {
+				key := s[left : right+1]
+				occur[key]++
+
+				if occur[key] > maxOccur {
+					maxOccur = occur[key]
+				}
+			}
+
+			freq[s[left]]--
+
+			if freq[s[left]] == 0 {
+				delete(freq, s[left])
+			}
+
+			left++
+		}
+	}
+
+	return maxOccur
+}
