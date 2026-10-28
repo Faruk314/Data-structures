@@ -3638,3 +3638,33 @@ func alertNames(keyName []string, keyTime []string) []string {
 
 	return result
 }
+
+func equalPairs(grid [][]int) int {
+	n := len(grid)
+	count := make(map[string]int)
+	totalPairs := 0
+
+	for i := 0; i < n; i++ {
+		var rowKey strings.Builder
+
+		for j := 0; j < n; j++ {
+			rowKey.WriteString(strconv.Itoa(grid[i][j]))
+			rowKey.WriteByte(',')
+		}
+
+		count[rowKey.String()]++
+	}
+
+	for i := 0; i < n; i++ {
+		var colKey strings.Builder
+
+		for j := 0; j < n; j++ {
+			colKey.WriteString(strconv.Itoa(grid[j][i]))
+			colKey.WriteByte(',')
+		}
+
+		totalPairs += count[colKey.String()]
+	}
+
+	return totalPairs
+}
