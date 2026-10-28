@@ -466,3 +466,56 @@ func smallestDivisor(nums []int, threshold int) int {
 
 	return smallestDivisor
 }
+
+func minDays(bloomDay []int, m int, k int) int {
+	if m*k > len(bloomDay) {
+		return -1
+	}
+
+	max := 0
+	for _, num := range bloomDay {
+		if num > max {
+			max = num
+		}
+	}
+
+	left := 1
+	right := max
+	minDays := max + 1
+
+	for left <= right {
+		mid := left + (right-left)/2
+
+		l := 0
+		bouquets := 0
+
+		for r := 0; r < len(bloomDay); r++ {
+			if bloomDay[r] > mid {
+				l = r + 1
+				continue
+			}
+
+			if r-l+1 == k {
+				bouquets++
+				l = r + 1
+			}
+
+			if bouquets >= m {
+				break
+			}
+		}
+
+		if bouquets >= m {
+			minDays = mid
+			right = mid - 1
+		} else {
+			left = mid + 1
+		}
+	}
+
+	if minDays == max+1 {
+		return -1
+	}
+
+	return minDays
+}
