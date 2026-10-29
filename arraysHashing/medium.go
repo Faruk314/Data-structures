@@ -3668,3 +3668,30 @@ func equalPairs(grid [][]int) int {
 
 	return totalPairs
 }
+
+func reportSpam(message []string, bannedWords []string) bool {
+	banned := make(map[string]struct{})
+
+	for _, word := range bannedWords {
+		banned[word] = struct{}{}
+	}
+
+	count := 0
+
+	for _, m := range message {
+
+		if _, exists := banned[m]; exists {
+			count++
+		}
+
+		if count == 2 {
+			break
+		}
+	}
+
+	if count == 2 {
+		return true
+	}
+
+	return false
+}
