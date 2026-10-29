@@ -691,3 +691,22 @@ func twoSum(numbers []int, target int) []int {
 
 	return []int{}
 }
+
+func searchMatrix(matrix [][]int, target int) bool {
+	row := 0
+	col := len(matrix[0]) - 1
+
+	for row < len(matrix) && col >= 0 {
+		curr := matrix[row][col]
+
+		if curr == target {
+			return true
+		} else if curr > target {
+			col--
+		} else {
+			row++
+		}
+	}
+
+	return false
+}
