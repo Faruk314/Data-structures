@@ -674,3 +674,20 @@ func getBound(nums []int, bound int) int {
 func numSubarrayBoundedMax(nums []int, left int, right int) int {
 	return getBound(nums, right) - getBound(nums, left-1)
 }
+
+func twoSum(numbers []int, target int) []int {
+	left := 0
+	right := len(numbers) - 1
+
+	for left < right {
+		if numbers[left]+numbers[right] == target {
+			return []int{left + 1, right + 1}
+		} else if numbers[left]+numbers[right] < target {
+			left++
+		} else {
+			right--
+		}
+	}
+
+	return []int{}
+}
