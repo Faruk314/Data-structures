@@ -710,3 +710,26 @@ func searchMatrix(matrix [][]int, target int) bool {
 
 	return false
 }
+
+func matchPlayersAndTrainers(players []int, trainers []int) int {
+	i, j := 0, 0
+
+	sort.Ints(trainers)
+	sort.Ints(players)
+
+	matches := 0
+
+	for i < len(players) && j < len(trainers) {
+		if players[i] > trainers[j] {
+			j++
+		} else {
+
+			matches++
+
+			i++
+			j++
+		}
+	}
+
+	return matches
+}
