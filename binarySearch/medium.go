@@ -519,3 +519,40 @@ func minDays(bloomDay []int, m int, k int) int {
 
 	return minDays
 }
+
+func minimizedMaximum(n int, quantities []int) int {
+	max := 0
+
+	for _, num := range quantities {
+		if num > max {
+			max = num
+		}
+	}
+
+	left := 1
+	right := max
+	min := max + 1
+
+	for left <= right {
+		mid := left + (right-left)/2
+
+		var stores float64
+
+		for _, num := range quantities {
+			stores += math.Ceil(float64(num) / float64(mid))
+
+			if stores > float64(n) {
+				break
+			}
+		}
+
+		if stores <= float64(n) {
+			min = mid
+			right = mid - 1
+		} else {
+			left = mid + 1
+		}
+	}
+
+	return min
+}
