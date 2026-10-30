@@ -3695,3 +3695,13 @@ func reportSpam(message []string, bannedWords []string) bool {
 
 	return false
 }
+
+func maxDistinct(s string) int {
+	dist := make(map[byte]struct{})
+
+	for i := 0; i < len(s); i++ {
+		dist[s[i]] = struct{}{}
+	}
+
+	return len(dist)
+}
