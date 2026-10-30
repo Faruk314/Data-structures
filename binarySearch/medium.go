@@ -556,3 +556,43 @@ func minimizedMaximum(n int, quantities []int) int {
 
 	return min
 }
+
+func maximumBeauty(items [][]int, queries []int) []int {
+	result := make([]int, len(queries))
+
+	sort.Slice(items, func(i, j int) bool {
+		return items[i][0] < items[j][0]
+	})
+
+	max := 0
+
+	for _, item := range items {
+		currMax := item[1]
+		if currMax > max {
+			max = currMax
+		}
+		item[1] = max
+	}
+
+	for idx, q := range queries {
+		left := 0
+		right := len(items) - 1
+		ans := 0
+
+		for left <= right {
+
+			mid := left + (right-left)/2
+
+			if items[mid][0] > q {
+				right = mid - 1
+			} else {
+				ans = items[mid][1]
+				left = mid + 1
+			}
+		}
+
+		result[idx] = ans
+	}
+
+	return result
+}
