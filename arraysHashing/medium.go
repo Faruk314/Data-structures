@@ -3705,3 +3705,33 @@ func maxDistinct(s string) int {
 
 	return len(dist)
 }
+
+func setZeroes(matrix [][]int) {
+	dirs := [4][2]int{{1, 0}, {-1, 0}, {0, 1}, {0, -1}}
+	pos := [][]int{}
+	n, m := len(matrix), len(matrix[0])
+
+	for row := 0; row < n; row++ {
+		for col := 0; col < m; col++ {
+			if matrix[row][col] == 0 {
+				pos = append(pos, []int{row, col})
+			}
+		}
+	}
+
+	for _, p := range pos {
+		startRow, startCol := p[0], p[1]
+
+		for _, dir := range dirs {
+			row := startRow + dir[0]
+			col := startCol + dir[1]
+
+			for row >= 0 && row < n && col >= 0 && col < m {
+				matrix[row][col] = 0
+
+				row += dir[0]
+				col += dir[1]
+			}
+		}
+	}
+}
