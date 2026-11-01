@@ -3775,3 +3775,33 @@ func findHighAccessEmployees(access_times [][]string) []string {
 
 	return result
 }
+
+func numberOfRightTriangles(grid [][]int) int64 {
+	n, m := len(grid), len(grid[0])
+	rowCount := make([]int, n)
+	colCount := make([]int, m)
+
+	for i := 0; i < n; i++ {
+		for j := 0; j < m; j++ {
+			if grid[i][j] == 1 {
+				rowCount[i]++
+				colCount[j]++
+			}
+		}
+	}
+
+	var totalTriangles int64 = 0
+
+	for i := 0; i < n; i++ {
+		for j := 0; j < m; j++ {
+			if grid[i][j] == 1 {
+				totalRows := int64(rowCount[i] - 1)
+				totalCols := int64(colCount[j] - 1)
+
+				totalTriangles += totalRows * totalCols
+			}
+		}
+	}
+
+	return totalTriangles
+}
