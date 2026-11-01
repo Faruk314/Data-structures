@@ -3735,3 +3735,43 @@ func setZeroes(matrix [][]int) {
 		}
 	}
 }
+
+func findHighAccessEmployees(access_times [][]string) []string {
+	userTimestamps := make(map[string][]int)
+
+	for _, data := range access_times {
+		person, timestamp := data[0], data[1]
+
+		hours, _ := strconv.Atoi(timestamp[:2])
+		minutes, _ := strconv.Atoi(timestamp[2:])
+
+		userTimestamps[person] = append(userTimestamps[person], hours*60+minutes)
+	}
+
+	result := []string{}
+
+	for user, timestamps := range userTimestamps {
+		sort.Ints(timestamps)
+
+		left := 0
+		hasAccess := false
+
+		for right := 0; right < len(timestamps); right++ {
+			if right-left+1 == 3 {
+
+				if timestamps[right]-timestamps[left] < 60 {
+					hasAccess = true
+					break
+				}
+
+				left++
+			}
+		}
+
+		if hasAccess {
+			result = append(result, user)
+		}
+	}
+
+	return result
+}
