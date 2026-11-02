@@ -596,3 +596,40 @@ func maximumBeauty(items [][]int, queries []int) []int {
 
 	return result
 }
+
+func repairCars(ranks []int, cars int) int64 {
+	maxRank := 0
+
+	for _, rank := range ranks {
+		if rank > maxRank {
+			maxRank = rank
+		}
+	}
+
+	left := 1
+	right := maxRank * cars * cars
+	minTime := int64(maxRank * cars * cars)
+
+	for left <= right {
+		time := left + (right-left)/2
+		totalFixed := 0
+
+		for _, rank := range ranks {
+			fixedCars := math.Sqrt(float64(time) / float64(rank))
+			totalFixed += int(fixedCars)
+
+			if totalFixed >= cars {
+				break
+			}
+		}
+
+		if totalFixed >= cars {
+			minTime = int64(time)
+			right = time - 1
+		} else {
+			left = time + 1
+		}
+	}
+
+	return minTime
+}
