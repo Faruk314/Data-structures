@@ -733,3 +733,38 @@ func matchPlayersAndTrainers(players []int, trainers []int) int {
 
 	return matches
 }
+
+func minFlips(grid [][]int) int {
+	rowFlips := 0
+	for i := 0; i < len(grid); i++ {
+		left := 0
+		right := len(grid[0]) - 1
+
+		for left < right {
+			if grid[i][left] != grid[i][right] {
+				rowFlips++
+			}
+
+			left++
+			right--
+		}
+	}
+
+	colFlips := 0
+	for i := 0; i < len(grid[0]); i++ {
+		top := 0
+		bottom := len(grid) - 1
+
+		for top < bottom {
+			if grid[top][i] != grid[bottom][i] {
+				colFlips++
+			}
+
+			top++
+			bottom--
+		}
+
+	}
+
+	return min(rowFlips, colFlips)
+}
