@@ -802,3 +802,21 @@ func findLongestWord(s string, dictionary []string) string {
 
 	return winner
 }
+
+func minPairSum(nums []int) int {
+	sort.Ints(nums)
+	max := 0
+	left := 0
+	right := len(nums) - 1
+
+	for left < right {
+		if nums[left]+nums[right] > max {
+			max = nums[left] + nums[right]
+		}
+
+		left++
+		right--
+	}
+
+	return max
+}
