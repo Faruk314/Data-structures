@@ -768,3 +768,37 @@ func minFlips(grid [][]int) int {
 
 	return min(rowFlips, colFlips)
 }
+
+func findLongestWord(s string, dictionary []string) string {
+	winner := ""
+	sLength := len(s)
+
+	for _, word := range dictionary {
+		wLength := len(word)
+
+		if wLength > sLength {
+			continue
+		}
+
+		i := 0
+		j := 0
+
+		for j < sLength && i < wLength {
+			if s[j] == word[i] {
+				i++
+			}
+
+			j++
+		}
+
+		if i != wLength {
+			continue
+		} else if len(winner) < wLength {
+			winner = word
+		} else if len(winner) == wLength && word < winner {
+			winner = word
+		}
+	}
+
+	return winner
+}
