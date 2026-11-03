@@ -820,3 +820,35 @@ func minPairSum(nums []int) int {
 
 	return max
 }
+
+func rotateTheBox(boxGrid [][]byte) [][]byte {
+	m, n := len(boxGrid), len(boxGrid[0])
+
+	for i := 0; i < m; i++ {
+		emptyPos := n - 1
+
+		for j := n - 1; j >= 0; j-- {
+			if boxGrid[i][j] == '*' {
+				emptyPos = j - 1
+			} else if boxGrid[i][j] == '#' {
+				boxGrid[i][j] = '.'
+				boxGrid[i][emptyPos] = '#'
+				emptyPos--
+			}
+		}
+	}
+
+	rotated := make([][]byte, n)
+
+	for i := range rotated {
+		rotated[i] = make([]byte, m)
+	}
+
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			rotated[j][m-1-i] = boxGrid[i][j]
+		}
+	}
+
+	return rotated
+}
