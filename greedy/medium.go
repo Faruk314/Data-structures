@@ -1004,3 +1004,30 @@ func advantageCount(nums1 []int, nums2 []int) []int {
 
 	return result
 }
+
+func maxArea(h int, w int, horizontalCuts []int, verticalCuts []int) int {
+	horizontalCuts = append(horizontalCuts, 0)
+	horizontalCuts = append(horizontalCuts, h)
+
+	verticalCuts = append(verticalCuts, 0)
+	verticalCuts = append(verticalCuts, w)
+
+	sort.Ints(horizontalCuts)
+	sort.Ints(verticalCuts)
+
+	maxHorizontalGap := 0
+
+	for i := 1; i < len(horizontalCuts); i++ {
+		maxHorizontalGap = max(horizontalCuts[i]-horizontalCuts[i-1], maxHorizontalGap)
+	}
+
+	maxVerticalGap := 0
+
+	for i := 1; i < len(verticalCuts); i++ {
+		maxVerticalGap = max(verticalCuts[i]-verticalCuts[i-1], maxVerticalGap)
+	}
+
+	const MOD = 1e9 + 7
+
+	return int((int64(maxVerticalGap) * int64(maxHorizontalGap)) % MOD)
+}
